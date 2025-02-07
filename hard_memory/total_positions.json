@@ -1,0 +1,56 @@
+{
+    "BTCUSD": {
+        "LONG": {
+            "SIZE_SUM": 0,
+            "AVG_PRICE": 0,
+            "POSITION_COUNT": 0,
+            "CURRENT_PRICE": 95893.3,
+            "UNREALIZED_PROFIT": 0,
+            "LAST_POSITION_TIME": null
+        },
+        "SHORT": {
+            "SIZE_SUM": 0.02,
+            "AVG_PRICE": 91186.5,
+            "POSITION_COUNT": 1,
+            "CURRENT_PRICE": 95893.3,
+            "UNREALIZED_PROFIT": -94.14,
+            "LAST_POSITION_TIME": "2025-01-09 19:32:08"
+        }
+    },
+    "US_TBond": {
+        "LONG": {
+            "SIZE_SUM": 0,
+            "AVG_PRICE": 0,
+            "POSITION_COUNT": 0,
+            "CURRENT_PRICE": 115.477,
+            "UNREALIZED_PROFIT": 0,
+            "LAST_POSITION_TIME": null
+        },
+        "SHORT": {
+            "SIZE_SUM": 1.0,
+            "AVG_PRICE": 114.358,
+            "POSITION_COUNT": 1,
+            "CURRENT_PRICE": 115.477,
+            "UNREALIZED_PROFIT": -1.12,
+            "LAST_POSITION_TIME": "2025-01-29 06:58:17"
+        }
+    },
+    "EURUSD": {
+        "LONG": {
+            "SIZE_SUM": 3.5999999999999672,
+            "AVG_PRICE": 1.0335835000000093,
+            "POSITION_COUNT": 360,
+            "CURRENT_PRICE": 1.03258,
+            "UNREALIZED_PROFIT": -361.2600000000002,
+            "LAST_POSITION_TIME": "2025-02-07 20:48:57"
+        },
+        "SHORT": {
+            "SIZE_SUM": 1.370000000000001,
+            "AVG_PRICE": 1.0326782481751822,
+            "POSITION_COUNT": 137,
+            "CURRENT_PRICE": 1.03258,
+            "UNREALIZED_PROFIT": 3.8699999999999988,
+            "LAST_POSITION_TIME": "2025-02-07 20:48:47"
+        }
+    }
+}

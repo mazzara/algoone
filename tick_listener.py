@@ -8,7 +8,7 @@ last_ticks = {}
 
 # Define major Forex symbols
 FOREX_MAJORS = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD"]
-FOREX_MAJORS = ['EURUSD',]
+FOREX_MAJORS = ['EURUSD', 'BTCUSD']
 
 def get_forex_symbols(limit=5, only_major_forex=False):
     """
@@ -20,6 +20,9 @@ def get_forex_symbols(limit=5, only_major_forex=False):
     if only_major_forex:
         selected_symbols = [s for s in forex_symbols if s in FOREX_MAJORS]
         logger.info(f"Major Forex Mode: Listening to {len(selected_symbols)} major Forex pairs.")
+        if not selected_symbols:
+            logger.warning("No major forex pairs found. Using All available symbols instead.")
+            selected_symbols = forex_symbols
     else:
         selected_symbols = random.sample(forex_symbols, min(limit, len(forex_symbols)))
         logger.info(f"Development Mode: Selected Forex Symbols: {selected_symbols}")
@@ -28,7 +31,7 @@ def get_forex_symbols(limit=5, only_major_forex=False):
         logger.error("No Forex symbols found.")
     return selected_symbols
 
-def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False):
+def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False, on_tick=None):
     """
     Listens to market ticks for all symbols or selected Forex symbols.
     """
@@ -48,6 +51,7 @@ def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False):
 
     while True:
         tick_detected = False
+        tick_data = []
 
         for symbol in symbols:
             tick = mt5.symbol_info_tick(symbol)
@@ -58,11 +62,27 @@ def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False):
                     last_ticks[symbol] = (tick.bid, tick.ask)
                     logger.info(f"{symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {tick.ask - tick.bid}")
                     tick_detected = True
+                    tick_info = {
+                        "symbol": symbol,
+                        "bid": tick.bid,
+                        "ask": tick.ask,
+                        "spread": tick.ask - tick.bid,
+                        "time": tick.time
+                    }
+                    tick_data.append(tick_info)
 
-            if not tick_detected:
-                time.sleep(0.5)
-            else:
-                time.sleep(sleep_time)
+        if tick_detected and on_tick and on_tick:
+            on_tick(tick_data)
+
+        time.sleep(sleep_time if tick_detected else 0.5)
+
+def sample_on_tick(ticks):
+    """
+    Example callback function to process tick events.
+    """
+    for tick in ticks:
+        logger.info(f"Tick Event: {tick['symbol']} | Bid: {tick['bid']} | Ask: {tick['ask']} | Spread: {tick['spread']} | Time: {tick['time']}")
+
 
 
 if __name__ == "__main__":

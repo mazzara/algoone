@@ -3,6 +3,7 @@ from logger_config import logger
 import os
 import json
 from datetime import datetime
+import time
 
 
 # Ensure the `hard_memory` directory exists
@@ -15,6 +16,11 @@ def save_positions(positions):
     Saves open positions to a JSON file.
     """
     positions_data = []
+
+    data = {
+        "timestamp": time.time(),
+        "positions": []
+    }
 
     for pos in positions:
         positions_data.append({
@@ -32,11 +38,13 @@ def save_positions(positions):
             "comment": pos.comment
         })
 
+    data["positions"] = positions_data
+
     file_path = os.path.join(HARD_MEMORY_DIR, "positions.json")
 
     try:
         with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(positions_data, f, indent=4)
+            json.dump(data, f, indent=4)
         logger.info(f"OK - Open positions saved to {file_path}")
     except Exception as e:
         logger.error(f"Oh No! - Failed to save positions: {e}")
