@@ -1,0 +1,16 @@
+[
+    {
+        "ticket": 128432800,
+        "symbol": "EURUSD",
+        "type": 2,
+        "type_str": "BUY_LIMIT",
+        "volume_current": 0.01,
+        "price_open": 0.90613,
+        "sl": 0.0,
+        "tp": 0.0,
+        "price_current": 1.03894,
+        "time_setup": "2025-02-07 00:24:03",
+        "expiration": "GTC",
+        "comment": ""
+    }
+]

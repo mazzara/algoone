@@ -1,0 +1,12 @@
+# .gitignore
+
+# Ignore .env files
+.env
+.env.*
+
+# Node modules (example)
+node_modules/
+
+# Optional: ignore build output
+dist/
+build/

@@ -1,0 +1,30 @@
+[
+    {
+        "ticket": 123666078,
+        "symbol": "BTCUSD",
+        "type": "SELL",
+        "volume": 0.02,
+        "price_open": 91186.5,
+        "sl": 0.0,
+        "tp": 0.0,
+        "price_current": 97343.1,
+        "profit": -123.13,
+        "swap": 12.16,
+        "time_open": "2025-01-09 19:32:08",
+        "comment": ""
+    },
+    {
+        "ticket": 126532346,
+        "symbol": "US_TBond",
+        "type": "SELL",
+        "volume": 1.0,
+        "price_open": 114.358,
+        "sl": 0.0,
+        "tp": 0.0,
+        "price_current": 116.195,
+        "profit": -1.8399999999999999,
+        "swap": -0.08,
+        "time_open": "2025-01-29 06:58:17",
+        "comment": ""
+    }
+]

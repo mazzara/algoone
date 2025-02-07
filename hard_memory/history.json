@@ -1,0 +1,93 @@
+[
+    {
+        "ticket": 101898818,
+        "order": 123438004,
+        "symbol": "BTCUSD",
+        "type": "BUY",
+        "volume": 1.0,
+        "price": 95951.3,
+        "profit": 1033.1,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-08 08:25:10",
+        "comment": ""
+    },
+    {
+        "ticket": 101967115,
+        "order": 123361562,
+        "symbol": "BTCUSD",
+        "type": "BUY",
+        "volume": 1.0,
+        "price": 94085.57,
+        "profit": 0.0,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-08 16:09:36",
+        "comment": ""
+    },
+    {
+        "ticket": 101971042,
+        "order": 123516786,
+        "symbol": "BTCUSD",
+        "type": "SELL",
+        "volume": 1.0,
+        "price": 92514.7,
+        "profit": -1570.87,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-08 16:31:20",
+        "comment": "[so 49.13%/462.23/940.86]"
+    },
+    {
+        "ticket": 101988101,
+        "order": 123535996,
+        "symbol": "BTCUSD",
+        "type": "SELL",
+        "volume": 0.15,
+        "price": 94149.7,
+        "profit": 0.0,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-08 18:42:04",
+        "comment": ""
+    },
+    {
+        "ticket": 102055911,
+        "order": 123607683,
+        "symbol": "BTCUSD",
+        "type": "BUY",
+        "volume": 0.15,
+        "price": 93406.5,
+        "profit": 111.48,
+        "commission": 0.0,
+        "swap": 2.95,
+        "time_setup": "2025-01-09 09:20:16",
+        "comment": ""
+    },
+    {
+        "ticket": 102109094,
+        "order": 123666078,
+        "symbol": "BTCUSD",
+        "type": "SELL",
+        "volume": 0.02,
+        "price": 91186.5,
+        "profit": 0.0,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-09 19:32:08",
+        "comment": ""
+    },
+    {
+        "ticket": 104778480,
+        "order": 126532346,
+        "symbol": "US_TBond",
+        "type": "SELL",
+        "volume": 1.0,
+        "price": 114.358,
+        "profit": 0.0,
+        "commission": 0.0,
+        "swap": 0.0,
+        "time_setup": "2025-01-29 06:58:17",
+        "comment": ""
+    }
+]
