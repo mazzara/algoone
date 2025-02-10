@@ -1,25 +1,31 @@
+# tick_listener.py
 import MetaTrader5 as mt5
 import time
 import random
 from logger_config import logger
+from config import SYMBOLS_ALLOWED
 
 # Store last tick data for comparison
 last_ticks = {}
 
 # Define major Forex symbols
-FOREX_MAJORS = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD"]
-FOREX_MAJORS = ['EURUSD', 'BTCUSD']
-FOREX_MAJORS = ['BTCUSD']
+# FOREX_MAJORS = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD"]
+# FOREX_MAJORS = ['EURUSD', 'BTCUSD']
+# FOREX_MAJORS = ['BTCUSD']
 
 def get_forex_symbols(limit=5, only_major_forex=False):
     """
     Retrieves Forex symbols from MT5 and returns a limited selection.
     """
     symbols = mt5.symbols_get()
+    if not symbols:
+        logger.error("Failed to retrieve symbols from MT5.")
+        return []
+
     forex_symbols = [s.name for s in symbols if "USD" in s.name or "EUR" in s.name or "GBP" in s.name]  # Basic Forex filter
 
     if only_major_forex:
-        selected_symbols = [s for s in forex_symbols if s in FOREX_MAJORS]
+        selected_symbols = [s for s in forex_symbols if s in SYMBOLS_ALLOWED]
         logger.info(f"Major Forex Mode: Listening to {len(selected_symbols)} major Forex pairs.")
         if not selected_symbols:
             logger.warning("No major forex pairs found. Using All available symbols instead.")
@@ -31,6 +37,7 @@ def get_forex_symbols(limit=5, only_major_forex=False):
     if not selected_symbols:
         logger.error("No Forex symbols found.")
     return selected_symbols
+
 
 def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False, on_tick=None):
     """
@@ -99,7 +106,7 @@ if __name__ == "__main__":
         finally:
             disconnect()
 
-# End of Listener
+# End of tick_listener.py
 
 
 

@@ -1,19 +1,19 @@
 {
     "BTCUSD": {
         "LONG": {
-            "SIZE_SUM": 0.05,
-            "AVG_PRICE": 97671.97999999998,
-            "POSITION_COUNT": 5,
-            "CURRENT_PRICE": 97675.1,
-            "UNREALIZED_PROFIT": -1.25,
-            "LAST_POSITION_TIME": "2025-02-10 12:41:35"
+            "SIZE_SUM": 0,
+            "AVG_PRICE": 0,
+            "POSITION_COUNT": 0,
+            "CURRENT_PRICE": 97876.9,
+            "UNREALIZED_PROFIT": 0,
+            "LAST_POSITION_TIME": null
         },
         "SHORT": {
             "SIZE_SUM": 0.05,
             "AVG_PRICE": 97506.25999999998,
             "POSITION_COUNT": 5,
-            "CURRENT_PRICE": 97675.1,
-            "UNREALIZED_PROFIT": -8.45,
+            "CURRENT_PRICE": 97876.9,
+            "UNREALIZED_PROFIT": -18.529999999999998,
             "LAST_POSITION_TIME": "2025-02-10 12:26:04"
         }
     }
