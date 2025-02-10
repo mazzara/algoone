@@ -1,11 +1,11 @@
 {
-    "login": 61312597,
-    "balance": 60556.78,
-    "equity": 60095.5,
-    "margin": 1247.07,
-    "free_margin": 58848.43,
+    "login": 61322081,
+    "balance": 49996.36,
+    "equity": 49988.29,
+    "margin": 243.77,
+    "free_margin": 49744.52,
     "leverage": 200,
     "currency": "USD",
     "trade_mode": 0,
-    "time": "2025-02-07 19:05:05"
+    "time": "2025-02-10 10:41:32"
 }

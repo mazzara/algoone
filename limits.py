@@ -15,14 +15,16 @@ def generate_default_trade_limits():
             "MAX_SHORT_SIZE": 0.05,
             "COOLDOWN_SECONDS": 300,
             "MAX_CAPITAL_ALLOCATION": 5000,
-            "DEFAULT_LOT_SIZE": 0.01
+            "DEFAULT_LOT_SIZE": 0.01,
+            "MAX_ORDERS": 100
         },
         "EURUSD": {
             "MAX_LONG_SIZE": 1.0,
             "MAX_SHORT_SIZE": 1.0,
             "COOLDOWN_SECONDS": 120,
             "MAX_CAPITAL_ALLOCATION": 10000,
-            "DEFAULT_LOT_SIZE": 0.01
+            "DEFAULT_LOT_SIZE": 0.01,
+            "MAX_ORDERS": 100
         }
     }
     

@@ -51,6 +51,24 @@ def get_account_info():
     return account_info
 
 
+def check_account_limits():
+    """Logs max allowed orders and positions from the broker."""
+    """Logs max allowed orders and positions from the broker."""
+    account_info = mt5.account_info()
+    if account_info:
+        logger.info(f"Trade Allowed: {account_info.trade_allowed}")
+        logger.info(f"Trade Expert: {account_info.trade_expert}")
+        
+        # Check possible broker limits
+        max_orders = getattr(account_info, "limit_orders", "Unknown")
+        max_positions = getattr(account_info, "limit_positions", "Unknown")
+
+        logger.info(f"Max Orders Allowed: {max_orders}")
+        logger.info(f"Max Open Positions Allowed: {max_positions}")
+    else:
+        logger.error("Failed to retrieve account info from MT5.")
+
+
 # Run standalone
 if __name__ == "__main__":
     from connect import connect, disconnect

@@ -9,6 +9,7 @@ last_ticks = {}
 # Define major Forex symbols
 FOREX_MAJORS = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD"]
 FOREX_MAJORS = ['EURUSD', 'BTCUSD']
+FOREX_MAJORS = ['BTCUSD']
 
 def get_forex_symbols(limit=5, only_major_forex=False):
     """

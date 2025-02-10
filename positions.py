@@ -34,6 +34,7 @@ def save_positions(positions):
             "price_current": pos.price_current,
             "profit": pos.profit,
             "swap": pos.swap,
+            "magic": pos.magic,
             "time_open": datetime.fromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
             "comment": pos.comment
         })
@@ -58,9 +59,11 @@ def get_positions():
 
     if positions:
         logger.info("=== Open Positions ===")
-        for pos in positions:
-            logger.info(f"Ticket: {pos.ticket} {pos.symbol} {('BUY' if pos.type == 0 else 'SELL')} {pos.volume} lots @ {pos.price_open}")
+        # for pos in positions:
+        #     # logger.info(f"Ticket: {pos.ticket} {pos.symbol} {('BUY' if pos.type == 0 else 'SELL')} {pos.volume} lots @ {pos.price_open}")
+        #     pass
         save_positions(positions)
+        logger.info(f"Total open positions saved: {len(positions)}")
     else:
         logger.info("No open positions found.")
         save_positions([])
