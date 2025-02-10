@@ -1,17 +1,11 @@
+# total_positions.py
 import MetaTrader5 as mt5
 from logger_config import logger
 import json
 import os
 import time
 from positions import get_positions
-
-
-# Define the hard memory directory
-HARD_MEMORY_DIR = "hard_memory"
-if not os.path.exists(HARD_MEMORY_DIR):
-    os.makedirs(HARD_MEMORY_DIR)
-POSITIONS_FILE = os.path.join(HARD_MEMORY_DIR, "positions.json")
-TOTAL_POSITIONS_FILE = os.path.join(HARD_MEMORY_DIR, "total_positions.json")
+from config import HARD_MEMORY_DIR, TOTAL_POSITIONS_FILE, POSITIONS_FILE
 
 
 def load_cached_positions(retries=3, delay=0.2):
@@ -20,15 +14,16 @@ def load_cached_positions(retries=3, delay=0.2):
     """
     logger.info("Loading cashed positions................")
 
-    if not os.path.exists(os.path.join(HARD_MEMORY_DIR, 'positions.json')):
+    if not os.path.exists(POSITIONS_FILE):
         logger.warning('No cashed positions found. File not found.')
         get_positions()
-        time.delay(delay)
+        time.sleep(delay)
         logger.info('Positions just pulled from MT5.')
         return load_cached_positions(retries=retries, delay=delay)
 
     file_age = time.time() - os.path.getmtime(POSITIONS_FILE)
     logger.info(f'Check cached-expire positions age: {file_age:.2f} seconds')
+
     if file_age > 10: # 10 seconds old
         logger.warning('Cashed positions are outdated.')
         get_positions()
@@ -63,7 +58,7 @@ def get_total_positions(save=True):
 
     logger.info("Calculating total positions...")
     positions = load_cached_positions()
-    
+
     if positions is None or len(positions) == 0:
         logger.warning('No positions found. Returning empty summary.')
         return {}
@@ -104,7 +99,8 @@ def get_total_positions(save=True):
         side_data["SIZE_SUM"] += volume
         side_data["POSITION_COUNT"] += 1
         side_data["UNREALIZED_PROFIT"] += profit
-        side_data["LAST_POSITION_TIME"] = max(side_data["LAST_POSITION_TIME"], time_open) if side_data["LAST_POSITION_TIME"] else time_open
+        side_data["LAST_POSITION_TIME"] = max(side_data["LAST_POSITION_TIME"],
+                                              time_open) if side_data["LAST_POSITION_TIME"] else time_open
 
         # Update weighted average price
         total_size = side_data["SIZE_SUM"]
@@ -141,3 +137,4 @@ if __name__ == "__main__":
     else:
         logger.error("total_positions.py failed.")
 
+# End of total_positions.py

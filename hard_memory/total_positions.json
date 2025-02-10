@@ -4,17 +4,17 @@
             "SIZE_SUM": 0.05,
             "AVG_PRICE": 98009.5,
             "POSITION_COUNT": 5,
-            "CURRENT_PRICE": 97389.5,
-            "UNREALIZED_PROFIT": -31.0,
+            "CURRENT_PRICE": 96890.3,
+            "UNREALIZED_PROFIT": -55.97,
             "LAST_POSITION_TIME": "2025-02-10 13:34:03"
         },
         "SHORT": {
             "SIZE_SUM": 0.05,
-            "AVG_PRICE": 97430.95999999999,
+            "AVG_PRICE": 96903.33999999998,
             "POSITION_COUNT": 5,
-            "CURRENT_PRICE": 97389.5,
-            "UNREALIZED_PROFIT": 0.4099999999999999,
-            "LAST_POSITION_TIME": "2025-02-10 13:40:14"
+            "CURRENT_PRICE": 96890.3,
+            "UNREALIZED_PROFIT": -0.73,
+            "LAST_POSITION_TIME": "2025-02-10 14:38:37"
         }
     }
 }
