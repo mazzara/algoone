@@ -1,14 +1,16 @@
+# positions.py
 import MetaTrader5 as mt5
 from logger_config import logger
 import os
 import json
 from datetime import datetime
 import time
+from config import HARD_MEMORY_DIR, POSITIONS_FILE
 
 
 # Ensure the `hard_memory` directory exists
-HARD_MEMORY_DIR = "hard_memory"
-os.makedirs(HARD_MEMORY_DIR, exist_ok=True)  # Cleaner directory check
+# HARD_MEMORY_DIR = "hard_memory"
+# os.makedirs(HARD_MEMORY_DIR, exist_ok=True)  # Cleaner directory check
 
 
 def save_positions(positions):
@@ -41,12 +43,10 @@ def save_positions(positions):
 
     data["positions"] = positions_data
 
-    file_path = os.path.join(HARD_MEMORY_DIR, "positions.json")
-
     try:
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(POSITIONS_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
-        logger.info(f"OK - Open positions saved to {file_path}")
+        logger.info(f"OK - Open positions saved to {POSITIONS_FILE}")
     except Exception as e:
         logger.error(f"Oh No! - Failed to save positions: {e}")
 
@@ -79,4 +79,4 @@ if __name__ == "__main__":
         disconnect()
 
 
-
+# End of positions.py
