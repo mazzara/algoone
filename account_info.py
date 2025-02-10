@@ -1,12 +1,11 @@
+# account_info.py
 import MetaTrader5 as mt5
 from logger_config import logger
 import os
 import json
 from datetime import datetime
+from config import HARD_MEMORY_DIR, ACCOUNT_INFO_FILE
 
-HARD_MEMORY_DIR = "hard_memory"
-if not os.path.exists(HARD_MEMORY_DIR):
-    os.makedirs(HARD_MEMORY_DIR)
 
 def save_account_info(account_info):
     account_data = {
@@ -20,12 +19,10 @@ def save_account_info(account_info):
         "trade_mode": account_info.trade_mode,
         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
-    file_path = os.path.join(HARD_MEMORY_DIR, "account_info.json")
-
     try:
-        with open(file_path, "w", encoding='utf-8') as f:
+        with open(ACCOUNT_INFO_FILE, "w", encoding='utf-8') as f:
             json.dump(account_data, f, indent=4)
-        logger.info(f"OK! - Account info saved to {file_path}")
+        logger.info(f"OK! - Account info saved to {ACCOUNT_INFO_FILE}")
     except Exception as e:
         logger.error(f"Oh No! - Failed to save account info: {e}")
 
@@ -75,4 +72,4 @@ if __name__ == "__main__":
     if connect():
         get_account_info()
         disconnect()
-
+# End of account_info.py

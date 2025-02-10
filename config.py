@@ -17,6 +17,7 @@ ensure_directories_exist()
 
 
 # ==== File Paths ==== #
+ACCOUNT_INFO_FILE = os.path.join(HARD_MEMORY_DIR, 'account_info.json')
 TRADE_LIMIT_FILE = os.path.join(HARD_MEMORY_DIR, 'trade_limits.json')
 TRADE_DECISIONS_FILE = os.path.join(HARD_MEMORY_DIR, 'trade_decisions.json')
 POSITIONS_FILE = os.path.join(HARD_MEMORY_DIR, 'positions.json')

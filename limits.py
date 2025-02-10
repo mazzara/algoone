@@ -4,8 +4,6 @@ import os
 from logger_config import logger
 from config import HARD_MEMORY_DIR, TRADE_LIMIT_FILE
 
-# HARD_MEMORY_DIR = "hard_memory"
-# TRADE_LIMITS_FILE = os.path.join(HARD_MEMORY_DIR, "trade_limits.json")
 
 def generate_default_trade_limits():
     """
