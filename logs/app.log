@@ -8261,3 +8261,1003 @@
 2025-02-10 11:21:56 - INFO - AlgoOne - Positions loaded from cache: 5
 2025-02-10 11:21:57 - INFO - AlgoOne - Tick listener stopped by user.
 2025-02-10 11:21:57 - INFO - AlgoOne - Disconnected from MetaTrader 5
+2025-02-10 11:27:19 - INFO - AlgoOne - Connected to MetaTrader 5
+2025-02-10 11:27:19 - INFO - AlgoOne - OK - MT5 Connection Established in Main Script
+2025-02-10 11:27:19 - INFO - AlgoOne - Trade Allowed: True
+2025-02-10 11:27:19 - INFO - AlgoOne - Trade Expert: True
+2025-02-10 11:27:19 - INFO - AlgoOne - Max Orders Allowed: 500
+2025-02-10 11:27:19 - INFO - AlgoOne - Max Open Positions Allowed: Unknown
+2025-02-10 11:27:19 - INFO - AlgoOne - === Account Info ===
+2025-02-10 11:27:19 - INFO - AlgoOne -  Login: 61322081
+2025-02-10 11:27:19 - INFO - AlgoOne -  Balance: 50006.18 USD
+2025-02-10 11:27:19 - INFO - AlgoOne -  Equity: 49995.22 USD
+2025-02-10 11:27:19 - INFO - AlgoOne -  Margin: 243.77 USD
+2025-02-10 11:27:19 - INFO - AlgoOne -  Free Margin: 49751.45 USD
+2025-02-10 11:27:19 - INFO - AlgoOne -  Leverage: 200x
+2025-02-10 11:27:19 - INFO - AlgoOne -  Currency: USD
+2025-02-10 11:27:19 - INFO - AlgoOne -  Trade Mode: 0
+2025-02-10 11:27:19 - INFO - AlgoOne -  Current Date Time: 2025-02-10 11:27:19
+2025-02-10 11:27:19 - INFO - AlgoOne - OK! - Account info saved to hard_memory\account_info.json
+2025-02-10 11:27:19 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:19 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:19 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:19 - INFO - AlgoOne - No pending orders found.
+2025-02-10 11:27:19 - INFO - AlgoOne - Ok - Pending orders saved to Z:\Users\mazza\devmazza\mt5\hard_memory\orders.json
+2025-02-10 11:27:19 - INFO - AlgoOne - === Trade History (Last 30 Days) ===
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441009, , BUY_LIMIT 0.0 lots @ 0.0 Profit: 50000.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441170, BTCUSD, BUY 0.01 lots @ 96487.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441172, BTCUSD, BUY 0.01 lots @ 96485.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441173, BTCUSD, BUY 0.01 lots @ 96485.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441175, BTCUSD, BUY 0.01 lots @ 96485.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441176, BTCUSD, BUY 0.01 lots @ 96485.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441178, BTCUSD, BUY 0.01 lots @ 96485.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441179, BTCUSD, BUY 0.01 lots @ 96485.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441327, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.41
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441328, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441329, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441330, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441331, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441332, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441333, BTCUSD, SELL 0.01 lots @ 96627.7 Profit: 1.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441334, BTCUSD, BUY 0.01 lots @ 96665.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441336, BTCUSD, BUY 0.01 lots @ 96667.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441337, BTCUSD, BUY 0.01 lots @ 96667.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441338, BTCUSD, BUY 0.01 lots @ 96665.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441339, BTCUSD, BUY 0.01 lots @ 96664.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441340, BTCUSD, BUY 0.01 lots @ 96663.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441342, BTCUSD, BUY 0.01 lots @ 96663.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441343, BTCUSD, BUY 0.01 lots @ 96662.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441344, BTCUSD, BUY 0.01 lots @ 96663.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441345, BTCUSD, BUY 0.01 lots @ 96662.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441346, BTCUSD, BUY 0.01 lots @ 96664.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441348, BTCUSD, BUY 0.01 lots @ 96662.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441604, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.49
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441605, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.5
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441606, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.5
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441607, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.49
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441608, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.48
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441609, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.46
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441610, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.46
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441611, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441612, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.46
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441613, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441614, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.47
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441615, BTCUSD, SELL 0.01 lots @ 96617.2 Profit: -0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441771, BTCUSD, BUY 0.01 lots @ 96870.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441772, BTCUSD, BUY 0.01 lots @ 96870.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441773, BTCUSD, BUY 0.01 lots @ 96870.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441775, BTCUSD, BUY 0.01 lots @ 96870.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441776, BTCUSD, BUY 0.01 lots @ 96870.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441777, BTCUSD, BUY 0.01 lots @ 96870.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441778, BTCUSD, BUY 0.01 lots @ 96870.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441779, BTCUSD, BUY 0.01 lots @ 96864.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441780, BTCUSD, BUY 0.01 lots @ 96867.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441781, BTCUSD, BUY 0.01 lots @ 96851.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441782, BTCUSD, BUY 0.01 lots @ 96853.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441783, BTCUSD, BUY 0.01 lots @ 96851.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441784, BTCUSD, BUY 0.01 lots @ 96851.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441786, BTCUSD, BUY 0.01 lots @ 96851.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441787, BTCUSD, BUY 0.01 lots @ 96848.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441788, BTCUSD, BUY 0.01 lots @ 96846.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441872, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441873, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441874, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441875, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441876, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441877, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441878, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441879, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.15
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441880, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.17
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441881, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.01
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441882, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.03
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441883, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.02
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441884, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.02
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441885, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: -0.01
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441886, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: 0.02
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441887, BTCUSD, SELL 0.01 lots @ 96850.3 Profit: 0.04
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441996, BTCUSD, BUY 0.01 lots @ 96928.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441998, BTCUSD, BUY 0.01 lots @ 96933.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106441999, BTCUSD, BUY 0.01 lots @ 96933.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442000, BTCUSD, BUY 0.01 lots @ 96932.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442001, BTCUSD, BUY 0.01 lots @ 96933.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442002, BTCUSD, BUY 0.01 lots @ 96934.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442004, BTCUSD, BUY 0.01 lots @ 96934.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442005, BTCUSD, BUY 0.01 lots @ 96934.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442007, BTCUSD, BUY 0.01 lots @ 96934.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442008, BTCUSD, BUY 0.01 lots @ 96933.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442009, BTCUSD, BUY 0.01 lots @ 96932.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442152, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.95
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442153, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.99
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442154, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.99
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442155, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.99
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442156, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -3.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442157, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -3.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442158, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -3.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442159, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -3.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442160, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -3.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442161, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.99
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442162, BTCUSD, SELL 0.01 lots @ 96634.2 Profit: -2.99
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442308, BTCUSD, SELL 0.01 lots @ 96652.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442309, BTCUSD, SELL 0.01 lots @ 96654.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442310, BTCUSD, SELL 0.01 lots @ 96654.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442312, BTCUSD, SELL 0.01 lots @ 96654.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442313, BTCUSD, SELL 0.01 lots @ 96660.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442314, BTCUSD, SELL 0.01 lots @ 96662.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442315, BTCUSD, SELL 0.01 lots @ 96665.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442316, BTCUSD, SELL 0.01 lots @ 96668.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442317, BTCUSD, SELL 0.01 lots @ 96668.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442318, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442319, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442320, BTCUSD, SELL 0.01 lots @ 96671.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442321, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442322, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442323, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442325, BTCUSD, SELL 0.01 lots @ 96670.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106442326, BTCUSD, SELL 0.01 lots @ 96670.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445560, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.59
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445561, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445562, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445563, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445564, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.66
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445565, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.6899999999999995
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445566, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.72
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445567, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.75
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445568, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.75
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445569, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445570, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445571, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445572, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445573, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445574, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445575, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445576, BTCUSD, BUY 0.01 lots @ 96193.7 Profit: 4.77
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445577, BTCUSD, SELL 0.01 lots @ 96170.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445578, BTCUSD, SELL 0.01 lots @ 96188.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445579, BTCUSD, SELL 0.01 lots @ 96188.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445580, BTCUSD, SELL 0.01 lots @ 96189.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445581, BTCUSD, SELL 0.01 lots @ 96189.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445582, BTCUSD, SELL 0.01 lots @ 96189.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445583, BTCUSD, SELL 0.01 lots @ 96189.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445584, BTCUSD, SELL 0.01 lots @ 96188.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445585, BTCUSD, SELL 0.01 lots @ 96188.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445595, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445596, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445597, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445598, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.18
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445599, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.18
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445600, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445601, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445602, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445603, BTCUSD, BUY 0.01 lots @ 96207.9 Profit: -0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445604, BTCUSD, SELL 0.01 lots @ 96146.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445605, BTCUSD, SELL 0.01 lots @ 96145.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445606, BTCUSD, SELL 0.01 lots @ 96145.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445607, BTCUSD, SELL 0.01 lots @ 96145.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445608, BTCUSD, SELL 0.01 lots @ 96145.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445609, BTCUSD, SELL 0.01 lots @ 96138.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445610, BTCUSD, SELL 0.01 lots @ 96136.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445611, BTCUSD, SELL 0.01 lots @ 96133.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445612, BTCUSD, SELL 0.01 lots @ 96133.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445622, BTCUSD, SELL 0.01 lots @ 96134.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445623, BTCUSD, SELL 0.01 lots @ 96134.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445624, BTCUSD, SELL 0.01 lots @ 96134.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445644, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.46
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445645, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.47
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445646, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.47
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445647, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.47
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445648, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.47
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445649, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.54
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445650, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.56
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445651, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.58
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445652, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.58
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445653, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.58
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445654, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.58
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445655, BTCUSD, BUY 0.01 lots @ 96192.2 Profit: -0.58
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445851, BTCUSD, SELL 0.01 lots @ 96041.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445852, BTCUSD, SELL 0.01 lots @ 96039.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445853, BTCUSD, SELL 0.01 lots @ 96038.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445854, BTCUSD, SELL 0.01 lots @ 96033.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445855, BTCUSD, SELL 0.01 lots @ 96033.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445856, BTCUSD, SELL 0.01 lots @ 96029.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445857, BTCUSD, SELL 0.01 lots @ 96028.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445858, BTCUSD, SELL 0.01 lots @ 96028.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445859, BTCUSD, SELL 0.01 lots @ 96028.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445860, BTCUSD, SELL 0.01 lots @ 96028.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106445861, BTCUSD, SELL 0.01 lots @ 96028.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446748, BTCUSD, BUY 0.01 lots @ 96216.2 Profit: -1.75
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446751, BTCUSD, BUY 0.01 lots @ 96213.8 Profit: -1.74
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446766, BTCUSD, BUY 0.01 lots @ 96187.4 Profit: -1.49
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446772, BTCUSD, BUY 0.01 lots @ 96221.9 Profit: -1.8900000000000001
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446774, BTCUSD, BUY 0.01 lots @ 96227.0 Profit: -1.94
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446775, BTCUSD, BUY 0.01 lots @ 96232.0 Profit: -2.03
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446776, BTCUSD, BUY 0.01 lots @ 96237.9 Profit: -2.1
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446777, BTCUSD, BUY 0.01 lots @ 96239.1 Profit: -2.11
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446778, BTCUSD, BUY 0.01 lots @ 96239.1 Profit: -2.11
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446779, BTCUSD, BUY 0.01 lots @ 96239.1 Profit: -2.11
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106446782, BTCUSD, BUY 0.01 lots @ 96239.1 Profit: -2.11
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447703, BTCUSD, SELL 0.01 lots @ 95921.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447704, BTCUSD, SELL 0.01 lots @ 95919.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447705, BTCUSD, SELL 0.01 lots @ 95919.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447706, BTCUSD, SELL 0.01 lots @ 95918.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447707, BTCUSD, SELL 0.01 lots @ 95918.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447912, BTCUSD, BUY 0.01 lots @ 96057.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447913, BTCUSD, BUY 0.01 lots @ 96057.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447914, BTCUSD, BUY 0.01 lots @ 96056.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447916, BTCUSD, BUY 0.01 lots @ 96056.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106447917, BTCUSD, BUY 0.01 lots @ 96056.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469462, BTCUSD, BUY 0.01 lots @ 96057.4 Profit: -1.3599999999999999
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469463, BTCUSD, SELL 0.01 lots @ 95921.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469464, BTCUSD, BUY 0.01 lots @ 96057.4 Profit: -1.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469465, BTCUSD, SELL 0.01 lots @ 95919.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469466, BTCUSD, BUY 0.01 lots @ 96056.3 Profit: -1.37
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469467, BTCUSD, SELL 0.01 lots @ 95919.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469468, BTCUSD, BUY 0.01 lots @ 96056.3 Profit: -1.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469469, BTCUSD, SELL 0.01 lots @ 95918.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469470, BTCUSD, BUY 0.01 lots @ 96056.2 Profit: -1.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469471, BTCUSD, SELL 0.01 lots @ 95918.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469599, BTCUSD, BUY 0.01 lots @ 97000.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469600, BTCUSD, BUY 0.01 lots @ 97000.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469601, BTCUSD, BUY 0.01 lots @ 97000.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469602, BTCUSD, BUY 0.01 lots @ 97000.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106469603, BTCUSD, BUY 0.01 lots @ 96993.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106470350, BTCUSD, SELL 0.01 lots @ 97095.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106470351, BTCUSD, SELL 0.01 lots @ 97095.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106470352, BTCUSD, SELL 0.01 lots @ 97095.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106470353, BTCUSD, SELL 0.01 lots @ 97093.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106470354, BTCUSD, SELL 0.01 lots @ 97093.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471247, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471248, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471249, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471250, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471251, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471252, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471253, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471254, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471255, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471256, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471257, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471258, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471259, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471260, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471261, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471263, BTCUSD, SELL 0.01 lots @ 97150.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471264, BTCUSD, SELL 0.01 lots @ 97150.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471265, BTCUSD, SELL 0.01 lots @ 97150.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471266, BTCUSD, SELL 0.01 lots @ 97150.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471267, BTCUSD, SELL 0.01 lots @ 97150.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471269, BTCUSD, SELL 0.01 lots @ 97150.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471270, BTCUSD, SELL 0.01 lots @ 97150.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471271, BTCUSD, SELL 0.01 lots @ 97150.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471272, BTCUSD, SELL 0.01 lots @ 97150.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471273, BTCUSD, SELL 0.01 lots @ 97150.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471274, BTCUSD, SELL 0.01 lots @ 97150.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471275, BTCUSD, SELL 0.01 lots @ 97150.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471276, BTCUSD, SELL 0.01 lots @ 97150.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471277, BTCUSD, SELL 0.01 lots @ 97150.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471278, BTCUSD, SELL 0.01 lots @ 97150.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471279, BTCUSD, SELL 0.01 lots @ 97150.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471280, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471281, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471282, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471283, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471284, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471285, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471286, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471287, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471288, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471289, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471290, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471291, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471292, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471293, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471294, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471295, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471296, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471297, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471298, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471299, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471300, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471301, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471302, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471303, BTCUSD, SELL 0.01 lots @ 97150.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471304, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471305, BTCUSD, SELL 0.01 lots @ 97150.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471306, BTCUSD, SELL 0.01 lots @ 97150.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471307, BTCUSD, SELL 0.01 lots @ 97150.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471308, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471309, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471310, BTCUSD, SELL 0.01 lots @ 97150.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471311, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471312, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471313, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471314, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471315, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471316, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471317, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471318, BTCUSD, SELL 0.01 lots @ 97149.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471319, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471320, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471321, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471322, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471323, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471325, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471326, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471327, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471328, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471329, BTCUSD, SELL 0.01 lots @ 97149.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471697, BTCUSD, SELL 0.01 lots @ 97060.3 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471698, BTCUSD, SELL 0.01 lots @ 97060.3 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471699, BTCUSD, SELL 0.01 lots @ 97060.3 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471700, BTCUSD, SELL 0.01 lots @ 97060.3 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471701, BTCUSD, SELL 0.01 lots @ 97060.3 Profit: 0.67
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471702, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471703, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471704, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471705, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471706, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471707, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471708, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471709, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471710, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471711, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471712, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471713, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471714, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471715, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471716, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471717, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471718, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471719, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471720, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471721, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.6
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471722, BTCUSD, BUY 0.01 lots @ 97090.1 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471723, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471724, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471725, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471726, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471727, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471728, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471729, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471730, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471731, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471733, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471734, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471735, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471736, BTCUSD, BUY 0.01 lots @ 97089.9 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471738, BTCUSD, BUY 0.01 lots @ 97097.4 Profit: 0.53
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471740, BTCUSD, BUY 0.01 lots @ 97105.5 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471741, BTCUSD, BUY 0.01 lots @ 97105.5 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471742, BTCUSD, BUY 0.01 lots @ 97105.5 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471743, BTCUSD, BUY 0.01 lots @ 97105.4 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471744, BTCUSD, BUY 0.01 lots @ 97105.4 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471745, BTCUSD, BUY 0.01 lots @ 97105.4 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471746, BTCUSD, BUY 0.01 lots @ 97105.8 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471747, BTCUSD, BUY 0.01 lots @ 97105.8 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471748, BTCUSD, BUY 0.01 lots @ 97105.8 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471749, BTCUSD, BUY 0.01 lots @ 97116.6 Profit: 0.34
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471750, BTCUSD, BUY 0.01 lots @ 97116.6 Profit: 0.34
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471751, BTCUSD, BUY 0.01 lots @ 97113.3 Profit: 0.37
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471752, BTCUSD, BUY 0.01 lots @ 97113.3 Profit: 0.37
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471753, BTCUSD, BUY 0.01 lots @ 97113.3 Profit: 0.37
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471754, BTCUSD, BUY 0.01 lots @ 97113.3 Profit: 0.37
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471755, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471756, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471757, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471758, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471759, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471760, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471761, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471762, BTCUSD, BUY 0.01 lots @ 97112.6 Profit: 0.38
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471775, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471776, BTCUSD, BUY 0.01 lots @ 97124.3 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471777, BTCUSD, BUY 0.01 lots @ 97124.3 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471778, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471779, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471780, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471781, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471782, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471783, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471784, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471785, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471786, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471787, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471788, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471789, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471790, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471791, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471792, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471793, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471794, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471795, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471796, BTCUSD, BUY 0.01 lots @ 97124.2 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471799, BTCUSD, BUY 0.01 lots @ 97123.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471800, BTCUSD, BUY 0.01 lots @ 97123.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471801, BTCUSD, BUY 0.01 lots @ 97123.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471802, BTCUSD, BUY 0.01 lots @ 97124.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106471803, BTCUSD, BUY 0.01 lots @ 97123.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106473745, BTCUSD, BUY 0.01 lots @ 96982.0 Profit: 1.13
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106473746, BTCUSD, BUY 0.01 lots @ 96982.0 Profit: 1.13
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106473747, BTCUSD, BUY 0.01 lots @ 96982.0 Profit: 1.13
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106473748, BTCUSD, BUY 0.01 lots @ 96982.1 Profit: 1.12
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106473749, BTCUSD, BUY 0.01 lots @ 96982.1 Profit: 1.12
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474180, BTCUSD, SELL 0.01 lots @ 97019.4 Profit: -1.04
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474181, BTCUSD, SELL 0.01 lots @ 97019.4 Profit: -1.04
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474182, BTCUSD, SELL 0.01 lots @ 97019.4 Profit: -1.04
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474183, BTCUSD, SELL 0.01 lots @ 97019.4 Profit: -1.05
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474184, BTCUSD, SELL 0.01 lots @ 97019.4 Profit: -1.04
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474428, BTCUSD, BUY 0.01 lots @ 97115.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474563, BTCUSD, SELL 0.01 lots @ 97056.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474723, BTCUSD, SELL 0.01 lots @ 96936.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474726, BTCUSD, BUY 0.01 lots @ 96965.8 Profit: 0.91
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474730, BTCUSD, BUY 0.01 lots @ 96871.9 Profit: 0.65
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474731, BTCUSD, SELL 0.01 lots @ 96880.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474793, BTCUSD, BUY 0.01 lots @ 96856.2 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474796, BTCUSD, SELL 0.01 lots @ 96792.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474803, BTCUSD, BUY 0.01 lots @ 96770.0 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106474807, BTCUSD, SELL 0.01 lots @ 96742.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106475758, BTCUSD, BUY 0.01 lots @ 96911.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106476531, BTCUSD, SELL 0.01 lots @ 96955.5 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106476532, BTCUSD, BUY 0.01 lots @ 96982.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477536, BTCUSD, BUY 0.01 lots @ 96681.5 Profit: 0.61
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477537, BTCUSD, SELL 0.01 lots @ 96651.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477910, BTCUSD, BUY 0.01 lots @ 96575.9 Profit: 0.76
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477911, BTCUSD, SELL 0.01 lots @ 96543.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477920, BTCUSD, BUY 0.01 lots @ 96455.9 Profit: 0.87
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106477929, BTCUSD, SELL 0.01 lots @ 96416.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479684, BTCUSD, BUY 0.01 lots @ 96342.4 Profit: 0.74
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479685, BTCUSD, SELL 0.01 lots @ 96317.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479907, BTCUSD, BUY 0.01 lots @ 96246.7 Profit: 0.71
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479912, BTCUSD, SELL 0.01 lots @ 96217.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479966, BTCUSD, BUY 0.01 lots @ 96194.4 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106479970, BTCUSD, SELL 0.01 lots @ 96164.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480180, BTCUSD, BUY 0.01 lots @ 96311.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480572, BTCUSD, BUY 0.01 lots @ 95977.9 Profit: 1.8599999999999999
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480573, BTCUSD, SELL 0.01 lots @ 95948.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480640, BTCUSD, BUY 0.01 lots @ 95913.4 Profit: 0.35
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480645, BTCUSD, SELL 0.01 lots @ 95852.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480828, BTCUSD, BUY 0.01 lots @ 95811.5 Profit: 0.41
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106480841, BTCUSD, SELL 0.01 lots @ 95727.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536811, BTCUSD, BUY 0.01 lots @ 97157.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536812, BTCUSD, SELL 0.01 lots @ 97129.0 Profit: 1.46
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536813, BTCUSD, SELL 0.01 lots @ 97129.0 Profit: 8.17
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536833, BTCUSD, SELL 0.01 lots @ 97140.0 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536918, BTCUSD, SELL 0.01 lots @ 97177.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106536919, BTCUSD, BUY 0.01 lots @ 97206.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537033, BTCUSD, SELL 0.01 lots @ 97227.9 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537034, BTCUSD, BUY 0.01 lots @ 97256.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537048, BTCUSD, SELL 0.01 lots @ 97285.8 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537073, BTCUSD, BUY 0.01 lots @ 97412.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537104, BTCUSD, SELL 0.01 lots @ 97442.8 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537116, BTCUSD, BUY 0.01 lots @ 97506.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537879, BTCUSD, SELL 0.01 lots @ 97528.1 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537881, BTCUSD, BUY 0.01 lots @ 97557.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537898, BTCUSD, SELL 0.01 lots @ 97585.7 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106537905, BTCUSD, BUY 0.01 lots @ 97606.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106538132, BTCUSD, SELL 0.01 lots @ 97642.2 Profit: 0.36
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106538136, BTCUSD, BUY 0.01 lots @ 97667.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106539118, BTCUSD, SELL 0.01 lots @ 97127.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106539212, BTCUSD, BUY 0.01 lots @ 97094.0 Profit: 0.34
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106539215, BTCUSD, SELL 0.01 lots @ 97048.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106539238, BTCUSD, BUY 0.01 lots @ 97023.6 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106539242, BTCUSD, SELL 0.01 lots @ 96966.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106540327, BTCUSD, BUY 0.01 lots @ 96943.1 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106540328, BTCUSD, SELL 0.01 lots @ 96913.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106540504, BTCUSD, BUY 0.01 lots @ 97038.6 Profit: -13.12
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106540557, BTCUSD, SELL 0.01 lots @ 97054.5 Profit: -6.13
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106541149, BTCUSD, BUY 0.01 lots @ 96882.4 Profit: 0.31
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106541154, BTCUSD, SELL 0.01 lots @ 96853.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106542376, BTCUSD, BUY 0.01 lots @ 97055.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106542435, BTCUSD, SELL 0.01 lots @ 97077.1 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106542437, BTCUSD, BUY 0.01 lots @ 97104.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106543239, BTCUSD, SELL 0.01 lots @ 97131.5 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106543242, BTCUSD, BUY 0.01 lots @ 97160.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106543265, BTCUSD, SELL 0.01 lots @ 97182.1 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106543267, BTCUSD, BUY 0.01 lots @ 97208.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545592, BTCUSD, BUY 0.01 lots @ 97126.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545597, BTCUSD, BUY 0.01 lots @ 97126.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545598, BTCUSD, BUY 0.01 lots @ 97125.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545600, BTCUSD, BUY 0.01 lots @ 97157.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545987, BTCUSD, SELL 0.01 lots @ 97149.3 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545988, BTCUSD, SELL 0.01 lots @ 97151.8 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106545990, BTCUSD, SELL 0.01 lots @ 97151.8 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549640, BTCUSD, SELL 0.01 lots @ 97160.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549642, BTCUSD, SELL 0.01 lots @ 97160.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549648, BTCUSD, SELL 0.01 lots @ 97161.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549652, BTCUSD, SELL 0.01 lots @ 97161.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549662, BTCUSD, SELL 0.01 lots @ 97182.0 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549725, BTCUSD, SELL 0.01 lots @ 97233.3 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549740, BTCUSD, BUY 0.01 lots @ 97302.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549751, BTCUSD, BUY 0.01 lots @ 97302.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549752, BTCUSD, BUY 0.01 lots @ 97302.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549753, BTCUSD, BUY 0.01 lots @ 97299.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549754, BTCUSD, BUY 0.01 lots @ 97280.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549867, BTCUSD, SELL 0.01 lots @ 97299.8 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549870, BTCUSD, BUY 0.01 lots @ 97310.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549993, BTCUSD, SELL 0.01 lots @ 97320.7 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549994, BTCUSD, BUY 0.01 lots @ 97357.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549996, BTCUSD, SELL 0.01 lots @ 97328.9 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106549997, BTCUSD, SELL 0.01 lots @ 97328.9 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550000, BTCUSD, SELL 0.01 lots @ 97328.9 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550006, BTCUSD, BUY 0.01 lots @ 97358.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550008, BTCUSD, SELL 0.01 lots @ 97330.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550009, BTCUSD, BUY 0.01 lots @ 97373.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550010, BTCUSD, BUY 0.01 lots @ 97361.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550011, BTCUSD, BUY 0.01 lots @ 97361.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550793, BTCUSD, BUY 0.01 lots @ 97357.6 Profit: -5.05
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550794, BTCUSD, SELL 0.01 lots @ 96853.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550795, BTCUSD, BUY 0.01 lots @ 97358.7 Profit: -1.98
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550796, BTCUSD, SELL 0.01 lots @ 97160.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550797, BTCUSD, BUY 0.01 lots @ 97373.3 Profit: -2.13
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550798, BTCUSD, SELL 0.01 lots @ 97160.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550799, BTCUSD, BUY 0.01 lots @ 97361.9 Profit: -2.01
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550800, BTCUSD, SELL 0.01 lots @ 97161.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550802, BTCUSD, BUY 0.01 lots @ 97361.9 Profit: -2.01
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550803, BTCUSD, SELL 0.01 lots @ 97161.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550805, BTCUSD, BUY 0.01 lots @ 97309.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550811, BTCUSD, BUY 0.01 lots @ 97309.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550812, BTCUSD, BUY 0.01 lots @ 97309.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550813, BTCUSD, BUY 0.01 lots @ 97309.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106550818, BTCUSD, BUY 0.01 lots @ 97305.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551141, BTCUSD, SELL 0.01 lots @ 97242.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551144, BTCUSD, SELL 0.01 lots @ 97242.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551147, BTCUSD, SELL 0.01 lots @ 97242.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551150, BTCUSD, SELL 0.01 lots @ 97239.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551151, BTCUSD, SELL 0.01 lots @ 97236.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551268, BTCUSD, BUY 0.01 lots @ 97221.0 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551269, BTCUSD, BUY 0.01 lots @ 97212.2 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551270, BTCUSD, BUY 0.01 lots @ 97212.2 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551272, BTCUSD, BUY 0.01 lots @ 97209.6 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551273, BTCUSD, BUY 0.01 lots @ 97209.6 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551277, BTCUSD, SELL 0.01 lots @ 97165.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551280, BTCUSD, SELL 0.01 lots @ 97163.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551285, BTCUSD, SELL 0.01 lots @ 97162.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551286, BTCUSD, SELL 0.01 lots @ 97161.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106551288, BTCUSD, SELL 0.01 lots @ 97161.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552193, BTCUSD, BUY 0.01 lots @ 97138.5 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552194, BTCUSD, BUY 0.01 lots @ 97138.5 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552195, BTCUSD, BUY 0.01 lots @ 97141.1 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552201, BTCUSD, BUY 0.01 lots @ 97141.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552204, BTCUSD, BUY 0.01 lots @ 97141.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552207, BTCUSD, SELL 0.01 lots @ 97117.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552208, BTCUSD, SELL 0.01 lots @ 97117.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552209, BTCUSD, SELL 0.01 lots @ 97116.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552210, BTCUSD, SELL 0.01 lots @ 97124.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106552213, BTCUSD, SELL 0.01 lots @ 97131.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553747, BTCUSD, SELL 0.01 lots @ 97328.1 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553751, BTCUSD, SELL 0.01 lots @ 97330.1 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553753, BTCUSD, SELL 0.01 lots @ 97330.1 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553755, BTCUSD, SELL 0.01 lots @ 97330.9 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553756, BTCUSD, SELL 0.01 lots @ 97330.9 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553796, BTCUSD, BUY 0.01 lots @ 97331.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553797, BTCUSD, BUY 0.01 lots @ 97331.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553802, BTCUSD, BUY 0.01 lots @ 97331.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553805, BTCUSD, BUY 0.01 lots @ 97331.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106553807, BTCUSD, BUY 0.01 lots @ 97325.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555379, BTCUSD, SELL 0.01 lots @ 97357.9 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555380, BTCUSD, SELL 0.01 lots @ 97360.9 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555381, BTCUSD, SELL 0.01 lots @ 97360.9 Profit: 0.3
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555383, BTCUSD, SELL 0.01 lots @ 97360.9 Profit: 0.29
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555384, BTCUSD, SELL 0.01 lots @ 97360.9 Profit: 0.35
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555736, BTCUSD, BUY 0.01 lots @ 97423.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555740, BTCUSD, BUY 0.01 lots @ 97423.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555742, BTCUSD, BUY 0.01 lots @ 97429.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555743, BTCUSD, BUY 0.01 lots @ 97431.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555744, BTCUSD, BUY 0.01 lots @ 97444.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555776, BTCUSD, SELL 0.01 lots @ 97444.0 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555778, BTCUSD, SELL 0.01 lots @ 97441.4 Profit: 0.18
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555782, BTCUSD, BUY 0.01 lots @ 97469.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106555783, BTCUSD, BUY 0.01 lots @ 97469.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556052, BTCUSD, SELL 0.01 lots @ 97448.2 Profit: 0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556055, BTCUSD, BUY 0.01 lots @ 97477.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556056, BTCUSD, SELL 0.01 lots @ 97451.3 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556064, BTCUSD, BUY 0.01 lots @ 97482.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556086, BTCUSD, SELL 0.01 lots @ 97465.6 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106556088, BTCUSD, BUY 0.01 lots @ 97495.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557027, BTCUSD, SELL 0.01 lots @ 97503.1 Profit: 0.34
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557028, BTCUSD, SELL 0.01 lots @ 97500.1 Profit: 0.31
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557030, BTCUSD, SELL 0.01 lots @ 97500.1 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557032, BTCUSD, SELL 0.01 lots @ 97500.1 Profit: 0.18
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557033, BTCUSD, BUY 0.01 lots @ 97529.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557034, BTCUSD, BUY 0.01 lots @ 97530.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557036, BTCUSD, BUY 0.01 lots @ 97529.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557038, BTCUSD, BUY 0.01 lots @ 97533.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557041, BTCUSD, SELL 0.01 lots @ 97521.4 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557044, BTCUSD, BUY 0.01 lots @ 97551.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557070, BTCUSD, SELL 0.01 lots @ 97558.9 Profit: 0.29
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557072, BTCUSD, SELL 0.01 lots @ 97558.9 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557075, BTCUSD, SELL 0.01 lots @ 97558.9 Profit: 0.29
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557078, BTCUSD, SELL 0.01 lots @ 97560.3 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557083, BTCUSD, BUY 0.01 lots @ 97586.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557088, BTCUSD, BUY 0.01 lots @ 97585.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557090, BTCUSD, BUY 0.01 lots @ 97585.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557093, BTCUSD, BUY 0.01 lots @ 97585.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557135, BTCUSD, SELL 0.01 lots @ 97572.5 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557137, BTCUSD, BUY 0.01 lots @ 97593.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557230, BTCUSD, SELL 0.01 lots @ 97630.4 Profit: 0.44
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557234, BTCUSD, SELL 0.01 lots @ 97639.3 Profit: 0.54
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557235, BTCUSD, SELL 0.01 lots @ 97639.3 Profit: 0.54
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557236, BTCUSD, SELL 0.01 lots @ 97636.0 Profit: 0.51
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557237, BTCUSD, SELL 0.01 lots @ 97636.0 Profit: 0.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557239, BTCUSD, BUY 0.01 lots @ 97667.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557240, BTCUSD, BUY 0.01 lots @ 97668.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557241, BTCUSD, BUY 0.01 lots @ 97668.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557242, BTCUSD, BUY 0.01 lots @ 97668.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557243, BTCUSD, BUY 0.01 lots @ 97667.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557327, BTCUSD, SELL 0.01 lots @ 97709.3 Profit: 0.42
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557328, BTCUSD, SELL 0.01 lots @ 97712.1 Profit: 0.44
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557329, BTCUSD, SELL 0.01 lots @ 97712.1 Profit: 0.44
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557330, BTCUSD, SELL 0.01 lots @ 97708.4 Profit: 0.4
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557332, BTCUSD, SELL 0.01 lots @ 97708.4 Profit: 0.41
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557335, BTCUSD, BUY 0.01 lots @ 97749.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557336, BTCUSD, BUY 0.01 lots @ 97749.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557337, BTCUSD, BUY 0.01 lots @ 97749.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557340, BTCUSD, BUY 0.01 lots @ 97763.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557341, BTCUSD, BUY 0.01 lots @ 97765.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557648, BTCUSD, SELL 0.01 lots @ 97772.1 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557649, BTCUSD, SELL 0.01 lots @ 97772.1 Profit: 0.23
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557650, BTCUSD, SELL 0.01 lots @ 97771.0 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557651, BTCUSD, BUY 0.01 lots @ 97800.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557652, BTCUSD, BUY 0.01 lots @ 97800.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557655, BTCUSD, BUY 0.01 lots @ 97800.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557717, BTCUSD, SELL 0.01 lots @ 97811.2 Profit: 0.48
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557718, BTCUSD, SELL 0.01 lots @ 97810.5 Profit: 0.45
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557720, BTCUSD, BUY 0.01 lots @ 97841.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557721, BTCUSD, BUY 0.01 lots @ 97841.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557723, BTCUSD, SELL 0.01 lots @ 97840.0 Profit: 0.4
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557724, BTCUSD, SELL 0.01 lots @ 97840.0 Profit: 0.4
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557726, BTCUSD, SELL 0.01 lots @ 97853.7 Profit: 0.53
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557728, BTCUSD, BUY 0.01 lots @ 97882.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557733, BTCUSD, BUY 0.01 lots @ 97863.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557736, BTCUSD, BUY 0.01 lots @ 97861.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557765, BTCUSD, SELL 0.01 lots @ 97861.9 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557767, BTCUSD, SELL 0.01 lots @ 97863.1 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557769, BTCUSD, BUY 0.01 lots @ 97892.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557770, BTCUSD, BUY 0.01 lots @ 97889.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557919, BTCUSD, SELL 0.01 lots @ 97880.7 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106557925, BTCUSD, BUY 0.01 lots @ 97897.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106558414, BTCUSD, SELL 0.01 lots @ 97893.3 Profit: 0.29
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106558417, BTCUSD, BUY 0.01 lots @ 97925.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560562, BTCUSD, BUY 0.01 lots @ 97882.3 Profit: -7.65
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560563, BTCUSD, SELL 0.01 lots @ 97117.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560564, BTCUSD, BUY 0.01 lots @ 97892.2 Profit: -7.75
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560565, BTCUSD, SELL 0.01 lots @ 97117.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560566, BTCUSD, BUY 0.01 lots @ 97889.8 Profit: -7.73
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560567, BTCUSD, SELL 0.01 lots @ 97116.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560568, BTCUSD, BUY 0.01 lots @ 97897.0 Profit: -7.73
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560569, BTCUSD, SELL 0.01 lots @ 97124.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560571, BTCUSD, BUY 0.01 lots @ 97925.1 Profit: -7.93
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560572, BTCUSD, SELL 0.01 lots @ 97131.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560677, BTCUSD, SELL 0.01 lots @ 97554.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560678, BTCUSD, SELL 0.01 lots @ 97549.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560679, BTCUSD, SELL 0.01 lots @ 97547.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560683, BTCUSD, SELL 0.01 lots @ 97547.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560684, BTCUSD, SELL 0.01 lots @ 97547.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560925, BTCUSD, BUY 0.01 lots @ 97754.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560926, BTCUSD, BUY 0.01 lots @ 97755.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560929, BTCUSD, BUY 0.01 lots @ 97754.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560931, BTCUSD, BUY 0.01 lots @ 97755.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106560940, BTCUSD, BUY 0.01 lots @ 97754.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561313, BTCUSD, SELL 0.01 lots @ 97774.5 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561314, BTCUSD, SELL 0.01 lots @ 97774.5 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561315, BTCUSD, SELL 0.01 lots @ 97774.5 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561325, BTCUSD, SELL 0.01 lots @ 97775.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561327, BTCUSD, SELL 0.01 lots @ 97775.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561340, BTCUSD, BUY 0.01 lots @ 97805.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561342, BTCUSD, BUY 0.01 lots @ 97805.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561345, BTCUSD, BUY 0.01 lots @ 97779.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561347, BTCUSD, BUY 0.01 lots @ 97779.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561350, BTCUSD, BUY 0.01 lots @ 97784.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561387, BTCUSD, SELL 0.01 lots @ 97802.8 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561388, BTCUSD, SELL 0.01 lots @ 97802.8 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561389, BTCUSD, BUY 0.01 lots @ 97832.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561399, BTCUSD, BUY 0.01 lots @ 97832.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561407, BTCUSD, SELL 0.01 lots @ 97804.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561410, BTCUSD, BUY 0.01 lots @ 97838.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561462, BTCUSD, SELL 0.01 lots @ 97833.0 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561463, BTCUSD, SELL 0.01 lots @ 97832.5 Profit: 0.27
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561466, BTCUSD, BUY 0.01 lots @ 97861.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561467, BTCUSD, BUY 0.01 lots @ 97861.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561491, BTCUSD, SELL 0.01 lots @ 97856.4 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561492, BTCUSD, SELL 0.01 lots @ 97856.3 Profit: 0.24
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561498, BTCUSD, BUY 0.01 lots @ 97902.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561499, BTCUSD, SELL 0.01 lots @ 97873.4 Profit: 0.35
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561500, BTCUSD, BUY 0.01 lots @ 97902.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561502, BTCUSD, BUY 0.01 lots @ 97894.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561863, BTCUSD, BUY 0.01 lots @ 97861.6 Profit: -3.07
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561864, BTCUSD, SELL 0.01 lots @ 97554.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561865, BTCUSD, BUY 0.01 lots @ 97861.6 Profit: -3.12
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561866, BTCUSD, SELL 0.01 lots @ 97549.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561867, BTCUSD, BUY 0.01 lots @ 97902.5 Profit: -3.55
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561868, BTCUSD, SELL 0.01 lots @ 97547.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561869, BTCUSD, BUY 0.01 lots @ 97902.5 Profit: -3.55
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561870, BTCUSD, SELL 0.01 lots @ 97547.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561872, BTCUSD, BUY 0.01 lots @ 97894.5 Profit: -3.4699999999999998
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561873, BTCUSD, SELL 0.01 lots @ 97547.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561874, BTCUSD, BUY 0.01 lots @ 97819.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561875, BTCUSD, BUY 0.01 lots @ 97817.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561876, BTCUSD, BUY 0.01 lots @ 97817.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561877, BTCUSD, BUY 0.01 lots @ 97807.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106561878, BTCUSD, BUY 0.01 lots @ 97804.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562306, BTCUSD, SELL 0.01 lots @ 97745.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562308, BTCUSD, SELL 0.01 lots @ 97745.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562309, BTCUSD, SELL 0.01 lots @ 97745.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562310, BTCUSD, SELL 0.01 lots @ 97732.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562312, BTCUSD, SELL 0.01 lots @ 97725.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562668, BTCUSD, BUY 0.01 lots @ 97717.4 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562669, BTCUSD, BUY 0.01 lots @ 97717.4 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562671, BTCUSD, BUY 0.01 lots @ 97717.4 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562674, BTCUSD, SELL 0.01 lots @ 97689.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562676, BTCUSD, SELL 0.01 lots @ 97689.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562678, BTCUSD, SELL 0.01 lots @ 97688.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562704, BTCUSD, BUY 0.01 lots @ 97711.2 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562705, BTCUSD, SELL 0.01 lots @ 97682.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562707, BTCUSD, BUY 0.01 lots @ 97681.2 Profit: 0.44
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106562710, BTCUSD, SELL 0.01 lots @ 97651.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563964, BTCUSD, SELL 0.01 lots @ 97828.9 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563965, BTCUSD, SELL 0.01 lots @ 97829.5 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563968, BTCUSD, BUY 0.01 lots @ 97858.2 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563969, BTCUSD, BUY 0.01 lots @ 97855.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563974, BTCUSD, SELL 0.01 lots @ 97836.9 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563975, BTCUSD, SELL 0.01 lots @ 97836.6 Profit: 0.19
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563976, BTCUSD, BUY 0.01 lots @ 97865.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563977, BTCUSD, BUY 0.01 lots @ 97864.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563978, BTCUSD, SELL 0.01 lots @ 97839.5 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106563979, BTCUSD, BUY 0.01 lots @ 97866.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565254, BTCUSD, SELL 0.01 lots @ 97883.8 Profit: 0.26
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565255, BTCUSD, SELL 0.01 lots @ 97881.3 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565407, BTCUSD, BUY 0.01 lots @ 97896.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565408, BTCUSD, BUY 0.01 lots @ 97896.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565644, BTCUSD, BUY 0.01 lots @ 97667.8 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565645, BTCUSD, BUY 0.01 lots @ 97667.8 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565646, BTCUSD, BUY 0.01 lots @ 97667.8 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565648, BTCUSD, SELL 0.01 lots @ 97634.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565649, BTCUSD, SELL 0.01 lots @ 97634.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565650, BTCUSD, SELL 0.01 lots @ 97654.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565844, BTCUSD, BUY 0.01 lots @ 97661.4 Profit: 0.21
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565850, BTCUSD, SELL 0.01 lots @ 97621.4 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565864, BTCUSD, BUY 0.01 lots @ 97636.6 Profit: 0.18
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565866, BTCUSD, SELL 0.01 lots @ 97607.7 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565885, BTCUSD, BUY 0.01 lots @ 97631.3 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106565886, BTCUSD, SELL 0.01 lots @ 97602.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566291, BTCUSD, BUY 0.01 lots @ 97606.5 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566292, BTCUSD, BUY 0.01 lots @ 97606.5 Profit: 0.28
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566293, BTCUSD, SELL 0.01 lots @ 97577.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566297, BTCUSD, SELL 0.01 lots @ 97563.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566298, BTCUSD, BUY 0.01 lots @ 97589.0 Profit: 0.32
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566305, BTCUSD, SELL 0.01 lots @ 97554.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566306, BTCUSD, BUY 0.01 lots @ 97583.1 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566308, BTCUSD, BUY 0.01 lots @ 97580.9 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566309, BTCUSD, SELL 0.01 lots @ 97552.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566311, BTCUSD, SELL 0.01 lots @ 97552.3 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566336, BTCUSD, BUY 0.01 lots @ 97557.6 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566339, BTCUSD, SELL 0.01 lots @ 97509.6 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566341, BTCUSD, BUY 0.01 lots @ 97538.2 Profit: 0.25
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566344, BTCUSD, BUY 0.01 lots @ 97535.1 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566348, BTCUSD, SELL 0.01 lots @ 97514.9 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106566350, BTCUSD, SELL 0.01 lots @ 97547.8 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567127, BTCUSD, BUY 0.01 lots @ 97530.4 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567129, BTCUSD, BUY 0.01 lots @ 97530.4 Profit: 0.22
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567132, BTCUSD, SELL 0.01 lots @ 97501.1 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567134, BTCUSD, SELL 0.01 lots @ 97500.0 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567137, BTCUSD, BUY 0.01 lots @ 97528.2 Profit: 0.2
+2025-02-10 11:27:19 - INFO - AlgoOne - Ticket: 106567139, BTCUSD, SELL 0.01 lots @ 97499.5 Profit: 0.0
+2025-02-10 11:27:19 - INFO - AlgoOne - Trade history saved to hard_memory\history.json
+2025-02-10 11:27:19 - INFO - AlgoOne - Retrieved 1484 symbols from MetaTrader 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Saved 1484 symbols to Z:\Users\mazza\devmazza\mt5\hard_memory\symbols.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:20 - INFO - AlgoOne - Check cached-expire positions age: 0.60 seconds
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:20 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Major Forex Mode: Listening to 1 major Forex pairs.
+2025-02-10 11:27:20 - INFO - AlgoOne - Listening for ticks on 1 (Major Forex Symbols)...
+2025-02-10 11:27:20 - INFO - AlgoOne - BTCUSD | Bid: 97678.6 | Ask: 97725.3 | Spread: 46.69999999999709
+2025-02-10 11:27:20 - INFO - AlgoOne - Tick Event: BTCUSD | Bid: 97678.6 | Ask: 97725.3 | Spread: 46.69999999999709 | Time: 1739204839
+2025-02-10 11:27:20 - INFO - AlgoOne - TICK: BTCUSD | Bid: 97678.6 | Ask: 97725.3 | Spread: 46.69999999999709
+2025-02-10 11:27:20 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:20 - INFO - AlgoOne - Check cached-expire positions age: 0.63 seconds
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:20 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Trade limits found for BTCUSD
+2025-02-10 11:27:20 - INFO - AlgoOne - Limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:20 - INFO - AlgoOne - Latest Tick BTCUSD: Tick(time=1739204839, bid=97678.6, ask=97725.3, last=0.0, volume=0, time_msc=1739204839180, flags=6, volume_real=0.0)
+2025-02-10 11:27:20 - INFO - AlgoOne - Local System Time: 2025-02-10 14:27:20.262115 | MT5 Server Time: 2025-02-10 16:27:19
+2025-02-10 11:27:20 - INFO - AlgoOne - Current Position Sizes: LONG: 0, SHORT: 0.05
+2025-02-10 11:27:20 - INFO - AlgoOne - Last Position Time (Parsed): LONG: 0, SHORT: 1739201164.0
+2025-02-10 11:27:20 - INFO - AlgoOne - Seconds since last position: LONG: 1739208440.262115, SHORT: 7276.2621150016785
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has LONG size clearance.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has LONG cooled.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has SHORT cooled.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD ALLOW BUY: True, ALLOW SELL: False
+2025-02-10 11:27:20 - INFO - AlgoOne - ADX for BTCUSD: 0.08 | +DI: 13.27 | -DI: 15.71
+2025-02-10 11:27:20 - ERROR - AlgoOne - ADX calculation failed or returned no signal for BTCUSD
+2025-02-10 11:27:20 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:20 - INFO - AlgoOne - Check cached-expire positions age: 0.65 seconds
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:20 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Closing trade... Calling close_trade()
+2025-02-10 11:27:20 - INFO - AlgoOne - Closing trades with profit threshold: 0.0002
+2025-02-10 11:27:20 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:20 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading positions from Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - close_trade() - Positions loaded from cache 'positions_data': 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - BTCUSD | Bid: 97677.8 | Ask: 97724.6 | Spread: 46.80000000000291
+2025-02-10 11:27:20 - INFO - AlgoOne - Tick Event: BTCUSD | Bid: 97677.8 | Ask: 97724.6 | Spread: 46.80000000000291 | Time: 1739204840
+2025-02-10 11:27:20 - INFO - AlgoOne - TICK: BTCUSD | Bid: 97677.8 | Ask: 97724.6 | Spread: 46.80000000000291
+2025-02-10 11:27:20 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:20 - INFO - AlgoOne - Check cached-expire positions age: 0.61 seconds
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:20 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Trade limits found for BTCUSD
+2025-02-10 11:27:20 - INFO - AlgoOne - Limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:20 - INFO - AlgoOne - Latest Tick BTCUSD: Tick(time=1739204840, bid=97677.8, ask=97724.6, last=0.0, volume=0, time_msc=1739204840841, flags=6, volume_real=0.0)
+2025-02-10 11:27:20 - INFO - AlgoOne - Local System Time: 2025-02-10 14:27:20.898017 | MT5 Server Time: 2025-02-10 16:27:20
+2025-02-10 11:27:20 - INFO - AlgoOne - Current Position Sizes: LONG: 0, SHORT: 0.05
+2025-02-10 11:27:20 - INFO - AlgoOne - Last Position Time (Parsed): LONG: 0, SHORT: 1739201164.0
+2025-02-10 11:27:20 - INFO - AlgoOne - Seconds since last position: LONG: 1739208440.898017, SHORT: 7276.8980169296265
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has LONG size clearance.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has LONG cooled.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD has SHORT cooled.
+2025-02-10 11:27:20 - INFO - AlgoOne - Symbol BTCUSD ALLOW BUY: True, ALLOW SELL: False
+2025-02-10 11:27:20 - INFO - AlgoOne - ADX for BTCUSD: 0.08 | +DI: 13.27 | -DI: 15.71
+2025-02-10 11:27:20 - ERROR - AlgoOne - ADX calculation failed or returned no signal for BTCUSD
+2025-02-10 11:27:20 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:20 - INFO - AlgoOne - Check cached-expire positions age: 0.62 seconds
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:20 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:20 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Closing trade... Calling close_trade()
+2025-02-10 11:27:20 - INFO - AlgoOne - Closing trades with profit threshold: 0.0002
+2025-02-10 11:27:20 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:20 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:20 - INFO - AlgoOne - Loading positions from Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:20 - INFO - AlgoOne - close_trade() - Positions loaded from cache 'positions_data': 2
+2025-02-10 11:27:20 - INFO - AlgoOne - Positions loaded from cache: 5
+2025-02-10 11:27:21 - INFO - AlgoOne - BTCUSD | Bid: 97678.0 | Ask: 97724.7 | Spread: 46.69999999999709
+2025-02-10 11:27:21 - INFO - AlgoOne - Tick Event: BTCUSD | Bid: 97678.0 | Ask: 97724.7 | Spread: 46.69999999999709 | Time: 1739204841
+2025-02-10 11:27:21 - INFO - AlgoOne - TICK: BTCUSD | Bid: 97678.0 | Ask: 97724.7 | Spread: 46.69999999999709
+2025-02-10 11:27:21 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:21 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:21 - INFO - AlgoOne - Check cached-expire positions age: 0.62 seconds
+2025-02-10 11:27:21 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:21 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:21 - INFO - AlgoOne - Trade limits found for BTCUSD
+2025-02-10 11:27:21 - INFO - AlgoOne - Limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:21 - INFO - AlgoOne - Latest Tick BTCUSD: Tick(time=1739204841, bid=97678.0, ask=97724.7, last=0.0, volume=0, time_msc=1739204841173, flags=6, volume_real=0.0)
+2025-02-10 11:27:21 - INFO - AlgoOne - Local System Time: 2025-02-10 14:27:21.532711 | MT5 Server Time: 2025-02-10 16:27:21
+2025-02-10 11:27:21 - INFO - AlgoOne - Current Position Sizes: LONG: 0, SHORT: 0.05
+2025-02-10 11:27:21 - INFO - AlgoOne - Last Position Time (Parsed): LONG: 0, SHORT: 1739201164.0
+2025-02-10 11:27:21 - INFO - AlgoOne - Seconds since last position: LONG: 1739208441.532711, SHORT: 7277.532711029053
+2025-02-10 11:27:21 - INFO - AlgoOne - Symbol BTCUSD has limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:21 - INFO - AlgoOne - Symbol BTCUSD has LONG size clearance.
+2025-02-10 11:27:21 - INFO - AlgoOne - Symbol BTCUSD has LONG cooled.
+2025-02-10 11:27:21 - INFO - AlgoOne - Symbol BTCUSD has SHORT cooled.
+2025-02-10 11:27:21 - INFO - AlgoOne - Symbol BTCUSD ALLOW BUY: True, ALLOW SELL: False
+2025-02-10 11:27:21 - INFO - AlgoOne - ADX for BTCUSD: 0.08 | +DI: 13.27 | -DI: 15.71
+2025-02-10 11:27:21 - ERROR - AlgoOne - ADX calculation failed or returned no signal for BTCUSD
+2025-02-10 11:27:21 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:21 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:21 - INFO - AlgoOne - Check cached-expire positions age: 0.65 seconds
+2025-02-10 11:27:21 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:21 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:21 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:21 - INFO - AlgoOne - Closing trade... Calling close_trade()
+2025-02-10 11:27:21 - INFO - AlgoOne - Closing trades with profit threshold: 0.0002
+2025-02-10 11:27:21 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:21 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:21 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:21 - INFO - AlgoOne - Loading positions from Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:21 - INFO - AlgoOne - close_trade() - Positions loaded from cache 'positions_data': 2
+2025-02-10 11:27:21 - INFO - AlgoOne - Positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - BTCUSD | Bid: 97679.1 | Ask: 97725.8 | Spread: 46.69999999999709
+2025-02-10 11:27:22 - INFO - AlgoOne - Tick Event: BTCUSD | Bid: 97679.1 | Ask: 97725.8 | Spread: 46.69999999999709 | Time: 1739204841
+2025-02-10 11:27:22 - INFO - AlgoOne - TICK: BTCUSD | Bid: 97679.1 | Ask: 97725.8 | Spread: 46.69999999999709
+2025-02-10 11:27:22 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:22 - INFO - AlgoOne - Check cached-expire positions age: 0.61 seconds
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:22 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Trade limits found for BTCUSD
+2025-02-10 11:27:22 - INFO - AlgoOne - Limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:22 - INFO - AlgoOne - Latest Tick BTCUSD: Tick(time=1739204841, bid=97679.1, ask=97725.8, last=0.0, volume=0, time_msc=1739204841840, flags=6, volume_real=0.0)
+2025-02-10 11:27:22 - INFO - AlgoOne - Local System Time: 2025-02-10 14:27:22.174867 | MT5 Server Time: 2025-02-10 16:27:21
+2025-02-10 11:27:22 - INFO - AlgoOne - Current Position Sizes: LONG: 0, SHORT: 0.05
+2025-02-10 11:27:22 - INFO - AlgoOne - Last Position Time (Parsed): LONG: 0, SHORT: 1739201164.0
+2025-02-10 11:27:22 - INFO - AlgoOne - Seconds since last position: LONG: 1739208442.174867, SHORT: 7278.174866914749
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has LONG size clearance.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has LONG cooled.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has SHORT cooled.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD ALLOW BUY: True, ALLOW SELL: False
+2025-02-10 11:27:22 - INFO - AlgoOne - ADX for BTCUSD: 0.08 | +DI: 13.27 | -DI: 15.71
+2025-02-10 11:27:22 - ERROR - AlgoOne - ADX calculation failed or returned no signal for BTCUSD
+2025-02-10 11:27:22 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:22 - INFO - AlgoOne - Check cached-expire positions age: 0.62 seconds
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:22 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Closing trade... Calling close_trade()
+2025-02-10 11:27:22 - INFO - AlgoOne - Closing trades with profit threshold: 0.0002
+2025-02-10 11:27:22 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:22 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading positions from Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - close_trade() - Positions loaded from cache 'positions_data': 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - BTCUSD | Bid: 97679.1 | Ask: 97725.9 | Spread: 46.79999999998836
+2025-02-10 11:27:22 - INFO - AlgoOne - Tick Event: BTCUSD | Bid: 97679.1 | Ask: 97725.9 | Spread: 46.79999999998836 | Time: 1739204842
+2025-02-10 11:27:22 - INFO - AlgoOne - TICK: BTCUSD | Bid: 97679.1 | Ask: 97725.9 | Spread: 46.79999999998836
+2025-02-10 11:27:22 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:22 - INFO - AlgoOne - Check cached-expire positions age: 0.61 seconds
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:22 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Trade limits found for BTCUSD
+2025-02-10 11:27:22 - INFO - AlgoOne - Limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:22 - INFO - AlgoOne - Latest Tick BTCUSD: Tick(time=1739204842, bid=97679.1, ask=97725.9, last=0.0, volume=0, time_msc=1739204842838, flags=4, volume_real=0.0)
+2025-02-10 11:27:22 - INFO - AlgoOne - Local System Time: 2025-02-10 14:27:22.796146 | MT5 Server Time: 2025-02-10 16:27:22
+2025-02-10 11:27:22 - INFO - AlgoOne - Current Position Sizes: LONG: 0, SHORT: 0.05
+2025-02-10 11:27:22 - INFO - AlgoOne - Last Position Time (Parsed): LONG: 0, SHORT: 1739201164.0
+2025-02-10 11:27:22 - INFO - AlgoOne - Seconds since last position: LONG: 1739208442.796146, SHORT: 7278.796145915985
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has limits: {'MAX_LONG_SIZE': 0.05, 'MAX_SHORT_SIZE': 0.05, 'COOLDOWN_SECONDS': 300, 'MAX_CAPITAL_ALLOCATION': 5000, 'DEFAULT_LOT_SIZE': 0.01, 'MAX_ORDERS': 100}
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has LONG size clearance.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has LONG cooled.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD has SHORT cooled.
+2025-02-10 11:27:22 - INFO - AlgoOne - Symbol BTCUSD ALLOW BUY: True, ALLOW SELL: False
+2025-02-10 11:27:22 - INFO - AlgoOne - ADX for BTCUSD: 0.08 | +DI: 13.27 | -DI: 15.71
+2025-02-10 11:27:22 - ERROR - AlgoOne - ADX calculation failed or returned no signal for BTCUSD
+2025-02-10 11:27:22 - INFO - AlgoOne - Calculating total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading cashed positions................
+2025-02-10 11:27:22 - INFO - AlgoOne - Check cached-expire positions age: 0.62 seconds
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions loaded from cache: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions calculated for BTCUSD.
+2025-02-10 11:27:22 - INFO - AlgoOne - Saving total positions...
+2025-02-10 11:27:22 - INFO - AlgoOne - Total positions saved to hard_memory\total_positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Closing trade... Calling close_trade()
+2025-02-10 11:27:22 - INFO - AlgoOne - Closing trades with profit threshold: 0.0002
+2025-02-10 11:27:22 - INFO - AlgoOne - === Open Positions ===
+2025-02-10 11:27:22 - INFO - AlgoOne - OK - Open positions saved to Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - Total open positions saved: 5
+2025-02-10 11:27:22 - INFO - AlgoOne - Loading positions from Z:\Users\mazza\devmazza\mt5\hard_memory\positions.json
+2025-02-10 11:27:22 - INFO - AlgoOne - close_trade() - Positions loaded from cache 'positions_data': 2
+2025-02-10 11:27:22 - INFO - AlgoOne - Positions loaded from cache: 5
+2025-02-10 11:27:24 - INFO - AlgoOne - Tick listener stopped by user.
+2025-02-10 11:27:24 - INFO - AlgoOne - Disconnected from MetaTrader 5

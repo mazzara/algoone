@@ -1,12 +1,14 @@
+# orders.py
 import MetaTrader5 as mt5
 import os
 import json
 from datetime import datetime
 from logger_config import logger
+from config import HARD_MEMORY_DIR, ORDERS_FILE
 
 # Ensure the `hard_memory` directory exists
-HARD_MEMORY_DIR = "hard_memory"
-os.makedirs(HARD_MEMORY_DIR, exist_ok=True)
+# HARD_MEMORY_DIR = "hard_memory"
+# os.makedirs(HARD_MEMORY_DIR, exist_ok=True)
 
 def save_orders(orders):
     """
@@ -30,14 +32,13 @@ def save_orders(orders):
             "comment": order.comment
         })
 
-    file_path = os.path.join(HARD_MEMORY_DIR, "orders.json")
-
     try:
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(ORDERS_FILE, "w", encoding="utf-8") as f:
             json.dump(orders_data, f, indent=4)
-        logger.info(f"Ok - Pending orders saved to {file_path}")
+        logger.info(f"Ok - Pending orders saved to {ORDERS_FILE}")
     except Exception as e:
         logger.error(f"Oh No! - Failed to save pending orders: {e}")
+
 
 def get_order_type(order_type):
     """
@@ -80,3 +81,4 @@ if __name__ == "__main__":
         get_orders()
         disconnect()
 
+# End of orders.py
