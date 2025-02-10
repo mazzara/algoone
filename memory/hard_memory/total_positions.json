@@ -4,7 +4,7 @@
             "SIZE_SUM": 0,
             "AVG_PRICE": 0,
             "POSITION_COUNT": 0,
-            "CURRENT_PRICE": 97745.0,
+            "CURRENT_PRICE": 97755.5,
             "UNREALIZED_PROFIT": 0,
             "LAST_POSITION_TIME": null
         },
@@ -12,8 +12,8 @@
             "SIZE_SUM": 0.05,
             "AVG_PRICE": 97506.25999999998,
             "POSITION_COUNT": 5,
-            "CURRENT_PRICE": 97745.0,
-            "UNREALIZED_PROFIT": -11.93,
+            "CURRENT_PRICE": 97755.5,
+            "UNREALIZED_PROFIT": -12.46,
             "LAST_POSITION_TIME": "2025-02-10 12:26:04"
         }
     }

@@ -1,11 +1,15 @@
+# symbols.py
 import MetaTrader5 as mt5
 import os
 import json
 from logger_config import logger
+from config import HARD_MEMORY_DIR, SYMBOLS_ALLOWED
 
 # Ensure the `hard_memory` directory exists
-HARD_MEMORY_DIR = "hard_memory"
-os.makedirs(HARD_MEMORY_DIR, exist_ok=True)
+# HARD_MEMORY_DIR = "hard_memory"
+# os.makedirs(HARD_MEMORY_DIR, exist_ok=True)
+
+SYMBOLS_FILE = os.path.join(HARD_MEMORY_DIR, "symbols.json")
 
 def save_symbols(symbols):
     """
@@ -81,3 +85,5 @@ if __name__ == "__main__":
     if connect():
         get_symbols()
         disconnect()
+
+# End of symbols.py
