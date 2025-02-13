@@ -13,3 +13,6 @@ node_modules/
 # Optional: ignore build output
 dist/
 build/
+__pycache__/
+*.pyc
+__MACOSX/

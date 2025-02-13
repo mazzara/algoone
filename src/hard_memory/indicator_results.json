@@ -2,15 +2,15 @@
     "indicator_result": {
         "symbol": "BTCUSD",
         "indicator": "ADX",
-        "signal": "SELL",
-        "value": 0.44662921348313117,
+        "signal": "CLOSE",
+        "value": 22.10188839468258,
         "parameters": {
-            "plus_di": 11.257142857143274,
-            "minus_di": 29.428571428571427
+            "plus_di": 32.237612832556714,
+            "minus_di": 25.195031480128954
         },
         "calculations": {
             "period": 14
         },
-        "time": "2025-02-10 13:20:30"
+        "time": "2025-02-12 14:46:23"
     }
 }
