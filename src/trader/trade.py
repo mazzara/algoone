@@ -1,23 +1,49 @@
+# src/trader/trade.py
 import MetaTrader5 as mt5
 import os
 import random
 import json
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+import pytz
 from src.logger_config import logger
 from src.portfolio.total_positions import get_total_positions, total_positions_cache
 from src.positions.positions import get_positions
 from src.indicators.adx_indicator import calculate_adx
+from src.indicators.signal_indicator import dispatch_signals
 from src.config import (
         HARD_MEMORY_DIR,
         POSITIONS_FILE,
         TRADE_LIMIT_FILE,
         TRADE_DECISIONS_FILE,
-        CLOSE_PROFIT_THRESHOLD)
+        CLOSE_PROFIT_THRESHOLD,
+        TRAILING_PROFIT_THRESHHOLD,
+        CLEARANCE_HEAT_FILE,
+        CLEARANCE_LIMIT_FILE)
 
 # Cash trade limits to avoid reloading
 trade_limits_cache = None
 # total_positions_cache = {}
+
+
+### --- Functions Index in this file --- ###
+# load_trade_limits()
+# save_trade_decision(trade_data)
+# parse_time(value)
+# get_server_time_from_tick(symbol)
+# load_limits(symbol)
+# load_positions(symbol)
+# get_cooldown_clearance(symbol)
+# get_limit_clearance(symbol)
+# get_open_trade_clearance(symbol)
+# open_trade(symbol, lot_size=0.01)
+# open_buy(symbol, lot_size=0.01)
+# open_sell(symbol, lot_size=0.01)
+# close_trade(symbol=None)
+# execute_trade(order)
+
+
+BROKER_TIMEZONE = pytz.timezone("Europe/Athens")
 
 def load_trade_limits():
     """
@@ -82,14 +108,26 @@ def get_server_time_from_tick(symbol):
         logger.warning(f"Failed to get tick data for {symbol}")
         return datetime.utcnow().timestamp()
 
-    server_time = tick_info.time
-    # create a time-zone datetime in UTC
-    utc_dt = datetime.fromtimestamp(server_time, tz=timezone.utc)
-    utc_server_time = utc_dt.timestamp()
-    logger.info(f"MT5 Server Time: {datetime.utcfromtimestamp(server_time)} | Local System Time: {datetime.utcnow()}")
-    # Show clock in timestamp format
-    logger.info(f"MT5 Server Time: {utc_server_time} | Local System Time: {datetime.utcnow().timestamp()}")
-    return utc_server_time
+    server_time = tick_info.time  # This is a raw timestamp
+
+    # Convert MT5 server time (broker time) to its actual broker time zone
+    broker_dt = datetime.fromtimestamp(server_time, tz=BROKER_TIMEZONE)
+
+    # Convert broker time to True UTC
+    true_utc_dt = broker_dt.astimezone(timezone.utc)
+    true_utc_timestamp = true_utc_dt.timestamp()
+
+    # Get system's current true UTC time
+    system_utc_dt = datetime.now(timezone.utc)
+    system_utc_timestamp = system_utc_dt.timestamp()
+
+    # Logging with clear distinctions
+    logger.info(f"MT5 Server Time (Broker's Timezone): {broker_dt} | True UTC Server Time: {true_utc_dt}")
+    logger.info(f"System UTC Time: {system_utc_dt} | System UTC Timestamp: {system_utc_timestamp}")
+
+    logger.debug(f"MT5 Server Timestamp: {server_time} | True UTC Timestamp: {true_utc_timestamp} | System UTC Timestamp: {system_utc_timestamp}")
+
+    return true_utc_timestamp
 
 
 def load_limits(symbol):
@@ -109,7 +147,7 @@ def load_limits(symbol):
 
 def load_positions(symbol):
     """Retrive open positions for a symbol."""
-    positions = get_total_positions()
+    positions = get_total_positions(save=True, use_cache=False)
     logger.info(f"Total positions: {positions}")
 
     position_data = positions.get(symbol, {})
@@ -149,6 +187,8 @@ def get_cooldown_clearance(symbol):
     long_time_diff = current_tick_time - last_long_time
     short_time_diff = current_tick_time - last_short_time
 
+    logger.debug(f"Cooldown Calculation: Current Tick Time: {current_tick_time} | Last Long Time: {last_long_time} | Last Short Time: {last_short_time}")
+
     logger.info(f"Time since last position: LONG: {long_time_diff}, SHORT: {short_time_diff}")
 
     allow_buy = long_time_diff > cooldown_limit
@@ -160,6 +200,20 @@ def get_cooldown_clearance(symbol):
         logger.info(f"Symbol {symbol} has not cleared cooldown for SHORT positions.")
 
     logger.info(f"Symbol Cooldown Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
+
+    ## Dumping to file for debugging
+    with open(CLEARANCE_HEAT_FILE, "w", encoding="utf-8") as f:
+        json.dump({
+            "symbol": symbol,
+            "current_tick_time": current_tick_time,
+            "last_long_time": last_long_time,
+            "last_short_time": last_short_time,
+            "long_time_diff": long_time_diff,
+            "short_time_diff": short_time_diff,
+            "cooldown_limit": cooldown_limit,
+            "allow_buy": allow_buy,
+            "allow_sell": allow_sell
+        }, f, indent=4)
 
     return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
 
@@ -180,29 +234,12 @@ def get_limit_clearance(symbol):
     max_orders = limits.get('max_orders', 100)
 
     positions = load_positions(symbol)
-    logger.info(f"Total positions: {positions}")
 
     current_long_size = positions.get('current_long_size', 0)
     current_short_size = positions.get('current_short_size', 0)
     total_positions = current_long_size + current_short_size
 
     logger.info(f"Current Position Sizes: LONG: {current_long_size}, SHORT: {current_short_size}")
-
-    # position_data = positions.get(symbol, {})
-    # long_data = position_data.get('LONG', {})
-    # short_data = position_data.get('SHORT', {})
-
-    # current_long_size = long_data.get('SIZE_SUM', 0) or 0
-    # current_short_size = short_data.get('SIZE_SUM', 0) or 0
-    # total_positions = current_long_size + current_short_size
-
-    # logger.info(f"Current Position Sizes: LONG: {current_long_size}, SHORT: {current_short_size}")
-
-    # logger.info(f"Symbol {symbol} has limits: {limits}")
-
-    # if total_positions >= max_orders:
-    #     logger.info(f"Symbol {symbol} has reached maximum orders.")
-    #     return None, None
 
     long_size_clarance = current_long_size < max_long_size
     short_size_clarance = current_short_size < max_short_size
@@ -216,6 +253,23 @@ def get_limit_clearance(symbol):
     allow_sell = short_size_clarance
 
     logger.info(f"Symbol Limit Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
+
+    # Dumping to file for debugging
+    with open(CLEARANCE_LIMIT_FILE, "w", encoding="utf-8") as f:
+        json.dump({
+            "symbol": symbol,
+            "max_long_size": max_long_size,
+            "max_short_size": max_short_size,
+            "max_orders": max_orders,
+            "current_long_size": current_long_size,
+            "current_short_size": current_short_size,
+            "total_positions": total_positions,
+            "long_size_clarance": long_size_clarance,
+            "short_size_clarance": short_size_clarance,
+            "allow_buy": allow_buy,
+            "allow_sell": allow_sell
+        }, f, indent=4)
+
     return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
 
 
@@ -231,9 +285,30 @@ def get_open_trade_clearance(symbol):
     return allow_buy, allow_sell
 
 
+def aggregate_signals(signals):
+    """Agregate indicator signals from multiple indicators."""
+    vote_counts = {'BUY': 0, 'SELL': 0, 
+                   'CLOSE': 0, 'BUY_CLOSE': 0, 
+                   'SELL_CLOSE': 0, 'NOENE': 0}
+    for name, result in signals.items():
+        sig = result.get('signal', 'NONE')
+        vote_counts[sig] += 1
+    logger.info(f"Signal Votes: {vote_counts}")
+
+    consensus_signal = max(vote_counts, key=vote_counts.get)
+
+    if vote_counts[consensus_signal] > 1:
+        logger.info(f"Consensus Signal: {consensus_signal}")
+        return consensus_signal
+    return None
+
+
+
 def open_trade(symbol, lot_size=0.01):
     global trade_limits_cache
     global total_positions_cache
+
+    logger.debug(f"--open_trade({symbol}, {lot_size}) globals: trade_limits_cache: {trade_limits_cache}, total_positions_cache: {total_positions_cache}")
 
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
@@ -241,31 +316,33 @@ def open_trade(symbol, lot_size=0.01):
         return False
 
     spread = tick.ask - tick.bid
-    logger.info(f"TICK: {symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {spread}")
+    logger.info(f"TICK: {symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {spread} | Time: {tick.time}")
 
     if spread > 0.0:
         allow_buy, allow_sell = get_open_trade_clearance(symbol)
-        adx_result = calculate_adx(symbol)
 
-        if not adx_result:
-            logger.error(f"ADX calculation failed or returned no signal for {symbol}")
-            return False
+        signals = dispatch_signals(symbol)
 
-        trade_signal, adx, plus_di, minus_di = adx_result
+        logger.debug(f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}")
 
-        logger.info(f"Indicator {symbol}: {trade_signal} - ADX: {adx} | +DI: {plus_di} | -DI: {minus_di}")
         logger.info(f"Trade Limits {symbol}: {allow_buy}, {allow_sell}")
+
+        # Agregate the SIgnals to get a consensus
+        consensus_signal = aggregate_signals(signals)
+        logger.info(f"Consensus Signal (open_trade): {consensus_signal}")
+        if consensus_signal == 'NONE':
+            return False
 
         trade_executed = None
 
-        if trade_signal == "BUY" and allow_buy:
-            logger.info(f"Signal BUY for {symbol} - ADX: {adx} | +DI: {plus_di} | -DI: {minus_di}")
+        # if trade_signal == "BUY" and allow_buy:
+        if consensus_signal == "BUY" and allow_buy:
             result = open_buy(symbol, lot_size)
             if result:
                 trade_executed = "BUY"
 
-        elif trade_signal == "SELL" and allow_sell:
-            logger.info(f"Signal SELL for {symbol} - ADX: {adx} | +DI: {plus_di} | -DI: {minus_di}")
+        # elif trade_signal == "SELL" and allow_sell:
+        elif consensus_signal == "SELL" and allow_sell:
             result = open_sell(symbol, lot_size)
             if result:
                 trade_executed = "SELL"
@@ -274,9 +351,6 @@ def open_trade(symbol, lot_size=0.01):
             trade_data = {
                 "symbol": symbol,
                 "spread": spread,
-                "adx": adx,
-                "plus_di": plus_di,
-                "minus_di": minus_di,
                 "trade_executed": trade_executed,
                 "result": result
             }
@@ -286,7 +360,7 @@ def open_trade(symbol, lot_size=0.01):
 
             logger.info(f"Total Positions Cached after trade: {total_positions_cache}")
 
-            time.sleep(3)  # Sleep for a second to avoid overloading the server
+            time.sleep(9)  # Sleep for some seconds to assure data
 
         else:
             logger.error(f"Trade limits reached for {symbol}")
@@ -344,21 +418,21 @@ def close_trade(symbol=None):
     close_profit_threshold = CLOSE_PROFIT_THRESHOLD
     logger.info(f"Closing trades with profit threshold: {close_profit_threshold}")
 
-    get_positions()
-    file_path = os.path.join(POSITIONS_FILE)
-    logger.info(f"Loading positions from {file_path}")
-
     if not symbol:
         logger.error("close_trade() called without a valid symbol.")
         return False
 
-    adx_result = calculate_adx(symbol)
-    if not adx_result:
-        logger.error(f"ADX calculation failed in close_trade for {symbol}")
-        return False
+    signals = dispatch_signals(symbol)
+    consensus_signal = aggregate_signals(signals)
+    logger.info(f"Consensus Signal (close_trade): {consensus_signal}")
 
-    trade_signal, adx, plus_di, minus_di = adx_result
-    logger.info(f"Signal (close_trade): {trade_signal} - ADX: {adx} | +DI: {plus_di} | -DI: {minus_di}")
+    if consensus_signal == 'NONE':
+        logger.error(f"No consensus signal to close trade.")
+        return False
+    
+    get_positions()
+    file_path = os.path.join(POSITIONS_FILE)
+    logger.info(f"Loading positions from {file_path}")
 
     if not os.path.exists(file_path):
         logger.warning(f"File positions not found. I am unable to close trades.")
@@ -386,9 +460,10 @@ def close_trade(symbol=None):
         position_pnl = profit / invested_amount
 
         min_profit = position_pnl > close_profit_threshold
-        key_signal = trade_signal in ['BUY_CLOSE', 'SELL_CLOSE', 'CLOSE']
+        valid_signals = ['BUY_CLOSE', 'SELL_CLOSE', 'CLOSE']
+        closing_signal = consensus_signal in valid_signals
 
-        if invested_amount > 0 and min_profit and key_signal:
+        if invested_amount > 0 and min_profit and closing_signal:
             logger.info(f"Closing trade on {symbol} - Profit reached: {profit}")
             close_request = {
                 "action": mt5.TRADE_ACTION_DEAL,

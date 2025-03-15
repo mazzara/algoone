@@ -17,10 +17,11 @@ def on_tick(ticks):
     Example callback function to process tick events.
     """
     for tick in ticks:
-        logger.info(f"Tick Event: {tick['symbol']} | Bid: {tick['bid']} | Ask: {tick['ask']} | Spread: {tick['spread']} | Time: {tick['time']}")
+        logger.info(f"|&|..|~~| -.-.- | Tick Event: {tick['symbol']} | Bid: {tick['bid']} | Ask: {tick['ask']} | Spread: {tick['spread']} | Time: {tick['time']}")
+
+        get_total_positions(save=True, use_cache=False) # Note for self: this also check positinos as a dependency.
         open_trade(tick['symbol'])
-        get_total_positions() # Note for self: this also check positinos as a dependency.
-        logger.info(f"Closing trade... Calling close_trade()")
+        get_total_positions(save=True, use_cache=False) # Note for self: this also check positinos as a dependency.
         close_trade(tick['symbol'])
 
 
@@ -38,7 +39,7 @@ if __name__ == "__main__":
         get_symbols()
 
         # Process Positions
-        get_total_positions()
+        get_total_positions(save=True, use_cache=False)
 
         # Listen to ticks for all symbols
         try:

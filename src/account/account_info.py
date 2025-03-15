@@ -17,7 +17,8 @@ def save_account_info(account_info):
         "leverage": account_info.leverage,
         "currency": account_info.currency,
         "trade_mode": account_info.trade_mode,
-        "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "my_local_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "my_local_timestamp": datetime.now().timestamp()
     }
     try:
         with open(ACCOUNT_INFO_FILE, "w", encoding='utf-8') as f:

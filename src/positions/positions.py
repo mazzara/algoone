@@ -1,4 +1,4 @@
-# positions.py
+# src/positions/positions.py
 import MetaTrader5 as mt5
 from src.logger_config import logger
 import os
@@ -6,6 +6,7 @@ import json
 from datetime import datetime
 import time
 from src.config import HARD_MEMORY_DIR, POSITIONS_FILE
+from src.tools.server_time import get_server_time_from_tick
 
 
 # Ensure the `hard_memory` directory exists
@@ -20,7 +21,8 @@ def save_positions(positions):
     positions_data = []
 
     data = {
-        "timestamp": time.time(),
+        "my_timestamp": time.time(),
+        "my_local_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "positions": []
     }
 
@@ -39,6 +41,7 @@ def save_positions(positions):
             "magic": pos.magic,
             # "time_open": datetime.fromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
             "time_open": datetime.utcfromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
+            "time_raw": pos.time,
             "comment": pos.comment
         })
 

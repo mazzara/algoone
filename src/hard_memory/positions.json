@@ -1,4 +1,70 @@
 {
-    "timestamp": 1739382383.2905788,
-    "positions": []
+    "my_timestamp": 1740540685.813785,
+    "my_local_time": "2025-02-25 23:31:25",
+    "positions": [
+        {
+            "ticket": 131813656,
+            "symbol": "BTCUSD",
+            "type": "BUY",
+            "volume": 0.01,
+            "price_open": 88669.9,
+            "sl": 0.0,
+            "tp": 0.0,
+            "price_current": 88990.0,
+            "profit": 3.2,
+            "swap": 0.0,
+            "magic": 188079,
+            "time_open": "2025-02-26 04:46:55",
+            "time_raw": 1740545215,
+            "comment": "Python Auto Trad"
+        },
+        {
+            "ticket": 131813824,
+            "symbol": "BTCUSD",
+            "type": "SELL",
+            "volume": 0.01,
+            "price_open": 88562.6,
+            "sl": 0.0,
+            "tp": 0.0,
+            "price_current": 89015.2,
+            "profit": -4.53,
+            "swap": 0.0,
+            "magic": 622154,
+            "time_open": "2025-02-26 04:49:00",
+            "time_raw": 1740545340,
+            "comment": "Python Auto Trad"
+        },
+        {
+            "ticket": 131816894,
+            "symbol": "BTCUSD",
+            "type": "BUY",
+            "volume": 0.01,
+            "price_open": 89206.3,
+            "sl": 0.0,
+            "tp": 0.0,
+            "price_current": 88990.0,
+            "profit": -2.16,
+            "swap": 0.0,
+            "magic": 297176,
+            "time_open": "2025-02-26 05:24:45",
+            "time_raw": 1740547485,
+            "comment": "Python Auto Trad"
+        },
+        {
+            "ticket": 131817334,
+            "symbol": "BTCUSD",
+            "type": "BUY",
+            "volume": 0.01,
+            "price_open": 89044.9,
+            "sl": 0.0,
+            "tp": 0.0,
+            "price_current": 88990.0,
+            "profit": -0.55,
+            "swap": 0.0,
+            "magic": 206566,
+            "time_open": "2025-02-26 05:30:39",
+            "time_raw": 1740547839,
+            "comment": "Python Auto Trad"
+        }
+    ]
 }

@@ -1,0 +1,11 @@
+{
+    "symbol": "BTCUSD",
+    "current_tick_time": 1740547886.0,
+    "last_long_time": 1740547839.0,
+    "last_short_time": 1740545340.0,
+    "long_time_diff": 47.0,
+    "short_time_diff": 2546.0,
+    "cooldown_limit": 300,
+    "allow_buy": false,
+    "allow_sell": true
+}

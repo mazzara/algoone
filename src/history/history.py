@@ -3,10 +3,8 @@ import os
 import json
 from datetime import datetime, timedelta
 from src.logger_config import logger
+from src.config import HARD_MEMORY_DIR
 
-# Ensure the `hard_memory` directory exists
-HARD_MEMORY_DIR = "hard_memory"
-os.makedirs(HARD_MEMORY_DIR, exist_ok=True)
 
 def save_history(history):
     """
@@ -17,6 +15,7 @@ def save_history(history):
     for deal in history:
         history_data.append({
             "ticket": deal.ticket,
+            "position_id": deal.position_id,
             "order": deal.order,
             "symbol": deal.symbol,
             "type": get_order_type(deal.type),  # Convert type to human-readable
@@ -25,7 +24,10 @@ def save_history(history):
             "profit": deal.profit,
             "commission": deal.commission,
             "swap": deal.swap,
+            "magic": deal.magic,
+            "reaseon": deal.reason,
             "time_setup": datetime.fromtimestamp(deal.time).strftime("%Y-%m-%d %H:%M:%S"),
+            "time_raw": deal.time,
             "comment": deal.comment
         })
 
