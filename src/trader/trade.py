@@ -382,8 +382,16 @@ def open_trade(symbol, lot_size=0.01):
 
     # Call ATR 
     # atr = calculate_adx(symbol, period=14)
-    atr = dispatch_position_manager_indicator(symbol, 'ATR')
-    atr = atr.get('value', {}).get('atr', 0)
+    atr_calculation = dispatch_position_manager_indicator(symbol, 'ATR')
+    # Properly extract ATR like in manage_trade. Latter YOU SHOULD (must) refactor this.
+    atr_result = atr_calculation.get("ATR")
+    if not atr_result:
+        logger.error(f"[ERROR 1700:50] :: Failed to extract ATR result for {symbol}")
+        return False
+
+    atr = atr_result.get("value", 0)
+
+    logger.debug(f"[DEBUG 1700:51] :: ATR for {symbol}: {atr} | Spread: {spread} | Tick: {tick.bid} | Time: {tick.time} | ATR Multiplier: {DEFAULT_ATR_MULTIPLYER} | Volatility: {DEFAULT_VOLATILITY} | Lot Size: {lot_size} | Slippage: 20 | Magic Number: {random.randint(100000, 999999)} | Comment: 'Python Auto Trading Bot' | Type Filling: mt5.ORDER_FILLING_IOC")
 
     if spread <= atr:
         allow_buy, allow_sell = get_open_trade_clearance(symbol)

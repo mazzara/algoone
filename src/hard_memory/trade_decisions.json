@@ -4383,5 +4383,3005 @@
             "allow_sell": true
         },
         "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:36:39",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 49.63913682082986,
+                    "plus_di": 9.222978419687088,
+                    "minus_di": 37.13761537821899,
+                    "sma_short": 145.7047777777778,
+                    "sma_long": 145.7703809523809
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:38:01",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 21.430638375779683,
+                    "plus_di": 36.962862842361396,
+                    "minus_di": 13.719713901914165,
+                    "sma_short": 1.1066544444444446,
+                    "sma_long": 1.1064661904761905
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:38:26",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 46.10524284832989,
+                    "plus_di": 8.632331451857658,
+                    "minus_di": 34.24303515050454,
+                    "sma_short": 0.8404433333333333,
+                    "sma_long": 0.8407390476190477
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 07:38:38",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 39.68733905769705,
+                    "plus_di": 32.728024826321445,
+                    "minus_di": 13.408078971379785,
+                    "sma_short": 1.29155,
+                    "sma_long": 1.2909761904761905
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:40:02",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.374314309843562,
+                    "plus_di": 36.353579302339426,
+                    "minus_di": 12.465918201335707,
+                    "sma_short": 1.1070977777777777,
+                    "sma_long": 1.106610476190476
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:40:28",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 48.084957374208244,
+                    "plus_di": 7.666630635912114,
+                    "minus_di": 31.833169811747393,
+                    "sma_short": 0.8403144444444446,
+                    "sma_long": 0.8406014285714285
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:42:03",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 28.570157850709535,
+                    "plus_di": 34.51034415043249,
+                    "minus_di": 11.369790350025294,
+                    "sma_short": 1.107541111111111,
+                    "sma_long": 1.1067299999999998
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:44:04",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 27.76359828401179,
+                    "plus_di": 26.532413742188872,
+                    "minus_di": 13.942234522118142,
+                    "sma_short": 1.1076844444444445,
+                    "sma_long": 1.1067890476190474
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:44:16",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 47.65533246413188,
+                    "plus_di": 14.7519025637362,
+                    "minus_di": 27.353274347157914,
+                    "sma_short": 145.6221111111111,
+                    "sma_long": 145.68804761904764
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 07:45:27",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 35.24864948846227,
+                    "plus_di": 24.372974082819194,
+                    "minus_di": 20.592058747020367,
+                    "sma_short": 1.291632222222222,
+                    "sma_long": 1.2914500000000002
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:46:33",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 45.501469626499556,
+                    "plus_di": 13.546629882470015,
+                    "minus_di": 26.59502245528042,
+                    "sma_short": 145.63344444444445,
+                    "sma_long": 145.67590476190477
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:46:57",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 44.95931682199056,
+                    "plus_di": 20.621084270930133,
+                    "minus_di": 25.3587902490024,
+                    "sma_short": 0.8401633333333334,
+                    "sma_long": 0.8404190476190475
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:49:53",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 38.997866398416015,
+                    "plus_di": 16.469602326357805,
+                    "minus_di": 21.6838091861508,
+                    "sma_short": 145.663,
+                    "sma_long": 145.6685238095238
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:50:03",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 20.79004226210609,
+                    "plus_di": 18.222899587180642,
+                    "minus_di": 25.441048510102384,
+                    "sma_short": 1.1068200000000001,
+                    "sma_long": 1.1069066666666667
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:52:04",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 21.540925046009647,
+                    "plus_di": 16.17437420923164,
+                    "minus_di": 26.862658483004726,
+                    "sma_short": 1.1064966666666667,
+                    "sma_long": 1.1069214285714286
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 07:54:05",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 20.092849373526366,
+                    "plus_di": 17.658850597242616,
+                    "minus_di": 22.60174778342021,
+                    "sma_short": 1.1063366666666665,
+                    "sma_long": 1.106949523809524
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:55:49",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 35.80865989857751,
+                    "plus_di": 29.60057667100734,
+                    "minus_di": 19.372446411596137,
+                    "sma_short": 0.8417455555555555,
+                    "sma_long": 0.8408504761904761
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:59:00",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 32.50326385620823,
+                    "plus_di": 15.590913342893806,
+                    "minus_di": 31.649448479510028,
+                    "sma_short": 145.64844444444444,
+                    "sma_long": 145.65490476190476
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:59:58",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 28.556642415078066,
+                    "plus_di": 25.912455290512614,
+                    "minus_di": 21.48296356218028,
+                    "sma_short": 0.8415722222222223,
+                    "sma_long": 0.841077619047619
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:00:08",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 24.385407243088597,
+                    "plus_di": 33.21555391506316,
+                    "minus_di": 13.777241843481661,
+                    "sma_short": 1.1071133333333334,
+                    "sma_long": 1.1070071428571426
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:01:05",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 33.167122327577125,
+                    "plus_di": 12.915590002376923,
+                    "minus_di": 27.63201078105736,
+                    "sma_short": 145.61344444444444,
+                    "sma_long": 145.648
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:02:10",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.48336146134662,
+                    "plus_di": 31.80800678793339,
+                    "minus_di": 14.146137652254174,
+                    "sma_short": 1.1075322222222221,
+                    "sma_long": 1.1070371428571428
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 08:02:46",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 20.505120526966838,
+                    "plus_di": 32.10828050267268,
+                    "minus_di": 15.435865666810777,
+                    "sma_short": 1.2912000000000001,
+                    "sma_long": 1.2910761904761907
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:03:36",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 32.41166836202751,
+                    "plus_di": 16.21604738083139,
+                    "minus_di": 24.2991464523253,
+                    "sma_short": 145.5881111111111,
+                    "sma_long": 145.64790476190478
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:03:48",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 23.3086057750528,
+                    "plus_di": 20.70454366906183,
+                    "minus_di": 26.425901100937043,
+                    "sma_short": 0.8411966666666666,
+                    "sma_long": 0.841297619047619
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:04:11",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 28.506026988845612,
+                    "plus_di": 31.064455455675567,
+                    "minus_di": 13.919315000110943,
+                    "sma_short": 1.1079088888888888,
+                    "sma_long": 1.107094761904762
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:06:13",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 30.707567057384708,
+                    "plus_di": 31.575070430480817,
+                    "minus_di": 12.463613965978269,
+                    "sma_short": 1.1081488888888888,
+                    "sma_long": 1.107251904761905
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:06:31",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 30.073929145669,
+                    "plus_di": 14.214722951751899,
+                    "minus_di": 22.41868696916754,
+                    "sma_short": 145.57399999999998,
+                    "sma_long": 145.6345238095238
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:08:16",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 33.245669809306364,
+                    "plus_di": 30.75506672538267,
+                    "minus_di": 12.369225914188302,
+                    "sma_short": 1.1083122222222221,
+                    "sma_long": 1.1074366666666666
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 08:10:16",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 22.27799209067973,
+                    "plus_di": 29.55616404607345,
+                    "minus_di": 14.31593505125991,
+                    "sma_short": 1.2922544444444444,
+                    "sma_long": 1.29152619047619
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:10:26",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 32.144897322153206,
+                    "plus_di": 29.676895263347237,
+                    "minus_di": 14.360588168404625,
+                    "sma_short": 1.1083766666666668,
+                    "sma_long": 1.1076219047619045
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:11:10",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 28.482495571446535,
+                    "plus_di": 14.199340414314054,
+                    "minus_di": 29.457705280251055,
+                    "sma_short": 145.57655555555553,
+                    "sma_long": 145.60438095238092
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:12:27",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 30.6510416084173,
+                    "plus_di": 27.700055982691058,
+                    "minus_di": 18.349118342096805,
+                    "sma_short": 1.1083222222222224,
+                    "sma_long": 1.1077895238095234
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:13:11",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 25.86848795408035,
+                    "plus_di": 19.81896583839938,
+                    "minus_di": 27.157024262559563,
+                    "sma_short": 145.57822222222222,
+                    "sma_long": 145.59319047619047
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 08:13:34",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 22.12953361334681,
+                    "plus_di": 27.78689600335074,
+                    "minus_di": 17.50589279811543,
+                    "sma_short": 1.2924566666666666,
+                    "sma_long": 1.2917785714285712
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:13:43",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 30.941833888042925,
+                    "plus_di": 29.95523418894072,
+                    "minus_di": 15.437836109700145,
+                    "sma_short": 1.1083477777777777,
+                    "sma_long": 1.1078928571428568
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:15:27",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 26.186414023192057,
+                    "plus_di": 17.135160073575044,
+                    "minus_di": 28.027276549997453,
+                    "sma_short": 145.57522222222224,
+                    "sma_long": 145.579
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:15:44",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 28.83085928330601,
+                    "plus_di": 26.298568898965907,
+                    "minus_di": 19.188244386658848,
+                    "sma_short": 1.108211111111111,
+                    "sma_long": 1.1080633333333334
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 08:17:32",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 21.369970634716232,
+                    "plus_di": 25.15512990296899,
+                    "minus_di": 16.226912337731545,
+                    "sma_short": 1.2927088888888891,
+                    "sma_long": 1.2922080952380952
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:17:48",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 25.65727327142756,
+                    "plus_di": 23.547128414645822,
+                    "minus_di": 23.871565174995567,
+                    "sma_short": 1.108056666666667,
+                    "sma_long": 1.1081095238095238
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:19:50",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 23.42657024921387,
+                    "plus_di": 20.227241911108777,
+                    "minus_di": 24.073275109869925,
+                    "sma_short": 1.1078311111111112,
+                    "sma_long": 1.1080814285714287
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:21:21",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 26.735468842213194,
+                    "plus_di": 15.610940339204618,
+                    "minus_di": 23.72696862766498,
+                    "sma_short": 145.56144444444442,
+                    "sma_long": 145.57104761904762
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:21:51",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 21.334175365232397,
+                    "plus_di": 20.724877483916682,
+                    "minus_di": 22.801245764061324,
+                    "sma_short": 1.1076544444444447,
+                    "sma_long": 1.1080338095238094
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:23:26",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.284712250656373,
+                    "plus_di": 20.54302182035436,
+                    "minus_di": 21.260182975043747,
+                    "sma_short": 145.5748888888889,
+                    "sma_long": 145.57538095238098
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:23:52",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 20.175089018006418,
+                    "plus_di": 17.875218854958835,
+                    "minus_di": 24.751871301611935,
+                    "sma_short": 1.1075166666666667,
+                    "sma_long": 1.107966666666667
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:26:01",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 20.010200921846504,
+                    "plus_di": 15.758324608415986,
+                    "minus_di": 23.948978429297693,
+                    "sma_short": 1.107354444444444,
+                    "sma_long": 1.1078061904761907
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:28:21",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 23.435188810814818,
+                    "plus_di": 30.195233002561693,
+                    "minus_di": 13.264827124602968,
+                    "sma_short": 0.8421144444444446,
+                    "sma_long": 0.8416371428571429
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:30:23",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.599972677356092,
+                    "plus_di": 28.277170750392017,
+                    "minus_di": 12.85129430112204,
+                    "sma_short": 0.8423133333333334,
+                    "sma_long": 0.8417295238095238
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:30:36",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.010511880557658,
+                    "plus_di": 13.156785446040582,
+                    "minus_di": 40.28315473447246,
+                    "sma_short": 145.55055555555552,
+                    "sma_long": 145.55909523809527
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 08:34:00",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 20.48481586010274,
+                    "plus_di": 25.163266747914946,
+                    "minus_di": 12.941608843248057,
+                    "sma_short": 1.1077044444444446,
+                    "sma_long": 1.1075866666666667
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:35:54",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 21.083301797789183,
+                    "plus_di": 22.77323285268412,
+                    "minus_di": 20.173973612931427,
+                    "sma_short": 0.8420922222222222,
+                    "sma_long": 0.8418957142857143
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:38:55",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 32.99043920586694,
+                    "plus_di": 12.01059007760166,
+                    "minus_di": 25.304975124027845,
+                    "sma_short": 145.4083333333333,
+                    "sma_long": 145.50109523809525
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:40:47",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 34.54102910125394,
+                    "plus_di": 11.58694291883691,
+                    "minus_di": 27.719461886584334,
+                    "sma_short": 145.4098888888889,
+                    "sma_long": 145.48395238095236
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:45:03",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 36.47135226479007,
+                    "plus_di": 10.35081611675553,
+                    "minus_di": 27.44220708005145,
+                    "sma_short": 145.40800000000002,
+                    "sma_long": 145.43766666666664
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:47:51",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 38.1554938670936,
+                    "plus_di": 8.774033683498462,
+                    "minus_di": 25.107189922089418,
+                    "sma_short": 145.3996666666667,
+                    "sma_long": 145.42004761904764
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:52:02",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 30.09617135296967,
+                    "plus_di": 18.90581674652583,
+                    "minus_di": 18.50287428441469,
+                    "sma_short": 145.4361111111111,
+                    "sma_long": 145.42200000000005
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:53:28",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.41603632992478,
+                    "plus_di": 19.39450696400151,
+                    "minus_di": 30.435134053135073,
+                    "sma_short": 0.8401688888888889,
+                    "sma_long": 0.8407909523809524
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:54:04",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.101177925791635,
+                    "plus_di": 16.693776601608164,
+                    "minus_di": 16.33812368741794,
+                    "sma_short": 145.46099999999998,
+                    "sma_long": 145.4324761904762
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 08:56:17",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 25.970817368673945,
+                    "plus_di": 18.330165427967287,
+                    "minus_di": 32.00178728165983,
+                    "sma_short": 0.8399944444444445,
+                    "sma_long": 0.8404933333333333
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 08:56:28",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 24.05057966883227,
+                    "plus_di": 17.188208550456054,
+                    "minus_di": 17.1498580244396,
+                    "sma_short": 145.4811111111111,
+                    "sma_long": 145.43971428571433
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:00:04",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 27.683220544962566,
+                    "plus_di": 17.556353826053876,
+                    "minus_di": 33.05789067468314,
+                    "sma_short": 0.8397166666666668,
+                    "sma_long": 0.8401871428571427
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:21:22",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 52.1040022270617,
+                    "plus_di": 30.788244192787605,
+                    "minus_di": 5.854623107688752,
+                    "sma_short": 1.1094255555555557,
+                    "sma_long": 1.1085576190476192
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:21:33",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 28.65578475877226,
+                    "plus_di": 9.017126253040809,
+                    "minus_di": 23.974816740825222,
+                    "sma_short": 145.4221111111111,
+                    "sma_long": 145.49152380952384
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:23:26",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 53.74503503564283,
+                    "plus_di": 30.001932926568188,
+                    "minus_di": 5.9666501623512325,
+                    "sma_short": 1.1095766666666664,
+                    "sma_long": 1.1088019047619047
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:23:37",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 32.59622978200785,
+                    "plus_di": 7.485614467640402,
+                    "minus_di": 24.75823787633607,
+                    "sma_short": 145.38133333333334,
+                    "sma_long": 145.47238095238095
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:24:27",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 38.76733148888282,
+                    "plus_di": 13.959246210884817,
+                    "minus_di": 31.205523862919943,
+                    "sma_short": 0.8380877777777778,
+                    "sma_long": 0.8386428571428571
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:25:28",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 55.42160526389745,
+                    "plus_di": 30.367256234548496,
+                    "minus_di": 7.651067436346981,
+                    "sma_short": 1.1097244444444445,
+                    "sma_long": 1.1090538095238094
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:26:38",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 56.03405327708926,
+                    "plus_di": 31.797152798816448,
+                    "minus_di": 6.979864660894601,
+                    "sma_short": 1.109768888888889,
+                    "sma_long": 1.109160476190476
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:26:49",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 36.63151800938772,
+                    "plus_di": 6.951871660317146,
+                    "minus_di": 23.658341549646693,
+                    "sma_short": 145.34533333333331,
+                    "sma_long": 145.43971428571427
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:28:54",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 56.155715965678965,
+                    "plus_di": 36.50778587200954,
+                    "minus_di": 8.243175766907166,
+                    "sma_short": 1.109881111111111,
+                    "sma_long": 1.1093761904761905
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:31:21",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 60.41820275148714,
+                    "plus_di": 46.44602398818442,
+                    "minus_di": 4.183655839518315,
+                    "sma_short": 1.1105533333333333,
+                    "sma_long": 1.1098609523809526
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:33:21",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 61.20903484156169,
+                    "plus_di": 42.975638201865365,
+                    "minus_di": 8.213841196645715,
+                    "sma_short": 1.1111266666666666,
+                    "sma_long": 1.1102185714285715
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:35:32",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 60.20883794311835,
+                    "plus_di": 38.45616983193039,
+                    "minus_di": 11.63489688416294,
+                    "sma_short": 1.1116144444444445,
+                    "sma_long": 1.1105080952380952
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:36:24",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 42.44473748496818,
+                    "plus_di": 16.988265662622595,
+                    "minus_di": 30.91593494313271,
+                    "sma_short": 145.15699999999998,
+                    "sma_long": 145.27342857142855
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:37:36",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 58.33229449861754,
+                    "plus_di": 34.267196915053454,
+                    "minus_di": 12.46464355411843,
+                    "sma_short": 1.1121677777777776,
+                    "sma_long": 1.1108138095238094
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:39:02",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 53.203946803099804,
+                    "plus_di": 9.496057529861506,
+                    "minus_di": 34.63853712692178,
+                    "sma_short": 0.8364677777777777,
+                    "sma_long": 0.8371047619047619
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:39:21",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 42.34235465023304,
+                    "plus_di": 14.155934883844653,
+                    "minus_di": 34.283995883655486,
+                    "sma_short": 145.0812222222222,
+                    "sma_long": 145.21904761904761
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:39:37",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 57.97822290830162,
+                    "plus_di": 36.26252498807173,
+                    "minus_di": 10.867059951758087,
+                    "sma_short": 1.1125544444444442,
+                    "sma_long": 1.1111561904761904
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:41:09",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 51.88478440638938,
+                    "plus_di": 12.580103335441631,
+                    "minus_di": 31.485309620950062,
+                    "sma_short": 0.8364577777777777,
+                    "sma_long": 0.8369642857142856
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:41:34",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 40.3083268220273,
+                    "plus_di": 18.5479960769647,
+                    "minus_di": 28.95529350525541,
+                    "sma_short": 145.09055555555557,
+                    "sma_long": 145.19028571428572
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:41:44",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 51.8580162002069,
+                    "plus_di": 28.5790440095413,
+                    "minus_di": 20.378986263088734,
+                    "sma_short": 1.1123855555555555,
+                    "sma_long": 1.1113314285714284
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:43:40",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 36.23480390282075,
+                    "plus_di": 20.66353114912772,
+                    "minus_di": 27.779687606525872,
+                    "sma_short": 145.10433333333333,
+                    "sma_long": 145.1757142857143
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:43:50",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 46.76336575243846,
+                    "plus_di": 26.358237883755752,
+                    "minus_di": 19.071115175721115,
+                    "sma_short": 1.11218,
+                    "sma_long": 1.1115119047619046
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:45:52",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 40.87546967207881,
+                    "plus_di": 23.098214738243726,
+                    "minus_di": 22.99076504979128,
+                    "sma_short": 1.1118655555555557,
+                    "sma_long": 1.1116085714285713
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:46:05",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 37.97623943756987,
+                    "plus_di": 22.62291846784604,
+                    "minus_di": 22.74627334944833,
+                    "sma_short": 1.1116533333333334,
+                    "sma_long": 1.1116542857142857
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": false,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:46:24",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 37.155594782427116,
+                    "plus_di": 23.637877582404727,
+                    "minus_di": 20.723106564491022,
+                    "sma_short": 0.8371966666666668,
+                    "sma_long": 0.8369300000000001
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:47:26",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 31.604951598629253,
+                    "plus_di": 28.763227308415278,
+                    "minus_di": 19.89791262866921,
+                    "sma_short": 145.16855555555557,
+                    "sma_long": 145.15961904761903
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:48:06",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 33.56847161510994,
+                    "plus_di": 19.569465545665672,
+                    "minus_di": 22.011415199636645,
+                    "sma_short": 1.1112666666666666,
+                    "sma_long": 1.1117690476190478
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:49:06",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 31.6958277737918,
+                    "plus_di": 22.691500517160446,
+                    "minus_di": 19.763936107757925,
+                    "sma_short": 0.8376677777777778,
+                    "sma_long": 0.8370061904761905
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:49:44",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 28.87976842621585,
+                    "plus_di": 25.327840353804042,
+                    "minus_di": 21.235616581220672,
+                    "sma_short": 145.2091111111111,
+                    "sma_long": 145.14771428571427
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:51:46",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.76622678630151,
+                    "plus_di": 24.598315783759823,
+                    "minus_di": 23.265310969956126,
+                    "sma_short": 145.21877777777775,
+                    "sma_long": 145.14671428571427
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:54:03",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 22.215051818227625,
+                    "plus_di": 25.49982053209872,
+                    "minus_di": 20.687033474520103,
+                    "sma_short": 145.22755555555557,
+                    "sma_long": 145.17290476190476
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:54:31",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 25.514143932433278,
+                    "plus_di": 22.03761303852389,
+                    "minus_di": 23.057401791306457,
+                    "sma_short": 1.1113533333333334,
+                    "sma_long": 1.1117261904761904
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:54:42",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 24.511134712362733,
+                    "plus_di": 24.621495921961557,
+                    "minus_di": 20.831671516011106,
+                    "sma_short": 0.83802,
+                    "sma_long": 0.8373833333333333
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:56:26",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.659834677289535,
+                    "plus_di": 33.71738283147418,
+                    "minus_di": 16.020572549367152,
+                    "sma_short": 145.2701111111111,
+                    "sma_long": 145.19919047619047
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:56:36",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.926132116897385,
+                    "plus_di": 18.715634190219514,
+                    "minus_di": 27.53204482664286,
+                    "sma_short": 1.1112600000000001,
+                    "sma_long": 1.1115490476190475
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 09:57:12",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.084955301587453,
+                    "plus_di": 29.056612454134985,
+                    "minus_di": 16.819540001419007,
+                    "sma_short": 0.8385044444444445,
+                    "sma_long": 0.8377971428571427
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 09:58:33",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.4759723920455,
+                    "plus_di": 32.23934869245646,
+                    "minus_di": 15.80369065564561,
+                    "sma_short": 145.30988888888888,
+                    "sma_long": 145.2275238095238
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 09:58:43",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.909982350202974,
+                    "plus_di": 16.905017012666143,
+                    "minus_di": 30.406675366759522,
+                    "sma_short": 1.1109644444444444,
+                    "sma_long": 1.1113004761904763
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:02:48",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 28.50229709391667,
+                    "plus_di": 14.056290519432233,
+                    "minus_di": 30.42762390922336,
+                    "sma_short": 1.1100866666666667,
+                    "sma_long": 1.1108038095238095
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:03:08",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 25.742399254411477,
+                    "plus_di": 26.88787544002394,
+                    "minus_di": 14.886804264915604,
+                    "sma_short": 0.8394722222222222,
+                    "sma_long": 0.8385828571428572
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:04:32",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 30.415267759684077,
+                    "plus_di": 12.132564931982696,
+                    "minus_di": 29.976849576606458,
+                    "sma_short": 1.1098488888888889,
+                    "sma_long": 1.1106242857142858
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 10:04:53",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 30.959332871124722,
+                    "plus_di": 28.294647518570816,
+                    "minus_di": 15.27355511263079,
+                    "sma_short": 145.43444444444447,
+                    "sma_long": 145.33166666666665
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:05:17",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.15329360829741,
+                    "plus_di": 25.065186079799734,
+                    "minus_di": 13.877829001355533,
+                    "sma_short": 0.8395355555555556,
+                    "sma_long": 0.8387952380952383
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:06:35",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 30.245195324520843,
+                    "plus_di": 15.342432667105902,
+                    "minus_di": 26.970789871004946,
+                    "sma_short": 1.1097777777777778,
+                    "sma_long": 1.1105338095238095
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:07:28",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.37505535037158,
+                    "plus_di": 24.885532161359652,
+                    "minus_di": 13.435143825669405,
+                    "sma_short": 0.8396933333333334,
+                    "sma_long": 0.8389790476190478
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 10:08:36",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 28.779575433373125,
+                    "plus_di": 11.423185301482984,
+                    "minus_di": 25.93202716989136,
+                    "sma_short": 1.29204,
+                    "sma_long": 1.2924785714285716
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:08:46",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 28.514828815301573,
+                    "plus_di": 17.89187012390661,
+                    "minus_di": 23.387252357661968,
+                    "sma_short": 1.1098811111111109,
+                    "sma_long": 1.1104728571428573
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 10:09:10",
+        "spread": 0.0010000000000047748,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 27.204324995204225,
+                    "plus_di": 23.156168778880932,
+                    "minus_di": 18.470725873645215,
+                    "sma_short": 145.39444444444445,
+                    "sma_long": 145.35876190476193
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:09:29",
+        "spread": 2.0000000000020002e-05,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.05840646625307,
+                    "plus_di": 23.113099016189214,
+                    "minus_di": 15.152446543713754,
+                    "sma_short": 0.8396966666666665,
+                    "sma_long": 0.8391428571428573
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 10:10:38",
+        "spread": 2.999999999997449e-05,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 30.509374597958352,
+                    "plus_di": 10.390202246879653,
+                    "minus_di": 25.439017160157178,
+                    "sma_short": 1.291921111111111,
+                    "sma_long": 1.2923338095238095
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:10:48",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 24.785181705598426,
+                    "plus_di": 19.89996169198351,
+                    "minus_di": 21.116331899960848,
+                    "sma_short": 1.1101766666666668,
+                    "sma_long": 1.1104295238095236
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 10:11:12",
+        "spread": 0.0009999999999763531,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 24.455809945516272,
+                    "plus_di": 22.43620213914293,
+                    "minus_di": 18.159079169403046,
+                    "sma_short": 145.37122222222223,
+                    "sma_long": 145.37085714285718
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 10:12:39",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 32.620073835940644,
+                    "plus_di": 11.908799731144281,
+                    "minus_di": 27.379243348352993,
+                    "sma_short": 1.2917133333333333,
+                    "sma_long": 1.2921566666666666
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:12:59",
+        "spread": 3.0000000000085514e-05,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.49544387541846,
+                    "plus_di": 26.259129439535606,
+                    "minus_di": 13.153458209144024,
+                    "sma_short": 0.8396833333333333,
+                    "sma_long": 0.8394133333333335
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 10:14:40",
+        "spread": 1.0000000000065512e-05,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 33.47113015880576,
+                    "plus_di": 11.016788446540394,
+                    "minus_di": 24.678048006184664,
+                    "sma_short": 1.291551111111111,
+                    "sma_long": 1.2919966666666665
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "EURUSD",
+        "local_time": "2025-04-10 10:14:52",
+        "spread": 0.0,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 21.439666338673884,
+                    "plus_di": 21.57460410746907,
+                    "minus_di": 21.417999899791702,
+                    "sma_short": 1.1105444444444443,
+                    "sma_long": 1.1102333333333334
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:15:38",
+        "spread": 2.0000000000020002e-05,
+        "trade_executed": "BUY",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "BUY",
+                "values": {
+                    "adx": 26.256600924378905,
+                    "plus_di": 22.36476398190535,
+                    "minus_di": 15.91363295231604,
+                    "sma_short": 0.8395844444444445,
+                    "sma_long": 0.839557619047619
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 10:16:33",
+        "spread": 2.0000000000020002e-05,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 23.47963604136049,
+                    "plus_di": 20.112169727292844,
+                    "minus_di": 20.59620323628098,
+                    "sma_short": 0.8394566666666665,
+                    "sma_long": 0.8395190476190477
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": false,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "GBPUSD",
+        "local_time": "2025-04-10 10:16:43",
+        "spread": 9.999999999843467e-06,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 33.652777481803476,
+                    "plus_di": 10.704543866440751,
+                    "minus_di": 23.44729507065158,
+                    "sma_short": 1.291488888888889,
+                    "sma_long": 1.291912380952381
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
     }
 ]

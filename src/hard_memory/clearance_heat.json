@@ -1,10 +1,10 @@
 {
-    "symbol": "EURUSD",
-    "current_tick_time": 1744292156.0,
+    "symbol": "USDJPY",
+    "current_tick_time": 1744301849.0,
     "last_long_time": 0,
     "last_short_time": 0,
-    "long_time_diff": 1744292156.0,
-    "short_time_diff": 1744292156.0,
+    "long_time_diff": 1744301849.0,
+    "short_time_diff": 1744301849.0,
     "cooldown_limit": 120,
     "allow_buy": true,
     "allow_sell": true

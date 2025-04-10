@@ -1,5 +1,5 @@
 {
-    "symbol": "EURUSD",
+    "symbol": "USDJPY",
     "max_long_size": 0.06,
     "max_short_size": 0.06,
     "max_orders": 100,
