@@ -11,6 +11,7 @@ from src.portfolio.total_positions import get_total_positions, total_positions_c
 from src.positions.positions import get_positions
 from src.indicators.adx_indicator import calculate_adx
 from src.indicators.signal_indicator import dispatch_signals, dispatch_position_manager_indicator
+from src.trader.awareness import evaluate_profit_awareness
 from src.config import (
         HARD_MEMORY_DIR,
         POSITIONS_FILE,
@@ -630,6 +631,39 @@ def close_trade(symbol=None):
     return True
 
 
+def close_position_by_ticket(ticket, symbol, pos_type, volume):
+    tick = mt5.symbol_info_tick(symbol)
+    if not tick:
+        logger.error(f"[CloseByTicket 2606:03] :: Failed to get tick data for {symbol}")
+        return False
+
+    price = tick.bid if pos_type == 'SELL' else tick.ask
+
+    close_request = {
+        "action": mt5.TRADE_ACTION_DEAL,
+        "position": ticket,
+        "symbol": symbol,
+        "volume": volume,
+        "type": mt5.ORDER_TYPE_BUY if pos_type == "SELL" else mt5.ORDER_TYPE_SELL,
+        "price": price,
+        "deviation": 20,
+        "magic": random.randint(100000, 999999),
+        "comment": "Close by Awareness",
+        "type_filling": mt5.ORDER_FILLING_IOC
+    }
+
+    result = mt5.order_send(close_request)
+    logger.info(f"[CloseByTicket 2606:04] :: Sent close request: {close_request}")
+    logger.info(f"[CloseByTicket 2606:05] :: MT5 response: {result}")
+
+    if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+        logger.info(f"[CloseByTicket 2606:07] :: Successfully closed ticket {ticket} for {symbol}")
+        return True
+    else:
+        logger.error(f"[CloseByTicket 2606:08] :: Failed to close ticket {ticket}. Error: {mt5.last_error()}")
+        return False
+
+
 def manage_trade(symbol):
     """
     Manage open positions for a symbol by updating trailing stops based on 
@@ -700,9 +734,21 @@ def manage_trade(symbol):
         ticket = pos.get("ticket")
         current_sl = pos.get("sl", None)  # current stop loss; may be None if not set
         open_price = pos.get("price_open", None)
+        volume = pos.get("volume", 0)
         recommended_sl = None
 
         BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
+
+        # Evaluate Awareness
+        take_profit = False
+        take_profit = evaluate_profit_awareness(symbol, tick, atr_value,
+                                                     open_price, pos_type)
+        logger.debug(f"[DEBUG 0625:02] :: Evaluating profit awareness for {symbol} - Take Profit: {take_profit} | ATR Value: {atr_value} | Open Price: {open_price} | Position Type: {pos_type} | Current SL: {current_sl} | Ticket: {ticket}")
+
+        if take_profit:
+            logger.info(f"[INFO 0625:03] :: Closing Symbol {symbol} position {ticket} due to profit awareness.")
+            close_position_by_ticket(ticket, symbol, pos_type, volume)
+            continue
 
         if pos_type == "BUY":
             has_moved_1_atr = tick.bid >= open_price + atr_value
@@ -778,6 +824,9 @@ def execute_trade(order):
     else:
         logger.error(f"Trade failed: {result.retcode}")
         return False
+
+
+
 
 
 

@@ -1,11 +1,11 @@
 {
-    "symbol": "USDJPY",
-    "current_tick_time": 1744301849.0,
-    "last_long_time": 0,
+    "symbol": "BTCUSD",
+    "current_tick_time": 1744326689.0,
+    "last_long_time": 1744326420.0,
     "last_short_time": 0,
-    "long_time_diff": 1744301849.0,
-    "short_time_diff": 1744301849.0,
-    "cooldown_limit": 120,
-    "allow_buy": true,
+    "long_time_diff": 269.0,
+    "short_time_diff": 1744326689.0,
+    "cooldown_limit": 300,
+    "allow_buy": false,
     "allow_sell": true
 }

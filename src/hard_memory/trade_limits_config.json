@@ -1,63 +1,63 @@
 {
     "BTCUSD": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 300,
         "MAX_CAPITAL_ALLOCATION": 5000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "EURUSD": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "GBPUSD": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "Crude-F": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "USDJPY": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "XAUUSD": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "ETHUSD": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 300,
         "MAX_CAPITAL_ALLOCATION": 5000,
         "DEFAULT_LOT_SIZE": 0.02,
         "MAX_ORDERS": 100
     },
     "USDCHF": {
-        "MAX_LONG_SIZE": 0.06,
-        "MAX_SHORT_SIZE": 0.06,
+        "MAX_LONG_SIZE": 0.02,
+        "MAX_SHORT_SIZE": 0.02,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
         "DEFAULT_LOT_SIZE": 0.02,
