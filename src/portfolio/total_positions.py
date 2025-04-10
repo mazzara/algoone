@@ -202,7 +202,7 @@ def aggregate_position_data(processed):
     return summary
 
 
-def get_total_positions(save=True, use_cache=True):
+def get_total_positions(save=True, use_cache=True, report=False):
     """
     Finalizes the processing: builds the detailed snapshot from positions,
     aggregates them, and then updates persistent records as needed.
@@ -221,7 +221,6 @@ def get_total_positions(save=True, use_cache=True):
 
     # Load historical positions to merge and update data.class
     historical_summary = load_total_positions_accounting()
-
 
     # Merge snapshot with historical data.
     for symbol, sides in snapshot_summary.items():
@@ -325,6 +324,14 @@ def get_total_positions(save=True, use_cache=True):
 
     if save:
         save_total_positions(historical_summary)
+
+    # If report is True, print and log the summary.
+    if report:
+        logger.info("[INFO 1649] ====== POSITIONS - Total positions summary ======")
+        for symbol, sides in snapshot_summary.items():
+            logger.info(f"[INFO 1649] Symbol: {symbol}")
+            for side, data in sides.items():
+                logger.info(f"[INFO 1649]  {side}: {data}")
 
     return snapshot_summary
 

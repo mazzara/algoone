@@ -1,13 +1,13 @@
 {
-    "symbol": "BTCUSD",
-    "max_long_size": 0.05,
-    "max_short_size": 0.05,
+    "symbol": "USDJPY",
+    "max_long_size": 0.06,
+    "max_short_size": 0.06,
     "max_orders": 100,
-    "current_long_size": 0.03,
-    "current_short_size": 0.01,
-    "total_positions": 0.04,
+    "current_long_size": 0,
+    "current_short_size": 0.060000000000000005,
+    "total_positions": 0.060000000000000005,
     "long_size_clarance": true,
-    "short_size_clarance": true,
+    "short_size_clarance": false,
     "allow_buy": true,
-    "allow_sell": true
+    "allow_sell": false
 }

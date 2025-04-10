@@ -28,9 +28,6 @@ from src.config import (
 trade_limits_cache = None
 # total_positions_cache = {}
 
-# Global variable to hold cached symbol conficurations
-_SYMBOLS_CONFIG_CACHE = None
-
 
 ### --- Functions Index in this file --- ###
 # load_trade_limits()
@@ -51,37 +48,6 @@ _SYMBOLS_CONFIG_CACHE = None
 
 
 BROKER_TIMEZONE = pytz.timezone("Europe/Athens")
-
-
-def get_symbols_config():
-    global _SYMBOLS_CONFIG_CACHE
-    if _SYMBOLS_CONFIG_CACHE is not None:
-        return _SYMBOLS_CONFIG_CACHE
-    
-    symbols_file = BROKER_SYMBOLS
-    if not os.path.exists(symbols_file):
-        logger.error(f"[ERROR 1247] :: Symbol configuration file not found: {symbols_file}")
-        return None
-    try:
-        with open(symbols_file, 'r', encoding='utf-8') as f:
-            symbols_config = json.load(f)
-            _SYMBOLS_CONFIG_CACHE = symbols_config
-        return symbols_config
-    except Exception as e:
-        logger.error(f"[ERROR 1247] :: Failed to load symbols configuration: {e}")
-        return None
-
-def get_symbol_config(symbol):
-    symbols_list = get_symbols_config()
-    if symbols_list is None:
-        return None
-    for sym in symbols_list:
-        if sym.get('name') == symbol:
-            return sym
-    logger.error(f"[ERROR 1252] :: Symbol {symbol} not found in configuration.")
-    return None
-
-
 
 def load_trade_limits():
     """
@@ -380,12 +346,7 @@ def open_trade(symbol, lot_size=0.01):
     spread = tick.ask - tick.bid
     logger.info(f"[INFO 1700] TICK: {symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {spread} | Time: {tick.time}")
 
-    # Call ATR 
-    # atr = calculate_adx(symbol, period=14)
-    atr = dispatch_position_manager_indicator(symbol, 'ATR')
-    atr = atr.get('value', {}).get('atr', 0)
-
-    if spread <= atr:
+    if spread > 0.0:
         allow_buy, allow_sell = get_open_trade_clearance(symbol)
 
         signals = dispatch_signals(symbol)
@@ -529,15 +490,18 @@ def close_trade(symbol=None):
     4 digit signature for this function: 1038
     """
     close_profit_threshold = CLOSE_PROFIT_THRESHOLD
-    logger.info(f"[INFO 1038] :: Closing trades with profit threshold: {close_profit_threshold}")
-    if not symbol:
+    logger.info(f"[INFO 1038] :: Closing trades with profit threshold: {close_profit_threshold}") if not symbol:
         logger.error("[ERROR 1038] :: close_trade() called without a valid symbol.")
         return False
 
-    symbol_config = get_symbol_config(symbol)
-    if symbol_config:
-        symbol_contract_size = symbol_config.get('contract_size', 1)
-        logger.info(f"[INFO 1038] :: Symbol {symbol} contract size: {symbol_contract_size}")
+    symbol_config = os.path.join(BROKER_SYMBOLS, symbol)
+    if not os.path.exists(symbol_config):
+        logger.error(f"[ERROR 1038] :: Symbol {symbol} not found in config.")
+        return False
+    if symbol_config not in os.listdir(BROKER_SYMBOLS):
+        logger.error(f"[ERROR 1038] :: Symbol {symbol} not found in config.")
+        return False
+    symbol_contract_size = symbol_config.get('contract_size', 1) 
 
     signals = dispatch_signals(symbol)
     consensus_signal = aggregate_signals(signals)
@@ -573,19 +537,15 @@ def close_trade(symbol=None):
 
     for pos in positions:
         symbol = pos['symbol']
-        symbol_config = get_symbol_config(symbol)
         ticket = pos['ticket']
         pos_type = pos['type']
         volume = pos['volume']
         profit = pos['profit']
         price_open = pos['price_open']
-        symbol_contract_size = symbol_config.get('contract_size', 1)
         invested_amount = volume * price_open * symbol_contract_size
         position_pnl = profit / invested_amount
 
         min_profit = position_pnl > close_profit_threshold
-
-        logger.info(f"[INFO 1038] :: Position PnL: {position_pnl} | Invested Amount: {invested_amount} | Profit: {profit} | Symbol: {symbol} | Volume: {volume} | Type: {pos_type} | Ticket: {ticket} | Price Open: {price_open} | Min Profit: {min_profit} | Close Profit Threshold: {close_profit_threshold} | Contract Size: {symbol_contract_size} | Trailing Stop: {trailing_stop}")
 
         if invested_amount > 0 and min_profit:
             logger.info(f"Closing trade on {symbol} - Profit reached: {profit}")
@@ -694,48 +654,48 @@ def manage_trade(symbol):
         open_price = pos.get("price_open", None)
         recommended_sl = None
 
-        BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
-
         if pos_type == "BUY":
-            has_moved_1_atr = tick.bid >= open_price + atr_value
-            in_trailing_range = tick.bid < open_price + (atr_value * multiplier)
-
-            if has_moved_1_atr and in_trailing_range:
-                # Break-even logic
-                recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: Break-even zone. Recommending SL to {recommended_sl}")
+            # First, check for break-even condition:
+            # If the current bid has moved at least one ATR above the open, set SL to the open price.
+            if tick.bid >= open_price + atr_value:
+                recommended_sl = open_price * 1.001
+                logger.info(f"[INFO 0625] :: BUY position {ticket}: Break-even rule triggered. Setting SL to open price {open_price}.")
+                if current_sl is not None and recommended_sl <= current_sl:
+                    # Well, if stop loss is already set on Break-Even or above, log and skikp update.
+                    logger.info(f"[INFO 0625] :: BUY position {ticket}: Recommended SL {recommended_sl} is not higher than current SL {current_sl}. Skipping update.")
+                    continue
             else:
-                # Trailing logic
+                # Otherwise, use the trailing stop method.
                 recommended_sl = tick.bid - multiplier * atr_value
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: Trailing SL calculated at {recommended_sl}")
-
-            if current_sl is not None and recommended_sl <= current_sl:
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: SL {recommended_sl} not better than current {current_sl}. Skipping update.")
-                continue
+                # Only update if the newly computed SL is higher than the current one.
+                if current_sl is not None and recommended_sl <= current_sl:
+                    logger.info(f"[INFO 0625] :: BUY position {ticket}: Recommended SL {recommended_sl} is not higher than current SL {current_sl}. Skipping update.")
+                    continue
 
         elif pos_type == "SELL":
-            has_moved_1_atr = tick.ask <= open_price - atr_value
-            in_trailing_range = tick.ask > open_price - (atr_value * multiplier)
-
-            if has_moved_1_atr and in_trailing_range:
-                # Break-even logic
-                recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: Break-even zone. Recommending SL to {recommended_sl}")
+            # For SELL positions, check the break-even rule:
+            if tick.ask <= open_price - atr_value:
+                recommended_sl = open_price * 0.999
+                logger.info(f"[INFO 0625] :: SELL position {ticket}: Break-even rule triggered. Setting SL to open price {open_price}.")
+                if current_sl is not None and recommended_sl >= current_sl:
+                    # If the stop loss is already set on Break-Even or below, log and skip update.
+                    logger.info(f"[INFO 0625] :: SELL position {ticket}: Recommended SL {recommended_sl} is not lower than current SL {current_sl}. Skipping update.")
+                    continue
             else:
-                # Trailing logic
                 recommended_sl = tick.ask + multiplier * atr_value
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: Trailing SL calculated at {recommended_sl}")
-
-            if current_sl is not None and recommended_sl >= current_sl:
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: SL {recommended_sl} not better than current {current_sl}. Skipping update.")
-                continue
+                if current_sl is not None and recommended_sl >= current_sl:
+                    logger.info(f"[INFO 0625] :: SELL position {ticket}: Recommended SL {recommended_sl} is not lower than current SL {current_sl}. Skipping update.")
+                    continue
 
         else:
             logger.warning(f"[WARNING 0625] :: Position {ticket} has unknown type: {pos_type}. Skipping.")
             continue
 
 
-        # Build a modify request.
+        # Optionally, add further validation: ensure the recommended SL is in a valid range relative to current price.
+
+        # Build a modify request. Note: mt5.order_modify() might differ in parameters,
+        # so adjust this request according to your MetaTrader5 Python API version.
         modify_request = {
             "action": mt5.TRADE_ACTION_SLTP,
             "position": ticket,

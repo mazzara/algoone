@@ -6,6 +6,14 @@
 
 # Ignore logs
 logs/
+*.log
+*.tmp
+
+# Sensitive Files
+*.pem
+*.key
+*.env
+*.env.local
 
 # Node modules (example)
 node_modules/

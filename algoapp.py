@@ -6,7 +6,7 @@ from src.history.history import get_trade_history
 from src.symbols.symbols import get_symbols
 from src.pending.orders import get_orders
 from src.tick_listener import listen_to_ticks
-from src.trader.trade import open_trade, close_trade
+from src.trader.trade import open_trade, close_trade, manage_trade
 from src.portfolio.total_positions import get_total_positions
 from src.limits.limits import load_trade_limits
 from src.logger_config import logger
@@ -14,13 +14,20 @@ from src.logger_config import logger
 
 def on_tick(ticks):
     """
-    Example callback function to process tick events.
+    Callback function to process tick events.
     """
     for tick in ticks:
         logger.info(f"|&|..|~~| -.-.- | Tick Event: {tick['symbol']} | Bid: {tick['bid']} | Ask: {tick['ask']} | Spread: {tick['spread']} | Time: {tick['time']}")
 
-        get_total_positions(save=True, use_cache=False) # Note for self: this also check positinos as a dependency.
+        # get_positions = get_total_positions(save=True, use_cache=False)
+        # open_trade(tick['symbol'], get_positions=get_positions)
+        # close_trade(tick['symbol'], get_positions=get_positions)
+
+        get_total_positions(save=True, use_cache=False, report=True) # Note for self: this also check positinos as a dependency.
         open_trade(tick['symbol'])
+
+        manage_trade(tick['symbol'])
+
         get_total_positions(save=True, use_cache=False) # Note for self: this also check positinos as a dependency.
         close_trade(tick['symbol'])
 
