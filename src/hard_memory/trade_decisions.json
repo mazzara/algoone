@@ -4308,5 +4308,80 @@
             "allow_sell": true
         },
         "consensus_signal": "BUY"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:33:11",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 43.18489066313646,
+                    "plus_di": 11.125912886539995,
+                    "minus_di": 28.071303940052626,
+                    "sma_short": 0.8407844444444444,
+                    "sma_long": 0.8411000000000002
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDJPY",
+        "local_time": "2025-04-10 07:33:53",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 47.623656158263564,
+                    "plus_di": 13.003054383901647,
+                    "minus_di": 31.360676615174405,
+                    "sma_short": 145.75122222222222,
+                    "sma_long": 145.80019047619047
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
+    },
+    {
+        "symbol": "USDCHF",
+        "local_time": "2025-04-10 07:35:05",
+        "spread": 0.0,
+        "trade_executed": "SELL",
+        "result": true,
+        "signals": {
+            "ScalpADX": {
+                "indicator": "ScalpADX",
+                "signal": "SELL",
+                "values": {
+                    "adx": 43.655962756140156,
+                    "plus_di": 12.231485813640493,
+                    "minus_di": 27.55746978558066,
+                    "sma_short": 0.8407344444444445,
+                    "sma_long": 0.8410128571428572
+                }
+            }
+        },
+        "trade_clearance": {
+            "allow_buy": true,
+            "allow_sell": true
+        },
+        "consensus_signal": "SELL"
     }
 ]

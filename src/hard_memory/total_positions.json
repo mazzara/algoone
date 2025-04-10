@@ -1,20 +1,20 @@
 {
     "GBPUSD": {
         "LONG": {
-            "SIZE_SUM": 0.02,
-            "POSITION_COUNT": 2,
-            "AVG_PRICE": 1.29046,
-            "CURRENT_PRICE": 1.29116,
-            "UNREALIZED_PROFIT": 1.4,
+            "SIZE_SUM": 0.01,
+            "POSITION_COUNT": 1,
+            "AVG_PRICE": 1.2916,
+            "CURRENT_PRICE": 1.29123,
+            "UNREALIZED_PROFIT": -0.37,
             "LAST_POSITION_TIME": "2025-04-10 13:32:12",
             "LAST_POSITION_TIME_RAW": 1744291932,
             "PROFIT_RECORD_TRACK": 3.02,
             "LOSS_RECORD_TRACK": -4.510000000000001,
-            "GOAL_MET": true,
-            "TRAILING_CROSSED": true,
-            "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": 0.000258092,
-            "TRAILING_PROFIT": 0.000129046
+            "GOAL_MET": false,
+            "TRAILING_CROSSED": false,
+            "CLOSE_SIGNAL": false,
+            "PROFIT_GOAL": 0.00012916000000000002,
+            "TRAILING_PROFIT": 6.458000000000001e-05
         },
         "SHORT": {
             "SIZE_SUM": 0,
@@ -33,20 +33,20 @@
             "TRAILING_PROFIT": 0
         },
         "NET": {
-            "SIZE_SUM": 0.02,
-            "POSITION_COUNT": 2,
-            "AVG_PRICE": 1.29046,
-            "CURRENT_PRICE": 1.29116,
-            "UNREALIZED_PROFIT": 1.4,
+            "SIZE_SUM": 0.01,
+            "POSITION_COUNT": 1,
+            "AVG_PRICE": 1.2916,
+            "CURRENT_PRICE": 1.29123,
+            "UNREALIZED_PROFIT": -0.37,
             "LAST_POSITION_TIME": "2025-04-10 13:32:12",
             "LAST_POSITION_TIME_RAW": 1744291932,
             "PROFIT_RECORD_TRACK": 3.02,
             "LOSS_RECORD_TRACK": -13.64,
-            "GOAL_MET": true,
-            "TRAILING_CROSSED": true,
-            "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": 0.000258092,
-            "TRAILING_PROFIT": 0.000129046
+            "GOAL_MET": false,
+            "TRAILING_CROSSED": false,
+            "CLOSE_SIGNAL": false,
+            "PROFIT_GOAL": 0.00012916000000000002,
+            "TRAILING_PROFIT": 6.458000000000001e-05
         }
     },
     "USDJPY": {
@@ -67,36 +67,36 @@
             "TRAILING_PROFIT": 0
         },
         "SHORT": {
-            "SIZE_SUM": 0.04,
-            "POSITION_COUNT": 4,
-            "AVG_PRICE": 145.80175,
-            "CURRENT_PRICE": 145.717,
-            "UNREALIZED_PROFIT": 2.33,
-            "LAST_POSITION_TIME": "2025-04-10 13:31:35",
-            "LAST_POSITION_TIME_RAW": 1744291895,
+            "SIZE_SUM": 0.05,
+            "POSITION_COUNT": 5,
+            "AVG_PRICE": 145.7856,
+            "CURRENT_PRICE": 145.637,
+            "UNREALIZED_PROFIT": 5.11,
+            "LAST_POSITION_TIME": "2025-04-10 13:33:53",
+            "LAST_POSITION_TIME_RAW": 1744292033,
             "PROFIT_RECORD_TRACK": 15.45,
             "LOSS_RECORD_TRACK": -3.0,
             "GOAL_MET": true,
             "TRAILING_CROSSED": true,
             "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": 0.0583207,
-            "TRAILING_PROFIT": 0.02916035
+            "PROFIT_GOAL": 0.0728928,
+            "TRAILING_PROFIT": 0.0364464
         },
         "NET": {
-            "SIZE_SUM": -0.04,
-            "POSITION_COUNT": 4,
-            "AVG_PRICE": 145.80175,
-            "CURRENT_PRICE": 145.717,
-            "UNREALIZED_PROFIT": 2.33,
-            "LAST_POSITION_TIME": "2025-04-10 13:31:35",
-            "LAST_POSITION_TIME_RAW": 1744291895,
+            "SIZE_SUM": -0.05,
+            "POSITION_COUNT": 5,
+            "AVG_PRICE": 145.7856,
+            "CURRENT_PRICE": 145.637,
+            "UNREALIZED_PROFIT": 5.11,
+            "LAST_POSITION_TIME": "2025-04-10 13:33:53",
+            "LAST_POSITION_TIME_RAW": 1744292033,
             "PROFIT_RECORD_TRACK": 15.45,
             "LOSS_RECORD_TRACK": -4.75,
             "GOAL_MET": true,
             "TRAILING_CROSSED": true,
             "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": -0.0583207,
-            "TRAILING_PROFIT": -0.02916035
+            "PROFIT_GOAL": -0.0728928,
+            "TRAILING_PROFIT": -0.0364464
         }
     },
     "EURUSD": {
@@ -217,36 +217,36 @@
             "TRAILING_PROFIT": 0
         },
         "SHORT": {
-            "SIZE_SUM": 0.04,
-            "POSITION_COUNT": 4,
-            "AVG_PRICE": 0.8410825,
-            "CURRENT_PRICE": 0.84077,
-            "UNREALIZED_PROFIT": 1.4900000000000002,
-            "LAST_POSITION_TIME": "2025-04-10 13:30:49",
-            "LAST_POSITION_TIME_RAW": 1744291849,
+            "SIZE_SUM": 0.03,
+            "POSITION_COUNT": 3,
+            "AVG_PRICE": 0.8411166666666668,
+            "CURRENT_PRICE": 0.84054,
+            "UNREALIZED_PROFIT": 2.05,
+            "LAST_POSITION_TIME": "2025-04-10 13:35:05",
+            "LAST_POSITION_TIME_RAW": 1744292105,
             "PROFIT_RECORD_TRACK": 7.65,
             "LOSS_RECORD_TRACK": -1.1099999999999999,
             "GOAL_MET": true,
             "TRAILING_CROSSED": true,
             "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": 0.000336433,
-            "TRAILING_PROFIT": 0.0001682165
+            "PROFIT_GOAL": 0.00025233500000000007,
+            "TRAILING_PROFIT": 0.00012616750000000004
         },
         "NET": {
-            "SIZE_SUM": -0.04,
-            "POSITION_COUNT": 4,
-            "AVG_PRICE": 0.8410825,
-            "CURRENT_PRICE": 0.84077,
-            "UNREALIZED_PROFIT": 1.4900000000000002,
-            "LAST_POSITION_TIME": "2025-04-10 13:30:49",
-            "LAST_POSITION_TIME_RAW": 1744291849,
+            "SIZE_SUM": -0.03,
+            "POSITION_COUNT": 3,
+            "AVG_PRICE": 0.8411166666666668,
+            "CURRENT_PRICE": 0.84054,
+            "UNREALIZED_PROFIT": 2.05,
+            "LAST_POSITION_TIME": "2025-04-10 13:35:05",
+            "LAST_POSITION_TIME_RAW": 1744292105,
             "PROFIT_RECORD_TRACK": 7.65,
             "LOSS_RECORD_TRACK": -1.1099999999999999,
             "GOAL_MET": true,
             "TRAILING_CROSSED": true,
             "CLOSE_SIGNAL": true,
-            "PROFIT_GOAL": -0.000336433,
-            "TRAILING_PROFIT": -0.0001682165
+            "PROFIT_GOAL": -0.00025233500000000007,
+            "TRAILING_PROFIT": -0.00012616750000000004
         }
     }
 }
