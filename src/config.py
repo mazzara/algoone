@@ -45,7 +45,10 @@ def load_allowed_symbols():
     if os.path.exists(SYMBOLS_CONFIG_FILE):
         with open(SYMBOLS_CONFIG_FILE, 'r') as file:
             return json.load(file).get('SYMBOLS_ALLOWED', [])
-    return ['BTCUSD', 'ETHUSD', 'Crude-F', 'EURUSD', 'GBPUSD', 'USDJPY', 'USDCHF', 'XAUUSD' ] # Default
+    return ['BTCUSD', 'ETHUSD', 'Crude-F', 'EURUSD', 'GBPUSD',
+            'Coffee', 'Sugar', 'Corn', 'Soybeans',
+            'EUSTX50', 'DAX', 'FTSE', 'SP500',
+            'USDJPY', 'USDCHF', 'XAUUSD' ] # Default
 
 SYMBOLS_ALLOWED = load_allowed_symbols()
 

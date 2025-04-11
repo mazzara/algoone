@@ -35,6 +35,46 @@
                 "ScalpADX"
             ]
         },
+        "Coffee": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "Sugar": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "Corn": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "Soybeans": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "EUSTX50": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "DAX": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "FTSE": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
+        "SP500": {
+            "indicators": [
+                "ScalpADX"
+            ]
+        },
         "XAUUSD": {
             "indicators": [
                 "ScalpADX"
