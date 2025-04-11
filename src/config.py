@@ -2,6 +2,7 @@
 import os
 import json
 
+
 # ==== Base Directories ==== #
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 HARD_MEMORY_DIR = os.path.join(BASE_DIR, 'hard_memory')
@@ -41,11 +42,19 @@ SYMBOLS_CONFIG_FILE = os.path.join(HARD_MEMORY_DIR, 'symbols_allowed.json')
 FOREX_MAJORS = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDCHF', 'USDCAD', 'AUDUSD', 'NZDUSD']
 
 def load_allowed_symbols():
-    """Load SYMBOLS_ALLOWED from a file."""
+    """
+    Load SYMBOLS_ALLOWED from a file.
+
+    Return a list of allowed symbols. If the file does not exist
+
+    4 digit function signature: 2901
+    """
     if os.path.exists(SYMBOLS_CONFIG_FILE):
         with open(SYMBOLS_CONFIG_FILE, 'r') as file:
             return json.load(file).get('SYMBOLS_ALLOWED', [])
-    return ['BTCUSD', 'ETHUSD', 'Crude-F', 'EURUSD', 'GBPUSD',
+
+    return ['BTCUSD', 'ETHUSD', 'Crude-F', 'SpotCrude', 'EURUSD', 'GBPUSD',
+            'Brent-F', 'SpotBrent', 'NaturalGas', 'Gold', 'Silver',
             'Coffee', 'Sugar', 'Corn', 'Soybeans',
             'EUSTX50', 'DAX', 'FTSE', 'SP500',
             'USDJPY', 'USDCHF', 'XAUUSD' ] # Default
@@ -53,8 +62,8 @@ def load_allowed_symbols():
 SYMBOLS_ALLOWED = load_allowed_symbols()
 
 # ==== Trade Settings ==== #
-CLOSE_PROFIT_THRESHOLD = 1.0/100.0  # 1.0% profit
+CLOSE_PROFIT_THRESHOLD = 5.0/100.0  # 5.0% profit
 CLOSE_PROFIT_DOLLAR_THRESHOLD = 0.25  # $0.25 profit
 TRAILING_PROFIT_THRESHHOLD = 0.5/100.0  # 0.5% profit
 DEFAULT_VOLATILITY = 0.03
-DEFAULT_ATR_MULTIPLYER = 2.0
+DEFAULT_ATR_MULTIPLYER = 3.0

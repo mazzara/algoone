@@ -60,7 +60,7 @@ def calculate_sma(prices, period):
     return sum(prices[-period:]) / period
 
 def calculate_scalp_adx(symbol, period=14, threshold=20,
-                        sma_short_period=9, sma_long_period=21):
+                        sma_short_period=9, sma_long_period=21, **kwargs):
     """
     Calculate a ScalpADX indicator:
     
@@ -75,6 +75,18 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
     
     The result is passed to indicator_result so that it can be stored/ingested by other modules.
     """
+
+    # Get latest price if tick not passed
+    tick = kwargs.get("tick")
+    if not tick:
+        tick = mt5.symbol_info_tick(symbol)
+
+    if not tick:
+        logger.error(f"[ScalpADX] Tick unavailable for {symbol}")
+        return None
+
+    price = tick.bid
+
     # Request enough bars for both ADX and SMA computations.
     # We use 200 bars for ADX (as in your existing function) and ensure at least sma_long_period bars.
     required_bars = max(200, sma_long_period)
@@ -102,12 +114,23 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
     minus_di = adx_data["values"]["minus_di"]
 
     # Decide on the trading signal
+    # if adx_value <= threshold:
+    #     signal = "NO SIGNAL"
+    # else:
+        # if plus_di > minus_di and short_sma > long_sma:
+        #     signal = "BUY"
+        # elif minus_di > plus_di and short_sma < long_sma:
+        #     signal = "SELL"
+        # else:
+        #     signal = "HOLD"
+
+    # Testing with tick filtering
     if adx_value <= threshold:
         signal = "NO SIGNAL"
     else:
-        if plus_di > minus_di and short_sma > long_sma:
+        if plus_di > minus_di and short_sma > long_sma and price < short_sma:
             signal = "BUY"
-        elif minus_di > plus_di and short_sma < long_sma:
+        elif minus_di > plus_di and short_sma < long_sma and price > short_sma:
             signal = "SELL"
         else:
             signal = "HOLD"

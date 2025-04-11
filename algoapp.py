@@ -55,8 +55,8 @@ if __name__ == "__main__":
 
         # Listen to ticks for all symbols, relax and let it roll.
         try:
-            listen_to_ticks(forex_mode=True,
-                            only_major_forex=True,
+            listen_to_ticks(forex_mode=False,
+                            only_major_forex=False,
                             on_tick=on_tick)
         except KeyboardInterrupt:
             logger.info("[MAIN EXCEPTION] :: Tick listener stopped by user.")

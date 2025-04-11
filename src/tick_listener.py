@@ -5,13 +5,10 @@ import random
 from src.logger_config import logger
 from src.config import SYMBOLS_ALLOWED
 
+
 # Store last tick data for comparison
 last_ticks = {}
 
-# Define major Forex symbols
-# FOREX_MAJORS = ["EURUSD", "USDJPY", "GBPUSD", "USDCHF", "USDCAD", "AUDUSD", "NZDUSD"]
-# FOREX_MAJORS = ['EURUSD', 'BTCUSD']
-# FOREX_MAJORS = ['BTCUSD']
 
 def get_forex_symbols(limit=5, only_major_forex=False):
     """
@@ -46,7 +43,7 @@ def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False, on
     global last_ticks
 
     if forex_mode:
-        symbols = get_forex_symbols(5, only_major_forex=only_major_forex)  # Development mode: 5 random Forex symbols
+        symbols = get_forex_symbols(200, only_major_forex=only_major_forex)  # Development mode: 5 random Forex symbols
     else:
         symbols = [s.name for s in mt5.symbols_get()]  # Production mode: all active symbols
 
@@ -98,9 +95,9 @@ if __name__ == "__main__":
 
     if connect():
         try:
-            forex_mode = True
-            only_major_forex = True
-            listen_to_ticks(forex_mode=forex_mode, only_major_forex=True)
+            forex_mode = False
+            only_major_forex = False
+            listen_to_ticks(forex_mode=forex_mode, only_major_forex=False)
         except KeyboardInterrupt:
             logger.info("Tick listener stopped by user.")
         finally:

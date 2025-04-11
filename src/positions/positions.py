@@ -7,16 +7,14 @@ from datetime import datetime
 import time
 from src.config import HARD_MEMORY_DIR, POSITIONS_FILE
 from src.tools.server_time import get_server_time_from_tick
-
-
-# Ensure the `hard_memory` directory exists
-# HARD_MEMORY_DIR = "hard_memory"
-# os.makedirs(HARD_MEMORY_DIR, exist_ok=True)  # Cleaner directory check
+from src.portfolio.position_state_tracker import process_all_positions
 
 
 def save_positions(positions):
     """
     Saves open positions to a JSON file.
+
+    4 digit function signature: 6737.
     """
     positions_data = []
 
@@ -45,14 +43,43 @@ def save_positions(positions):
             "comment": pos.comment
         })
 
-    data["positions"] = positions_data
+    # Resolving in-memory traking vs. stateless update issue.
+    # Load previously saved state if available
+    existing_data = {}
+    if os.path.exists(POSITIONS_FILE):
+        try:
+            with open(POSITIONS_FILE, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+        except Exception as e:
+            logger.warning(f"[WARN 6737] :: Failed to load existing position memory: {e}")
+
+    # Create a mapping by ticket for fast lookup
+    previous_map = {p['ticket']: p for p in existing_data.get("positions", [])}
+
+    logger.debug(
+        f"[Save Position 6737:10] :: Previous positions: {previous_map}"
+    )
+
+    # Merge in previous memory
+    for pos in positions_data:
+        prev = previous_map.get(pos["ticket"])
+        if prev:
+            pos["profit_chain"] = prev.get("profit_chain", [])
+            pos["peak_profit"] = prev.get("peak_profit", 0.0)
+        logger.debug(
+            f"[Save Position 6737:20] :: Merged position: {pos}"
+        )
+
+    data["positions"] = process_all_positions(positions_data)
 
     try:
         with open(POSITIONS_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
         logger.info(f"OK - Open positions saved to {POSITIONS_FILE}")
     except Exception as e:
-        logger.error(f"Oh No! - Failed to save positions: {e}")
+        logger.error(f"[Save Positions 6737:40] :: "
+                     f"Oh No! - Failed to save positions: {e}"
+                     )
 
 
 def get_positions():
@@ -66,6 +93,7 @@ def get_positions():
         # for pos in positions:
         #     # logger.info(f"Ticket: {pos.ticket} {pos.symbol} {('BUY' if pos.type == 0 else 'SELL')} {pos.volume} lots @ {pos.price_open}")
         #     pass
+
         save_positions(positions)
         logger.info(f"Total open positions saved: {len(positions)}")
     else:

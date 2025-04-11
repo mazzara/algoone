@@ -111,17 +111,35 @@ def disconnect():
 def handle_connection_error(error_code, server, login):
     """
     Provides feedback on connection issues.
+
+    4 digit function signature: 0431
     """
     if error_code == -6:
-        logger.error(f"Authorization failed. Check your credentials.")
-        logger.error(f"Server: {server}, Login: {login}")
-        logger.error("Possible causes: Invalid credentials, server down, or invalid server.")
+        logger.error(
+            "[ERROR 0431] :: "
+            "Authorization failed. Check your credentials."
+        )
+        logger.error(
+            "[ERROR 0431] :: "
+            f"Server: {server}, Login: {login}"
+        )
+        logger.error(
+            "[ERROR 0431] :: "
+            "Check for: Invalid credentials, server down, or invalid server."
+        )
     elif error_code == 5:
-        logger.error("No connection to trade server. Check your internet connection.")
+        logger.error(
+            "[ERROR 0431] :: "
+            "No connection to trade server. Check your internet connection."
+        )
     elif error_code == 10014:
-        logger.error("Terminal not connected or already closed.")
+        logger.error(
+            "[ERROR 0431] :: "
+            "Terminal not connected or already closed."
+        )
     else:
-        logger.warning(f"Connection error: {error_code}")
+        logger.warning(f"[WARNING 0431] :: Connection error: {error_code}")
+
 
 # Run connection test
 if __name__ == "__main__":

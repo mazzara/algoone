@@ -75,7 +75,7 @@ def load_config():
             json.dump(default_config, file, indent=4)
         return default_config
 
-def get_indicator_signal(indicator_config, symbol):
+def get_indicator_signal(indicator_config, symbol, **kwargs):
     """
     Dinamically load indicator module and calls its signal function.
     4 digit function signature: 1918
@@ -87,7 +87,9 @@ def get_indicator_signal(indicator_config, symbol):
     try:
         mod = importlib.import_module(module_name)
         func = getattr(mod, function_name)
-        result = func(symbol, **params)
+        # result = func(symbol, **params)
+        merged_params = {**params, **kwargs}  # kwargs takes precedence
+        result = func(symbol, **merged_params)
         logger.info(f"{indicator_config.get('name')} signal: {result}")
         return result
     except Exception as e:
@@ -145,7 +147,7 @@ def dispatch_position_manager_indicator(symbol, indicator_name):
     return signals
 
 
-def dispatch_signals(symbol):
+def dispatch_signals(symbol, **kwargs):
     """
     Loads config, calls each indicator and saves results.
     4 digit function signature: 1715

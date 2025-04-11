@@ -394,13 +394,32 @@ def open_trade(symbol, lot_size=0.01):
 
     atr_pct = atr / tick.bid if tick and tick.bid else 0
 
-    MIN_ART_PCT = 0.2/100
+    MIN_ART_PCT = 0.05/100.0
 
     if atr_pct < MIN_ART_PCT:
-        logger.error(f"[ERROR 1700:50] :: ATR percentage too low for {symbol}: {atr_pct:.6f}")
+        logger.error(
+            f"[TRADE-LOGIC 1700:50] :: "
+            f"atr_pct is low for {symbol}: {atr_pct:.6f} | "
+            f"Expected > {MIN_ART_PCT:.6f} | "
+        )
         return False
+    else:
+        logger.info(
+            f"[TRADE-LOGIC 1700:50] :: "
+            f"atr_pct for {symbol}: {atr_pct:.6f} | "
+            f"Expected > {MIN_ART_PCT:.6f} | "
+            f"Qualified ATR "
+        )
 
-    logger.debug(f"[DEBUG 1700:51] :: ATR for {symbol}: {atr} | Spread: {spread} | Tick: {tick.bid} | Time: {tick.time} | ATR Multiplier: {DEFAULT_ATR_MULTIPLYER} | Volatility: {DEFAULT_VOLATILITY} | Lot Size: {lot_size} | Slippage: 20 | Magic Number: {random.randint(100000, 999999)} | Comment: 'Python Auto Trading Bot' | Type Filling: mt5.ORDER_FILLING_IOC")
+    logger.debug(
+        f"[DEBUG 1700:51] :: "
+        f"ATR for {symbol}: {atr} | Spread: {spread} | Tick: {tick.bid} | "
+        f"Time: {tick.time} | ATR Multiplier: {DEFAULT_ATR_MULTIPLYER} | "
+        f"Volatility: {DEFAULT_VOLATILITY} | Lot Size: {lot_size} | "
+        f"Slippage: 20 | Magic Number: {random.randint(100000, 999999)} | "
+        f"Comment: 'Python Auto Trading Bot' | "
+        f"Type Filling: mt5.ORDER_FILLING_IOC"
+    )
 
     if spread <= atr:
         allow_buy, allow_sell = get_open_trade_clearance(symbol)

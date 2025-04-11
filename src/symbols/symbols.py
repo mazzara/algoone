@@ -66,14 +66,22 @@ def get_symbol_category(symbol_info):
 def get_symbols():
     """
     Retrieves all available symbols from MT5, categorizes them, and saves them.
+    
+    4 digit function signature: 0855
     """
     symbols = mt5.symbols_get()
 
     if symbols:
-        logger.info(f"Retrieved {len(symbols)} symbols from MetaTrader 5")
+        logger.info(
+            f"[INFO 0855] :: "
+            f"Retrieved {len(symbols)} symbols from MetaTrader 5"
+        )
         save_symbols(symbols)
     else:
-        logger.warning("No symbols retrieved from MetaTrader 5")
+        logger.warning(
+            "[WARNING 0855] :: "
+            "No symbols retrieved from MetaTrader 5"
+        )
         save_symbols([])
 
     return symbols
