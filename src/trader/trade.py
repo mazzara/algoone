@@ -23,7 +23,8 @@ from src.config import (
         CLEARANCE_HEAT_FILE,
         CLEARANCE_LIMIT_FILE,
         DEFAULT_VOLATILITY,
-        DEFAULT_ATR_MULTIPLYER)
+        DEFAULT_ATR_MULTIPLYER,
+        MIN_ART_PCT)
 
 # Cash trade limits to avoid reloading
 trade_limits_cache = None
@@ -394,20 +395,22 @@ def open_trade(symbol, lot_size=0.01):
 
     atr_pct = atr / tick.bid if tick and tick.bid else 0
 
-    MIN_ART_PCT = 0.05/100.0
+    # MIN_ART_PCT = 0.05/100.0
 
-    if atr_pct < MIN_ART_PCT:
+    min_art_pct = MIN_ART_PCT
+
+    if atr_pct < min_art_pct:
         logger.error(
             f"[TRADE-LOGIC 1700:50] :: "
             f"atr_pct is low for {symbol}: {atr_pct:.6f} | "
-            f"Expected > {MIN_ART_PCT:.6f} | "
+            f"Expected > {min_art_pct:.6f} | "
         )
         return False
     else:
         logger.info(
             f"[TRADE-LOGIC 1700:50] :: "
             f"atr_pct for {symbol}: {atr_pct:.6f} | "
-            f"Expected > {MIN_ART_PCT:.6f} | "
+            f"Expected > {min_art_pct:.6f} | "
             f"Qualified ATR "
         )
 

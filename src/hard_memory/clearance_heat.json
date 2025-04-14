@@ -1,10 +1,10 @@
 {
-    "symbol": "EUSTX50",
-    "current_tick_time": 1744411635.0,
+    "symbol": "BTCUSD",
+    "current_tick_time": 1744644734.0,
     "last_long_time": 0,
     "last_short_time": 0,
-    "long_time_diff": 1744411635.0,
-    "short_time_diff": 1744411635.0,
+    "long_time_diff": 1744644734.0,
+    "short_time_diff": 1744644734.0,
     "cooldown_limit": 300,
     "allow_buy": true,
     "allow_sell": true

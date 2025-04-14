@@ -1,12 +1,12 @@
 {
     "login": 61342026,
-    "balance": 797.55,
-    "equity": 795.21,
-    "margin": 41.83,
-    "free_margin": 753.38,
+    "balance": 780.44,
+    "equity": 782.47,
+    "margin": 16.89,
+    "free_margin": 765.58,
     "leverage": 200,
     "currency": "USD",
     "trade_mode": 0,
-    "my_local_time": "2025-04-11 16:19:16",
-    "my_local_timestamp": 1744399156.820247
+    "my_local_time": "2025-04-14 07:33:06",
+    "my_local_timestamp": 1744626786.202544
 }
