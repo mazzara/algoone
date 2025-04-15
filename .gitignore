@@ -4,6 +4,12 @@
 .env
 .env.*
 
+# Ignore config files in config dir
+config/
+
+# Ignore folder hard_memory files - these are just for runtime
+hard_memory/
+
 # Ignore logs
 logs/
 *.log

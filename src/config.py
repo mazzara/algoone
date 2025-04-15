@@ -20,18 +20,20 @@ ensure_directories_exist()
 
 
 # ==== File Paths ==== #
+# Config files #
+PAUSE_FILE = os.path.join(CONFIG_DIR, 'pause.json')
+INDICATOR_CONFIG_FILE = os.path.join(CONFIG_DIR, 'indicator_config.json')
+TRADE_LIMIT_FILE = os.path.join(CONFIG_DIR, 'trade_limits_config.json')
+# Trade files #
 BROKER_SYMBOLS = os.path.join(HARD_MEMORY_DIR, 'symbols.json')
 ACCOUNT_INFO_FILE = os.path.join(HARD_MEMORY_DIR, 'account_info.json')
-TRADE_LIMIT_FILE = os.path.join(HARD_MEMORY_DIR, 'trade_limits_config.json')
 TRADE_DECISIONS_FILE = os.path.join(HARD_MEMORY_DIR, 'trade_decisions.json')
 POSITIONS_FILE = os.path.join(HARD_MEMORY_DIR, 'positions.json')
 TOTAL_POSITIONS_FILE = os.path.join(HARD_MEMORY_DIR, 'total_positions.json')
 INDICATOR_RESULTS_FILE = os.path.join(HARD_MEMORY_DIR, 'indicator_results.json')
-INDICATOR_CONFIG_FILE = os.path.join(HARD_MEMORY_DIR, 'indicator_config.json')
 ORDERS_FILE = os.path.join(HARD_MEMORY_DIR, 'orders.json')
 CLEARANCE_HEAT_FILE = os.path.join(HARD_MEMORY_DIR, 'clearance_heat.json')
 CLEARANCE_LIMIT_FILE = os.path.join(HARD_MEMORY_DIR, 'clearance_limit.json')
-PAUSE_FILE = os.path.join(CONFIG_DIR, 'pause.json')
 
 # ==== Logger Settings ==== #
 LOG_FILE = os.path.join(LOG_DIR, 'app.log')

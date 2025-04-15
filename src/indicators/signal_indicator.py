@@ -154,7 +154,7 @@ def dispatch_signals(symbol, **kwargs):
     """
     config = load_config()
     global_indicators = config.get('indicators', [])
-    
+
     symbol_config = config.get('symbols', {}).get(symbol, {})
     allowed_indicator = symbol_config.get('indicators', [])
 
@@ -174,8 +174,12 @@ def dispatch_signals(symbol, **kwargs):
             if result is not None:
                 signals[indicator.get('name', 'unknown')] = result
 
-    logger.debug(f"[DEBUG 1715] :: Dispatching called signals for {symbol} and indicators: {global_indicators}")
-    logger.debug(f"[DEBUG 1715] :: Signals: {signals}")
+    logger.debug(
+        f"[DEBUG 1715:50] :: "
+        f"Dispatching called signals for {symbol} "
+        f"and indicators: {global_indicators}"
+    )
+    logger.debug(f"[DEBUG 1715:51] :: Signals: {signals}")
     return signals
 
 

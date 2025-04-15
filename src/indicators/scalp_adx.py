@@ -46,7 +46,6 @@ def indicator_result(symbol, indicator, signal, value,
             "my_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "tick_timestamp": get_server_time_from_tick(symbol),
             "tick_time": datetime.utcfromtimestamp(get_server_time_from_tick(symbol)).strftime("%Y-%m-%d %H:%M:%S")
-
         }
     }
     # write_to_hard_memory(data)
@@ -59,54 +58,206 @@ def calculate_sma(prices, period):
         return None
     return sum(prices[-period:]) / period
 
+
+def calculate_sma_slope(prices, sma_period=9, lookback_bars=3):
+    """
+    Calculate the slope of an SMA over a specified lookback period.
+
+    Returns:
+        dict or None
+    """
+    if len(prices) < sma_period + lookback_bars:
+        return None
+
+    sma_now = sum(prices[-sma_period:]) / sma_period
+    sma_past = sum(prices[-(sma_period + lookback_bars):-lookback_bars]) / sma_period
+
+    if sma_past == 0:
+        return None
+
+    slope = sma_now - sma_past
+    slope_pct = slope / sma_past * 100
+
+    return {
+        "slope": slope,
+        "slope_pct": slope_pct,
+        "sma_now": sma_now,
+        "sma_past": sma_past
+    }
+
+
+def classify_slope(slope_data, min_slope_pct=0.01):
+    """
+    Classify the slope trend as UP, DOWN or FLAT.
+
+    Args:
+        slope_data (dict): Output from calculate_sma_slope().
+        min_slope_pct (float): Minimum slope % to consider as a trend.
+
+    Returns:
+        str: One of ['UP', 'DOWN', 'FLAT'] or 'UNDEFINED' if data is invalid.
+    """
+    if not slope_data or 'slope_pct' not in slope_data:
+        return 'UNDEFINED'
+
+    slope_pct = slope_data['slope_pct']
+
+    if slope_pct > min_slope_pct:
+        return 'UP'
+    elif slope_pct < -min_slope_pct:
+        return 'DOWN'
+    else:
+        return 'FLAT'
+
+
 def calculate_scalp_adx(symbol, period=14, threshold=20,
                         sma_short_period=9, sma_long_period=21, **kwargs):
     """
     Calculate a ScalpADX indicator:
-    
+
     - Uses the ADX calculation (with DI+ and DI- computed in calculate_adx)
-    - Computes two SMAs from closing prices: one short (default 9 bars) and one long (default 21 bars)
+    - Computes two SMAs from closing prices:
+        one short (default 9 bars) and
+        one long (default 21 bars)
+        - The short SMA is used to determine the slope.
     - Decides a signal:
         • If ADX is below the threshold: "NO SIGNAL"
         • If ADX is above threshold:
             - "LONG" if DI+ > DI- and short SMA > long SMA
             - "SHORT" if DI- > DI+ and short SMA < long SMA
             - Otherwise, "HOLD"
-    
-    The result is passed to indicator_result so that it can be stored/ingested by other modules.
+
+    - Evaluates slope using short SMA vs past short SMA (3-bar lookback by default)
+    - Skips ADX check if slope is classified as FLAT
+
+    The result is passed to indicator_result.
+    It is than can be stored/ingested by other modules.
+
+    4 digit signature: 3700
     """
 
     # Get latest price if tick not passed
     tick = kwargs.get("tick")
     if not tick:
         tick = mt5.symbol_info_tick(symbol)
+        logger.debug(
+            f"[ScalpADX 3700:10] :: Warning - revise calling function. "
+            f"Tick not passed, fetched from MT5: {symbol} | {tick}"
+        )
 
     if not tick:
-        logger.error(f"[ScalpADX] Tick unavailable for {symbol}")
+        logger.error(
+            f"[ScalpADX 3700:11] :: Escaped function. "
+            f"Tick unavailable for {symbol}"
+        )
         return None
 
     price = tick.bid
+    logger.debug(f"[ScalpADX 3700:12] Current price for {symbol}: {price}")
 
     # Request enough bars for both ADX and SMA computations.
-    # We use 200 bars for ADX (as in your existing function) and ensure at least sma_long_period bars.
+    # We use 200 bars for ADX (as in your existing function)
+    # ensure at least sma_long_period bars.
     required_bars = max(200, sma_long_period)
+    logger.debug(
+        f"[ScalpADX 3700:15] Required bars for {symbol}: {required_bars}"
+    )
+
     rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_M1, 0, required_bars)
+    logger.debug(
+        f"[ScalpADX 3700:16] Rates fetched for {symbol}: {len(rates)} bars"
+    )
+
     if rates is None or len(rates) < sma_long_period:
-        logger.error(f"Not enough data to calculate SMAs for {symbol}")
+        logger.error(
+            f"[ScalpADX 3700:20] :: Escaped function. "
+            f"Not enough data to calculate SMAs for {symbol}"
+            f" (required: {sma_long_period}, available: {len(rates)})"
+        )
         return None
 
     # Calculate SMAs using closing prices
     closing_prices = [bar['close'] for bar in rates]
     short_sma = calculate_sma(closing_prices, sma_short_period)
     long_sma = calculate_sma(closing_prices, sma_long_period)
+
     if short_sma is None or long_sma is None:
         logger.error(f"Failed to compute SMAs for {symbol}")
         return None
 
-    # Calculate ADX (which also computes DI+ and DI-) using your existing function
+    logger.debug(
+        f"[ScalpADX 3700:30] :: "
+        f"SMAs for {symbol}: Short: {short_sma:.2f} | Long: {long_sma:.2f}"
+    )
+
+    # # Calculate slope (as percent change over 3 bars)
+    # short_sma_3ago = calculate_sma(closing_prices[-(sma_short_period+3):-3], sma_short_period)
+    # logger.debug(
+    #     f"[ScalpADX 3700:31] :: "
+    #     f"Short SMA 3 bars ago for {symbol}: {short_sma_3ago:.2f}"
+    # )
+    # if not short_sma_3ago or short_sma_3ago == 0:
+    #     logger.warning(
+    #         f"[ScalpADX 3700:40] :: "
+    #         f"Escaped function calculate_scalp_adx "
+    #         f"Cannot calculate slope for {symbol}"
+    #     )
+    #     return None
+
+    # slope_pct = (short_sma - short_sma_3ago) / short_sma_3ago * 100
+    # min_slope_pct = 0.01  # 0.01% slope threshold to filter flat entries
+    # if abs(slope_pct) < min_slope_pct:
+    #     logger.debug(
+    #         f"[ScalpADX 3700:41] :: Escaped function. "
+    #         f"Slope filter: market too flat for {symbol} | Slope %: {slope_pct:.2f}"
+    #     )
+    #     return {
+    #         "indicator": "ScalpADX",
+    #         "signal": "HOLD",
+    #         "values": {
+    #             "adx": None,  # Not yet calculated
+    #             "plus_di": None,
+    #             "minus_di": None,
+    #             "sma_short": short_sma,
+    #             "sma_long": long_sma,
+    #             "slope_pct": slope_pct
+    #         }
+    #     }
+
+    
+    # Evaluate Slope 
+    slope_data = calculate_sma_slope(closing_prices, sma_short_period, lookback_bars=3)
+    slope = classify_slope(slope_data, min_slope_pct=0.01)
+    slope_pct = slope_data["slope_pct"] if slope_data else None
+
+    logger.debug(
+                f"[ScalpADX 3700:42] :: Slope classification for {symbol}: {slope}"
+    )
+
+    # If slope is FLAT, we can skip the ADX calculation
+    # if slope == "FLAT":
+    #     logger.debug(
+    #         f"[ScalpADX 3700:42] :: Escaped function. "
+    #         f"Slope filter: market too flat for {symbol} | Slope: {slope}"
+    #     )
+    #     return {
+    #         "indicator": "ScalpADX",
+    #         "signal": "HOLD",
+    #         "values": {
+    #             "adx": None,  # Not yet calculated
+    #             "plus_di": None,
+    #             "minus_di": None,
+    #             "sma_short": short_sma,
+    #             "sma_long": long_sma,
+    #             "slope_pct": slope_data["slope_pct"]
+    #         }
+    #     }
+
+
+    # Calculate ADX (which also computes DI+ and DI-) using existing function
     adx_data = calculate_adx(symbol, period=period)
     if adx_data is None:
-        logger.error(f"ADX calculation failed for {symbol}")
+        logger.error(f"[ScalpADX 3700:43] :: ADX calculation failed for {symbol}")
         return None
 
     adx_value = adx_data["values"]["adx"]
@@ -124,16 +275,53 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
         # else:
         #     signal = "HOLD"
 
+    logger.debug(
+            f"[ScalpADX 3700:45] :: check signal parameters: " 
+            f"ADX for {symbol}: {adx_value:.2f} | "
+            f"+DI: {plus_di:.2f} | -DI: {minus_di:.2f} | "
+            f"SMA Fast: {short_sma:.2f} | SMA Slow: {long_sma:.2f} | "
+            f"Slope %: {slope_pct:.2f}"
+        )
+
     # Testing with tick filtering
     if adx_value <= threshold:
         signal = "NO SIGNAL"
+        logger.debug(
+            f"[ScalpADX 3700:48:1] :: "
+            f"ADX below threshold for {symbol} | ADX: {adx_value:.2f} | Signal: {signal}"
+        )
     else:
+        # NO SLOPE VERIFICATION
+        # note: here, long_sma and short_sma has nothing to do with LONG or SHORT position. 
+        # It was a naming decision, maybe better if were fast_sma and slow_sma. But well, changing names at this point requires too much code review, so I'll procrastinate this issue. Maybe never review - kkkk.
         if plus_di > minus_di and short_sma > long_sma and price < short_sma:
             signal = "BUY"
+            logger.debug(
+                    f"[ScalpADX 3700:48:2] :: "
+                    f"BUY signal for {symbol} | ADX: {adx_value:.2f} | Signal: {signal}"
+            )
         elif minus_di > plus_di and short_sma < long_sma and price > short_sma:
             signal = "SELL"
+            logger.debug(
+                    f"[ScalpADX 3700:48:3] :: "
+                    f"SELL signal for {symbol} | ADX: {adx_value:.2f} | Signal: {signal}"
+            )
         else:
             signal = "HOLD"
+            logger.debug(
+                    f"[ScalpADX 3700:48:4] :: "
+                    f"HOLD signal for {symbol} | ADX: {adx_value:.2f} | Signal: {signal}"
+            )
+
+
+        #
+        # SLOPE VERIFICATION
+        # if plus_di > minus_di and short_sma > long_sma and price < short_sma and slope_pct > min_slope_pct:
+        #     signal = "BUY"
+        # elif minus_di > plus_di and short_sma < long_sma and price > short_sma and slope_pct < -min_slope_pct:
+        #     signal = "SELL"
+        # else:
+        #     signal = "HOLD"
 
     # Log and persist the indicator result via the shared function.
     indicator_result(
@@ -141,9 +329,23 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
         "ScalpADX",
         signal,
         adx_value,
-        {"plus_di": plus_di, "minus_di": minus_di, "sma_short": short_sma, "sma_long": long_sma},
-        {"period": period, "threshold": threshold,
-         "sma_short_period": sma_short_period, "sma_long_period": sma_long_period}
+        {"plus_di": plus_di, 
+         "minus_di": minus_di, 
+         "sma_short": short_sma, 
+         "sma_long": long_sma,
+         **slope_data
+         },
+        {"period": period, 
+         "threshold": threshold,
+         "sma_short_period": sma_short_period, 
+         "sma_long_period": sma_long_period}
+    )
+
+    logger.debug(
+        f"[ScalpADX 3700:50] :: Signal for {symbol}: {signal} | "
+        f"ADX: {adx_value:.2f} | +DI: {plus_di:.2f} | -DI: {minus_di:.2f} | "
+        f"SMA Short: {short_sma:.2f} | SMA Long: {long_sma:.2f} | "
+        f"Slope %: {slope_pct:.2f}"
     )
 
     # Return a result dictionary for further processing if needed.
@@ -155,6 +357,7 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
             "plus_di": plus_di,
             "minus_di": minus_di,
             "sma_short": short_sma,
-            "sma_long": long_sma
+            "sma_long": long_sma,
+            **slope_data
         }
     }

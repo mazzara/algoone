@@ -11,6 +11,7 @@ from src.portfolio.total_positions import get_total_positions, total_positions_c
 from src.positions.positions import get_positions
 from src.indicators.adx_indicator import calculate_adx
 from src.indicators.signal_indicator import dispatch_signals, dispatch_position_manager_indicator
+from src.journal.position_journal import log_open_trade, log_close_trade, append_tracking
 from src.trader.awareness import evaluate_profit_awareness
 from src.config import (
         HARD_MEMORY_DIR,
@@ -361,7 +362,6 @@ def aggregate_signals(signals):
 
 
 def open_trade(symbol, lot_size=0.01):
-    # Generate function description and random 4 digit number
     """
     Open a trade based on the symbol and lot size.
     This function checks the current market conditions, trade limits, and cooldown periods before executing a trade.
@@ -372,18 +372,26 @@ def open_trade(symbol, lot_size=0.01):
     global trade_limits_cache
     global total_positions_cache
 
-    logger.debug(f"[DEBUG 1700] :: function open_trade({symbol}, {lot_size}) globals: trade_limits_cache: {trade_limits_cache}, total_positions_cache: {total_positions_cache}")
+    logger.debug(
+        f"[DEBUG 1700:10] :: "
+        f"\n[1700:10] function open_trade({symbol}, {lot_size}) "
+        f"\n[1700:10] globals: trade_limits_cache: {trade_limits_cache}, "
+        f"\n[1700:10] total_positions_cache: {total_positions_cache}"
+    )
 
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
-        logger.error(f"[ERROR 1700] :: Failed to get tick data for {symbol}")
+        logger.error(f"[ERROR 1700:12] :: Failed to get tick data for {symbol}")
         return False
 
     spread = tick.ask - tick.bid
-    logger.info(f"[INFO 1700] TICK: {symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {spread} | Time: {tick.time}")
+    logger.info(
+        f"[INFO 1700:15] TICK: {symbol} | "
+        f"Bid: {tick.bid} | Ask: {tick.ask} | "
+        f"Spread: {spread} | Time: {tick.time}"
+    )
 
-    # Call ATR 
-    # atr = calculate_adx(symbol, period=14)
+    # Call ATR - it is a core component of opening a trade logic.
     atr_calculation = dispatch_position_manager_indicator(symbol, 'ATR')
     # Properly extract ATR like in manage_trade. Latter YOU SHOULD (must) refactor this.
     atr_result = atr_calculation.get("ATR")
@@ -401,14 +409,14 @@ def open_trade(symbol, lot_size=0.01):
 
     if atr_pct < min_art_pct:
         logger.error(
-            f"[TRADE-LOGIC 1700:50] :: "
+            f"[TRADE-LOGIC 1700:50:1] :: "
             f"atr_pct is low for {symbol}: {atr_pct:.6f} | "
             f"Expected > {min_art_pct:.6f} | "
         )
         return False
     else:
         logger.info(
-            f"[TRADE-LOGIC 1700:50] :: "
+            f"[TRADE-LOGIC 1700:50:2] :: "
             f"atr_pct for {symbol}: {atr_pct:.6f} | "
             f"Expected > {min_art_pct:.6f} | "
             f"Qualified ATR "
@@ -426,21 +434,43 @@ def open_trade(symbol, lot_size=0.01):
 
     if spread <= atr:
         allow_buy, allow_sell = get_open_trade_clearance(symbol)
+        logger.debug(
+            f"[DEBUG 1700:60] :: "
+            f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+        )
 
         signals = dispatch_signals(symbol)
+        logger.debug(
+            f"[DEBUG 1700:61] :: "
+            f"Signals for {symbol}: {signals}"
+        )
 
         position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
+        logger.debug(
+            f"[DEBUG 1700:62] :: "
+            f"Position Manager for {symbol}: {position_manager}"
+        )
+
         trailing_stop = None
         if position_manager:
             trailing_stop = position_manager.get('value', {})
 
-        logger.debug(f"[DEBUG 1700] :: Trade Clearance for {symbol}: {allow_buy}, {allow_sell}")
+        logger.debug(
+            f"[DEBUG 1700:70] :: "
+            f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+        )
 
-        logger.info(f"[INFO 1700] :: Trade Limits {symbol}: {allow_buy}, {allow_sell}")
+        logger.info(
+            f"[INFO 1700:71] :: "
+            f"Trade Limits {symbol}: {allow_buy}, {allow_sell}"
+        )
 
         # Agregate the Signals to get a consensus
         consensus_signal = aggregate_signals(signals)
-        logger.info(f"[INFO 1700] :: Consensus Signal (open_trade): {consensus_signal}")
+        logger.info(
+            f"[INFO 1700:72] :: "
+            f"Consensus Signal (open_trade): {symbol} {consensus_signal}"
+        )
         if consensus_signal == 'NONE':
             return False
 
@@ -451,16 +481,36 @@ def open_trade(symbol, lot_size=0.01):
             sl = tick.bid - (tick.ask * DEFAULT_VOLATILITY)
             tp = tick.bid + (tick.ask * DEFAULT_VOLATILITY * 2.0)
             result = open_buy(symbol, lot_size, stop_loss=sl, take_profit=tp)
+            logger.debug(
+                f"[DEBUG 1700:73] :: "
+                f"System called open_buy({symbol}, {lot_size}) "
+                f"with sl: {sl}, tp: {tp}"
+                )
             if result:
                 trade_executed = "BUY"
+                logger.debug(
+                    f"[DEBUG 1700:74] :: "
+                    f"Trade executed: {trade_executed} for {symbol} "
+                    f"with result: {result}"
+                )
 
         # elif trade_signal == "SELL" and allow_sell:
         elif consensus_signal == "SELL" and allow_sell:
             sl = tick.bid + (tick.ask * DEFAULT_VOLATILITY)
             tp = tick.bid - (tick.ask * DEFAULT_VOLATILITY * 2.0)
             result = open_sell(symbol, lot_size, stop_loss=sl, take_profit=tp)
+            logger.debug(
+                    f"[DEBUG 1700:75] :: "
+                    f"System called open_sell({symbol}, {lot_size}) "
+                    f"with sl: {sl}, tp: {tp}"
+                )
             if result:
                 trade_executed = "SELL"
+                logger.debug(
+                    f"[DEBUG 1700:76] :: "
+                    f"Trade executed: {trade_executed} for {symbol} "
+                    f"with result: {result}"
+                )
 
         if trade_executed:
             trade_data = {
@@ -652,6 +702,7 @@ def close_trade(symbol=None):
 
             if close_result.retcode == mt5.TRADE_RETCODE_DONE:
                 logger.info(f"[INFO 1038] :: Successfully closed position on {symbol}")
+                log_close_trade(ticket, close_reason="TP Triggered", final_profit=profit)
             else:
                 logger.error(f"[ERROR 1038] :: Failed to close position on {symbol}. Error Code: {close_result.retcode}, Message: {close_result.comment}")
 
@@ -767,6 +818,8 @@ def manage_trade(symbol):
         volume = pos.get("volume", 0)
         recommended_sl = None
 
+        append_tracking(ticket, current_profit=pos["profit"])
+
         BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
 
         # Evaluate Awareness
@@ -850,6 +903,9 @@ def execute_trade(order):
 
     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
         logger.info(f"Trade opened: {result.order}")
+        ticket = result.order
+        indicators = {"adx": 22.4, "sma_short": 102.3, "slope": "UP"}  # example - make it dynamic latter
+        log_open_trade(ticket, order["symbol"], "BUY", order["volume"], order["price"], indicators)
         return True
     else:
         logger.error(f"Trade failed: {result.retcode}")

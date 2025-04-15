@@ -23,8 +23,6 @@ def update_position_profit_chain(position, profit_step=0.01, max_chain_length=10
     Updates the profit_chain and peak_profit fields of a position.
     Modifies the position dict in-place.
     """
-
-    profit = position.get("profit", 0.0)
     profit_pct = calculate_profit_pct(position)
 
     # Initialize profit_chain if it doesn't exist
@@ -49,10 +47,6 @@ def update_position_profit_chain(position, profit_step=0.01, max_chain_length=10
     if len(chain) > max_chain_length:
         chain = chain[-max_chain_length:]
 
-    # Limit the lengh of the chain
-    # if len(position["profit_chain"]) > max_chain_length:
-    #     position["profit_chain"] = position["profit_chain"][-max_chain_length:]
-
     position["profit_chain"] = chain
 
     return position
@@ -74,13 +68,27 @@ def check_trailing_retrace(position, retrace_pct=0.382):
     return retraced
 
 
+def check_failed_bounce(position, lookback=3):
+    """
+    If peak is negative and last 3 profits show lower lows, exit.
+    """
+    peak = position.get("peak_profit", 0.0)
+    chain = position.get("profit_chain", [])
+
+    if peak >= 0 or len(chain) < lookback:
+        return False
+
+    recent = chain[-lookback:]
+    return all(x > y for x, y in zip(recent, recent[1:]))
+
+
 def process_position_state(position):
     """
     Updates a single position with profit_chain tracking and close_signal logic.
     Returns updated position.
     """
     updated = update_position_profit_chain(position)
-    if check_trailing_retrace(updated):
+    if check_trailing_retrace(updated) or check_failed_bounce(updated):
         updated["CLOSE_SIGNAL"] = True
     else:
         updated["CLOSE_SIGNAL"] = False

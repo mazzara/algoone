@@ -1,0 +1,123 @@
+{
+    "144106786": {
+        "symbol": "BTCUSD",
+        "direction": "BUY",
+        "volume": 0.01,
+        "entry_price": 84070.9,
+        "open_time": "2025-04-15 17:40:54",
+        "indicators": {
+            "adx": 22.4,
+            "sma_short": 102.3,
+            "slope": "UP"
+        },
+        "rationale": null,
+        "profit_chain": [
+            -0.13,
+            0.03,
+            -0.32,
+            -0.4,
+            -0.4,
+            -0.16,
+            -0.16,
+            -0.16,
+            -0.23,
+            -0.23,
+            -0.2,
+            0.06,
+            -0.03,
+            0.05,
+            0.04,
+            0.0,
+            0.0,
+            -0.03,
+            0.14,
+            0.14,
+            -0.09,
+            -0.09,
+            -0.25,
+            -0.26,
+            -0.07,
+            -0.05,
+            -0.04,
+            -0.35,
+            -0.4,
+            -0.16,
+            -0.3,
+            -0.3,
+            -0.27,
+            -0.27,
+            -0.28,
+            -0.53,
+            -0.58,
+            -0.6,
+            -0.62,
+            -0.62,
+            -0.59,
+            -0.61
+        ],
+        "peak_profit": 0.14,
+        "closed": false
+    },
+    "144107525": {
+        "symbol": "BTCUSD",
+        "direction": "BUY",
+        "volume": 0.01,
+        "entry_price": 84033.6,
+        "open_time": "2025-04-15 17:44:04",
+        "indicators": {
+            "adx": 22.4,
+            "sma_short": 102.3,
+            "slope": "UP"
+        },
+        "rationale": null,
+        "profit_chain": [
+            -0.22,
+            0.02,
+            -0.24,
+            -0.23,
+            -0.28,
+            -0.29,
+            -0.28,
+            -0.06,
+            -0.16,
+            -0.16,
+            -0.45
+        ],
+        "peak_profit": 0.02,
+        "closed": false
+    },
+    "144107585": {
+        "symbol": "BTCUSD",
+        "direction": "BUY",
+        "volume": 0.01,
+        "entry_price": 84012.3,
+        "open_time": "2025-04-15 17:44:53",
+        "indicators": {
+            "adx": 22.4,
+            "sma_short": 102.3,
+            "slope": "UP"
+        },
+        "rationale": null,
+        "profit_chain": [],
+        "peak_profit": 0,
+        "closed": false
+    },
+    "144107664": {
+        "symbol": "BTCUSD",
+        "direction": "BUY",
+        "volume": 0.01,
+        "entry_price": 83990.4,
+        "open_time": "2025-04-15 17:45:05",
+        "indicators": {
+            "adx": 22.4,
+            "sma_short": 102.3,
+            "slope": "UP"
+        },
+        "rationale": null,
+        "profit_chain": [
+            -0.22
+        ],
+        "peak_profit": 0,
+        "closed": false
+    }
+}
