@@ -9,6 +9,7 @@ config/
 
 # Ignore folder hard_memory files - these are just for runtime
 hard_memory/
+src/hard_memory/
 
 # Ignore logs
 logs/
