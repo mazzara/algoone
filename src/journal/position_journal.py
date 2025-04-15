@@ -42,16 +42,18 @@ def log_open_trade(ticket, symbol, direction, volume, entry_price, indicators, r
     save_journal(journal)
     logger.info(f"[JOURNAL] Trade opened: {ticket} | {symbol} | {direction}")
 
-def append_tracking(ticket, current_profit):
+def append_tracking(ticket, current_profit, entry_price, volume):
     journal = load_journal()
     ticket_str = str(ticket)
     if ticket_str in journal:
         trade = journal[ticket_str]
-        trade["profit_chain"].append(current_profit)
-        trade["peak_profit"] = max(trade["peak_profit"], current_profit)
+        if entry_price and volume:
+            pct_profit = (current_profit / (entry_price * volume)) * 100
+            trade["profit_chain"].append(pct_profit)
+            trade["peak_profit"] = max(trade["peak_profit"], pct_profit)
         save_journal(journal)
     else:
-        logger.warning(f"[JOURNAL] Tried to track unknown ticket {ticket}")
+        logger.warning(f"[JOURNAL 2053:90] Tried to track unknown ticket {ticket}")
 
 def log_close_trade(ticket, close_reason, final_profit):
     journal = load_journal()
