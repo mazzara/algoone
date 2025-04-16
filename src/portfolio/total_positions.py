@@ -1,10 +1,10 @@
 # src/portfolio/total_positions.py
-import MetaTrader5 as mt5
+# import MetaTrader5 as mt5
 from src.logger_config import logger
 import json
 import os
 import time
-from datetime import datetime
+# from datetime import datetime
 from src.positions.positions import get_positions
 from src.config import (HARD_MEMORY_DIR,
                         TOTAL_POSITIONS_FILE,
@@ -12,7 +12,11 @@ from src.config import (HARD_MEMORY_DIR,
                         CLOSE_PROFIT_THRESHOLD,
                         TRAILING_PROFIT_THRESHHOLD)
 
-### Functions Summary in this module - why this? to sign if a mudule gets too overcrowded with functions, indicating need to refactoring ### 
+###
+# Functions Summary in this module - why this?
+# to sign if a module gets too overcrowded with functions,
+# indicating need to refactoring
+###
 # load_cached_positions(retries=3, delay=0.2)
 # get_total_positions(save=True, use_cache=True)
 # save_total_positions(summary)
@@ -24,24 +28,26 @@ total_positions_cache = {}
 def load_cached_positions(retries=3, delay=0.2):
     """
     Loads cached positions from 'hard_memory/positions.json'.
+    4 digit function signature: 6747
     """
-    logger.info("Loading cashed positions................")
-
     if not os.path.exists(POSITIONS_FILE):
-        logger.warning('No cashed positions found. File not found.')
+        logger.debug('[6747:10] :: No cashed positions found. File not found.')
         get_positions()
         time.sleep(delay)
-        logger.info('Positions just pulled from MT5.')
+        logger.debug('[6747:20] :: Fallback: Positions just pulled from MT5.')
         return load_cached_positions(retries=retries, delay=delay)
 
     file_age = time.time() - os.path.getmtime(POSITIONS_FILE)
-    logger.info(f'Check cached-expire positions age: {file_age:.2f} seconds')
 
-    if file_age > 10: # 10 seconds old
-        logger.warning('Cashed positions are outdated.')
+    logger.debug(
+        f"[6747:30] :: "
+        f"Check cached-expire positions age: {file_age:.2f} seconds"
+    )
+
+    if file_age > 10:      # X seconds old
+        logger.debug('[6747:40] :: Cashed positions are outdated.')
         get_positions()
         time.sleep(delay)
-        logger.info('Positions just pulled from MT5.')
         return load_cached_positions(retries=retries, delay=delay)
 
     for attempt in range(retries):
@@ -49,15 +55,24 @@ def load_cached_positions(retries=3, delay=0.2):
             with open(POSITIONS_FILE, 'r', encoding='utf-8') as f:
                 positions = json.load(f)
             if 'positions' in positions:
-                logger.info(f"Positions loaded from cache: {len(positions)}")
+                logger.info(
+                    f"[6747:60[ :: "
+                    f"Positions loaded from cache: {len(positions)}"
+                )
                 return positions['positions']
             else:
-                logger.warning(f"Loaded JSON does not contain 'positions' key. Retrying...")
+                logger.warning(
+                    "[6747:70] :: "
+                    "Loaded JSON doen't have 'positions' key. Retrying..."
+                )
         except (json.JSONDecodeError, FileNotFoundError) as e:
-            logger.warning(f"Retry {attempt+1}/{retries}: Failed to load cached positions: {e}")
+            logger.warning(
+                f"[6747:80] :: Retry {attempt+1}/{retries}: "
+                f"Failed to load cached positions: {e}"
+            )
             time.sleep(delay)
 
-    logger.error('Failed to load cached positions after multiple attempts.')
+    logger.error('[6746:90] :: Multiple Failed to load cached positions.')
     return []
 
 
@@ -123,7 +138,9 @@ def aggregate_position_data(processed):
             # Compute weighted average price
             total_weight = sum(data["SIZES"])
             if total_weight > 0:
-                weighted_sum = sum(p * s for p, s in zip(data["PRICES"], data["SIZES"]))
+                weighted_sum = sum(
+                    p * s for p, s in zip(data["PRICES"], data["SIZES"])
+                )
                 avg_price = weighted_sum / total_weight
             else:
                 avg_price = 0

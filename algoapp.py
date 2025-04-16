@@ -18,7 +18,7 @@ def on_tick(ticks):
     """
     for tick in ticks:
         logger.info(
-            f"|&|..|~~| -.-.- | Tick Event: {tick['symbol']} | "
+            f"|~~|.AlgoOne.|~~~| -.-.- | Tick Event: {tick['symbol']} | "
             f"Bid: {tick['bid']} | Ask: {tick['ask']} | "
             f"Spread: {tick['spread']} | Time: {tick['time']}"
         )
