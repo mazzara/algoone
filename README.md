@@ -3,6 +3,11 @@
 
 **AlgoOne** is a modular, event-driven trading system built primarily for use with MetaTrader 5 (MT5). It was designed to assist in executing portfolio-aware strategies on forex, CFDs, and other instruments, with a focus on transparency, control, and future scalability.
 
+AlgoOne is structured, rule-based, testable, and logs every move.
+
+AlgoOne is not just a bot—it’s a decision engine with state awareness, risk management, and a clear logic path.
+
+
 ---
 
 ## 🚀 Overview
@@ -32,6 +37,7 @@ algoone/
 │   ├── limits/               # Per-symbol trading rules & constraints
 │   ├── trader/               # Trade execution logic (open/manage/close)
 │   ├── history/              # Trade history retrieval
+│   ├── journal/              # Trade journal for logging
 │   ├── indicators/           # Strategy-specific indicators (e.g., ADX)
 │   ├── logger_config.py      # Logging setup for observability
 │   └── tick_listener.py      # Real-time tick event dispatcher
