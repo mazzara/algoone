@@ -155,7 +155,7 @@ def aggregate_helper_compute_summary(processed):
     return summary
 
 
-def agregate_helper_compute_time(processed):
+def aggregate_helper_compute_time(processed):
     """
     Compute the most recent trade's time for each symbol/side.
     """
@@ -180,9 +180,9 @@ def agregate_helper_compute_time(processed):
             }
     return summary
 
-def aggregate_position_data_v2(processed):
+def aggregate_position_data(processed):
     summary_values = aggregate_helper_compute_summary(processed)
-    summary_times = agregate_helper_compute_time(processed)
+    summary_times = aggregate_helper_compute_time(processed)
 
     summary = {}
     for symbol in processed.keys():
@@ -233,98 +233,149 @@ def aggregate_position_data_v2(processed):
     return summary
 
 
-def aggregate_position_data(processed):
-    """
-    Aggregates detailed trade arrays into a final summary for each symbol/side.
-    """
-    summary = {}
-    for symbol, sides in processed.items():
-        summary[symbol] = {}
-        for side, data in sides.items():
-            position_count = len(data["TICKETS"])
-            size_sum = sum(data["SIZES"])
-            # Compute weighted average price
-            total_weight = sum(data["SIZES"])
-            if total_weight > 0:
-                weighted_sum = sum(
-                    p * s for p, s in zip(data["PRICES"], data["SIZES"])
+# def aggregate_position_data(processed):
+#     """
+#     Aggregates detailed trade arrays into a final summary for each symbol/side.
+#     """
+#     summary = {}
+#     for symbol, sides in processed.items():
+#         summary[symbol] = {}
+#         for side, data in sides.items():
+#             position_count = len(data["TICKETS"])
+#             size_sum = sum(data["SIZES"])
+#             # Compute weighted average price
+#             total_weight = sum(data["SIZES"])
+#             if total_weight > 0:
+#                 weighted_sum = sum(
+#                     p * s for p, s in zip(data["PRICES"], data["SIZES"])
+#                 )
+#                 avg_price = weighted_sum / total_weight
+#             else:
+#                 avg_price = 0
+#
+#             unrealized_profit = sum(data["UNREALIZED_PROFITS"])
+#
+#             # Compute the most recent trade's time (and its corresponding current price)
+#             if data["POSITION_TIMES_RAW"]:
+#                 max_index = data["POSITION_TIMES_RAW"].index(max(data["POSITION_TIMES_RAW"]))
+#                 last_position_time = data["POSITION_TIMES"][max_index]
+#                 last_position_time_raw = data["POSITION_TIMES_RAW"][max_index]
+#                 current_price = data["CURRENT_PRICES"][max_index]
+#             else:
+#                 last_position_time = ""  # Using empty string to avoid None errors when formatting
+#                 last_position_time_raw = 0
+#                 current_price = None
+#
+#             # last_position_time = max(data["POSITION_TIMES"]) if data["POSITION_TIMES"] else "" 
+#             # last_position_time_raw = max(data["POSITION_TIMES_RAW"]) if data["POSITION_TIMES_RAW"] else 0
+#             #
+#             summary[symbol][side] = {
+#                 "SIZE_SUM": size_sum,
+#                 "POSITION_COUNT": position_count,
+#                 "AVG_PRICE": avg_price,
+#                 "CURRENT_PRICE": current_price,
+#                 "UNREALIZED_PROFIT": unrealized_profit,
+#                 "LAST_POSITION_TIME": last_position_time,
+#                 "LAST_POSITION_TIME_RAW": last_position_time_raw,
+#             }
+#             
+#         # Now compute the NET aggregation for the symbol.
+#         long_data = summary[symbol].get("LONG", {})
+#         short_data = summary[symbol].get("SHORT", {})
+#
+#         # If a side is missing, assume zeros.
+#         long_size = long_data.get("SIZE_SUM", 0)
+#         short_size = short_data.get("SIZE_SUM", 0)
+#         # Net: LONG volumes are positive, SHORT volumes are negative.
+#         net_size = long_size - short_size
+#         net_count = long_data.get("POSITION_COUNT", 0) + short_data.get("POSITION_COUNT", 0)
+#         net_unrealized_profit = long_data.get("UNREALIZED_PROFIT", 0) + short_data.get("UNREALIZED_PROFIT", 0)
+#
+#         # For AVG_PRICE, compute a weighted average using signed volumes.
+#         if net_size != 0:
+#             weighted_long = long_data.get("SIZE_SUM", 0) * long_data.get("AVG_PRICE", 0)
+#             weighted_short = short_data.get("SIZE_SUM", 0) * short_data.get("AVG_PRICE", 0)
+#             net_weighted = weighted_long - weighted_short
+#             net_avg_price = net_weighted / net_size
+#         else:
+#             net_avg_price = 0
+#
+#         # Determine the most recent update from either side.
+#         if long_data.get("LAST_POSITION_TIME_RAW", 0) >= short_data.get("LAST_POSITION_TIME_RAW", 0):
+#             net_current_price = long_data.get("CURRENT_PRICE", None)
+#             net_last_time = long_data.get("LAST_POSITION_TIME", "")
+#             net_last_time_raw = long_data.get("LAST_POSITION_TIME_RAW", 0)
+#         else:
+#             net_current_price = short_data.get("CURRENT_PRICE", None)
+#             net_last_time = short_data.get("LAST_POSITION_TIME", "")
+#             net_last_time_raw = short_data.get("LAST_POSITION_TIME_RAW", 0)
+#
+#         # If you are tracking best/worst trade records persistently,
+#         # you might merge them here as well—for example, taking the maximum profit and minimum loss.
+#         # For now, they are omitted.
+#
+#         summary[symbol]["NET"] = {
+#             "SIZE_SUM": net_size,
+#             "POSITION_COUNT": net_count,
+#             "AVG_PRICE": net_avg_price,
+#             "CURRENT_PRICE": net_current_price,
+#             "UNREALIZED_PROFIT": net_unrealized_profit,
+#             "LAST_POSITION_TIME": net_last_time,
+#             "LAST_POSITION_TIME_RAW": net_last_time_raw,
+#         }
+#
+#     return summary
+
+
+def merge_snapshot_into_history(snapshot_summary, historical_summary):
+    for symbol, sides in snapshot_summary.items():
+        if symbol not in historical_summary:
+            # New symbol: take the snapshot and initialize extreme records.
+            historical_summary[symbol] = sides
+            for side in ('LONG', 'SHORT', 'NET'):
+                if side in historical_summary[symbol]:
+                    # Initialize extremes with the current total side position.
+                    historical_summary[symbol][side]["PROFIT_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
+                    historical_summary[symbol][side]["LOSS_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
+                    historical_summary[symbol][side]["GOAL_MET"] = False
+                    historical_summary[symbol][side]["TRAILING_CROSSED"] = False
+                    historical_summary[symbol][side]["CLOSE_SIGNAL"] = False
+        else:
+            for side in ('LONG', 'SHORT', 'NET'):
+                snap = sides.get(side, {})
+                hist = historical_summary[symbol].get(side, {})
+
+                # Initialize missing extreme fields with the current aggregated unrealized profit.
+                if "PROFIT_RECORD_TRACK" not in hist:
+                    hist["PROFIT_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
+                if "LOSS_RECORD_TRACK" not in hist:
+                    hist["LOSS_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
+
+                # Update persistent extreme records based on the aggregated (total) unrealized profit.
+                hist["PROFIT_RECORD_TRACK"] = max(
+                    hist.get("PROFIT_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
+                    snap.get("UNREALIZED_PROFIT", 0)
                 )
-                avg_price = weighted_sum / total_weight
-            else:
-                avg_price = 0
+                hist["LOSS_RECORD_TRACK"] = min(
+                    hist.get("LOSS_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
+                    snap.get("UNREALIZED_PROFIT", 0)
+                )
 
-            unrealized_profit = sum(data["UNREALIZED_PROFITS"])
+                # Overwrite snapshot-dependent fields.
+                hist["SIZE_SUM"] = snap["SIZE_SUM"]
+                hist["POSITION_COUNT"] = snap["POSITION_COUNT"]
+                hist["AVG_PRICE"] = snap["AVG_PRICE"]
+                hist["CURRENT_PRICE"] = snap["CURRENT_PRICE"]
+                hist["UNREALIZED_PROFIT"] = snap["UNREALIZED_PROFIT"]
+                hist["LAST_POSITION_TIME"] = snap["LAST_POSITION_TIME"]
+                hist["LAST_POSITION_TIME_RAW"] = snap["LAST_POSITION_TIME_RAW"]
+    return historical_summary
 
-            # Compute the most recent trade's time (and its corresponding current price)
-            if data["POSITION_TIMES_RAW"]:
-                max_index = data["POSITION_TIMES_RAW"].index(max(data["POSITION_TIMES_RAW"]))
-                last_position_time = data["POSITION_TIMES"][max_index]
-                last_position_time_raw = data["POSITION_TIMES_RAW"][max_index]
-                current_price = data["CURRENT_PRICES"][max_index]
-            else:
-                last_position_time = ""  # Using empty string to avoid None errors when formatting
-                last_position_time_raw = 0
-                current_price = None
 
-            # last_position_time = max(data["POSITION_TIMES"]) if data["POSITION_TIMES"] else "" 
-            # last_position_time_raw = max(data["POSITION_TIMES_RAW"]) if data["POSITION_TIMES_RAW"] else 0
-            #
-            summary[symbol][side] = {
-                "SIZE_SUM": size_sum,
-                "POSITION_COUNT": position_count,
-                "AVG_PRICE": avg_price,
-                "CURRENT_PRICE": current_price,
-                "UNREALIZED_PROFIT": unrealized_profit,
-                "LAST_POSITION_TIME": last_position_time,
-                "LAST_POSITION_TIME_RAW": last_position_time_raw,
-            }
-            
-        # Now compute the NET aggregation for the symbol.
-        long_data = summary[symbol].get("LONG", {})
-        short_data = summary[symbol].get("SHORT", {})
-
-        # If a side is missing, assume zeros.
-        long_size = long_data.get("SIZE_SUM", 0)
-        short_size = short_data.get("SIZE_SUM", 0)
-        # Net: LONG volumes are positive, SHORT volumes are negative.
-        net_size = long_size - short_size
-        net_count = long_data.get("POSITION_COUNT", 0) + short_data.get("POSITION_COUNT", 0)
-        net_unrealized_profit = long_data.get("UNREALIZED_PROFIT", 0) + short_data.get("UNREALIZED_PROFIT", 0)
-
-        # For AVG_PRICE, compute a weighted average using signed volumes.
-        if net_size != 0:
-            weighted_long = long_data.get("SIZE_SUM", 0) * long_data.get("AVG_PRICE", 0)
-            weighted_short = short_data.get("SIZE_SUM", 0) * short_data.get("AVG_PRICE", 0)
-            net_weighted = weighted_long - weighted_short
-            net_avg_price = net_weighted / net_size
-        else:
-            net_avg_price = 0
-
-        # Determine the most recent update from either side.
-        if long_data.get("LAST_POSITION_TIME_RAW", 0) >= short_data.get("LAST_POSITION_TIME_RAW", 0):
-            net_current_price = long_data.get("CURRENT_PRICE", None)
-            net_last_time = long_data.get("LAST_POSITION_TIME", "")
-            net_last_time_raw = long_data.get("LAST_POSITION_TIME_RAW", 0)
-        else:
-            net_current_price = short_data.get("CURRENT_PRICE", None)
-            net_last_time = short_data.get("LAST_POSITION_TIME", "")
-            net_last_time_raw = short_data.get("LAST_POSITION_TIME_RAW", 0)
-
-        # If you are tracking best/worst trade records persistently,
-        # you might merge them here as well—for example, taking the maximum profit and minimum loss.
-        # For now, they are omitted.
-
-        summary[symbol]["NET"] = {
-            "SIZE_SUM": net_size,
-            "POSITION_COUNT": net_count,
-            "AVG_PRICE": net_avg_price,
-            "CURRENT_PRICE": net_current_price,
-            "UNREALIZED_PROFIT": net_unrealized_profit,
-            "LAST_POSITION_TIME": net_last_time,
-            "LAST_POSITION_TIME_RAW": net_last_time_raw,
-        }
-
-    return summary
+def compute_target_profit(snap, threshold):
+    size = snap.get("SIZE_SUM", 0)
+    avg_price = snap.get("AVG_PRICE", 0)
+    return size * avg_price * threshold
 
 
 def get_total_positions(save=True, use_cache=True, report=False):
@@ -338,143 +389,202 @@ def get_total_positions(save=True, use_cache=True, report=False):
         logger.warning("No positions found. Returning empty summary.")
         return {}
 
-    # Process individual positions into detailed arrays
     processed = process_positions(positions)
-
-    # Aggregate the processed data into final summary numbers
-    # snapshot_summary = aggregate_position_data(processed)
-    snapshot_summary = aggregate_position_data_v2(processed)
-
-    # Load historical positions to merge and update data.class
+    snapshot_summary = aggregate_position_data(processed)
     historical_summary = load_total_positions_accounting()
 
-    # Merge snapshot with historical data.
-    for symbol, sides in snapshot_summary.items():
-        if symbol not in historical_summary:
-            # New symbol: take the snapshot and initialize extreme records.
-            historical_summary[symbol] = sides
-            for side in ('LONG', 'SHORT', 'NET'):
-                if side in historical_summary[symbol]:
-                    # Initialize extremes with the current total side position.
-                    historical_summary[symbol][side]["PROFIT_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
-                    historical_summary[symbol][side]["LOSS_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
-                    historical_summary[symbol][side]["GOAL_MET"] = False
-                    historical_summary[symbol][side]["TRAILING_CROSSED"] = False
-                    historical_summary[symbol][side]["CLOSE_SIGNAL"] = False
-                    
-        else:
-            for side in ('LONG', 'SHORT', 'NET'):
-                snap = sides.get(side, {})
-                hist = historical_summary[symbol].get(side, {})
+    historical_summary = merge_snapshot_into_history(
+        snapshot_summary, historical_summary)
 
-                # Initialize missing extreme fields with the current aggregated unrealized profit.
-                if "PROFIT_RECORD_TRACK" not in hist:
-                    hist["PROFIT_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
-                if "LOSS_RECORD_TRACK" not in hist:
-                    hist["LOSS_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
+    for symbol, sides in historical_summary.items():
+        for side in ('LONG', 'SHORT', 'NET'):
+            hist = sides.get(side, {})
+            size = hist.get("SIZE_SUM", 0)
+            # avg_price = hist.get("AVG_PRICE", 0)
 
-                if "PROFIT_GOAL" not in hist:
-                    size = snap.get("SIZE_SUM", 0)
-                    avg_price = snap.get("AVG_PRICE", 0)
-                    investment = size * avg_price
-                    target_profit = investment * CLOSE_PROFIT_THRESHOLD
-                    hist["PROFIT_GOAL"] = target_profit
+            # Set/reset target profits
+            if size == 0:
+                hist.update({
+                    "PROFIT_RECORD_TRACK": 0,
+                    "LOSS_RECORD_TRACK": 0,
+                    "PROFIT_GOAL": 0,
+                    "TRAILING_PROFIT": 0,
+                    "GOAL_MET": False,
+                    "TRAILING_CROSSED": False,
+                    "CLOSE_SIGNAL": False
+                })
+            else:
+                hist["PROFIT_GOAL"] = compute_target_profit(hist, CLOSE_PROFIT_THRESHOLD)
+                hist["TRAILING_PROFIT"] = compute_target_profit(hist, TRAILING_PROFIT_THRESHHOLD)
+                hist["GOAL_MET"] = hist["UNREALIZED_PROFIT"] >= hist["PROFIT_GOAL"]
+                hist["TRAILING_CROSSED"] = hist["UNREALIZED_PROFIT"] >= hist["TRAILING_PROFIT"]
+                hist["CLOSE_SIGNAL"] = hist["GOAL_MET"] and hist["TRAILING_CROSSED"]
 
-                if "TRAILING_PROFIT" not in hist:
-                    size = snap.get("SIZE_SUM", 0)
-                    avg_price = snap.get("AVG_PRICE", 0)
-                    investment = size * avg_price
-                    target_profit = investment * TRAILING_PROFIT_THRESHHOLD
-                    hist["TRAILING_PROFIT"] = target_profit
-
-                if not hist:
-                    historical_summary[symbol][side] = snap
-                else:
-                    # Update persistent extreme records based on the aggregated (total) unrealized profit.
-                    hist["PROFIT_RECORD_TRACK"] = max(
-                        hist.get("PROFIT_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
-                        snap.get("UNREALIZED_PROFIT", 0)
-                    )
-                    hist["LOSS_RECORD_TRACK"] = min(
-                        hist.get("LOSS_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
-                        snap.get("UNREALIZED_PROFIT", 0)
-                    )
-                    # Overwrite snapshot-dependent fields.
-                    hist["SIZE_SUM"] = snap["SIZE_SUM"]
-                    hist["POSITION_COUNT"] = snap["POSITION_COUNT"]
-                    hist["AVG_PRICE"] = snap["AVG_PRICE"]
-                    hist["CURRENT_PRICE"] = snap["CURRENT_PRICE"]
-                    hist["UNREALIZED_PROFIT"] = snap["UNREALIZED_PROFIT"]
-                    hist["LAST_POSITION_TIME"] = snap["LAST_POSITION_TIME"]
-                    hist["LAST_POSITION_TIME_RAW"] = snap["LAST_POSITION_TIME_RAW"]
-
-                    # Update profit goal and trailing profit
-                    size = snap.get("SIZE_SUM", 0)
-                    avg_price = snap.get("AVG_PRICE", 0)
-                    investment = size * avg_price
-                    target_profit = investment * CLOSE_PROFIT_THRESHOLD
-                    hist["PROFIT_GOAL"] = target_profit
-
-                    size = snap.get("SIZE_SUM", 0)
-                    avg_price = snap.get("AVG_PRICE", 0)
-                    investment = size * avg_price
-                    target_profit = investment * TRAILING_PROFIT_THRESHHOLD
-                    hist["TRAILING_PROFIT"] = target_profit
-
-                    # Reset extreme records if no positions are open.
-                    if snap.get("SIZE_SUM", 0) == 0:
-                        hist["PROFIT_RECORD_TRACK"] = 0
-                        hist["LOSS_RECORD_TRACK"] = 0
-                        hist["PROFIT_GOAL"] = 0
-                        hist["TRAILING_PROFIT"] = 0
-                        hist["GOAL_MET"] = False
-                        hist["TRAILING_CROSSED"] = False
-                    else:
-                        # Set flags if thresholds are reached.
-                        if snap.get("UNREALIZED_PROFIT", 0) >= hist.get("PROFIT_GOAL", 0):
-                            hist["GOAL_MET"] = True
-                        else:
-                            hist["GOAL_MET"] = False
-
-                        if snap.get("UNREALIZED_PROFIT", 0) >= hist.get("TRAILING_PROFIT", 0):
-                            hist["TRAILING_CROSSED"] = True
-                        else:
-                            hist["TRAILING_CROSSED"] = False
-
-                        if hist.get("GOAL_MET", False) and hist.get("TRAILING_CROSSED", False):
-                            hist["CLOSE_SIGNAL"] = True
-                        else:
-                            hist["CLOSE_SIGNAL"] = False
-
-                    historical_summary[symbol][side] = hist
+            sides[side] = hist  # reassign to ensure it's updated
 
     if save:
         save_total_positions(historical_summary)
 
-    # If report is True, print and log the summary.
     if report:
-        logger.info("[INFO 1649] ====== POSITIONS - Total positions summary ======")
+        logger.debug("[SUMMARY 1649] ====== POSITIONS - Total positions summary ======")
         for symbol, sides in snapshot_summary.items():
-            logger.info(f"[INFO 1649] Symbol: {symbol}")
+            logger.debug(f"[INFO 1649] Symbol: {symbol}")
             for side, data in sides.items():
-                logger.info(f"[INFO 1649]  {side}: {data}")
+                logger.debug(f"[INFO 1649]  {side}: {data}")
 
     return snapshot_summary
+
+# def get_total_positions_deprecated(save=True, use_cache=True, report=False):
+#     """
+#     Finalizes the processing: builds the detailed snapshot from positions,
+#     aggregates them, and then updates persistent records as needed.
+#     """
+#     # Get the raw positions from cache or MT5
+#     positions = load_cached_positions()
+#     if not positions:
+#         logger.warning("No positions found. Returning empty summary.")
+#         return {}
+#
+#     # Process individual positions into detailed arrays
+#     processed = process_positions(positions)
+#
+#     # Aggregate the processed data into final summary numbers
+#     # snapshot_summary = aggregate_position_data(processed)
+#     snapshot_summary = aggregate_position_data_v2(processed)
+#
+#     # Load historical positions to merge and update data.class
+#     historical_summary = load_total_positions_accounting()
+#
+#     # Merge snapshot with historical data.
+#     for symbol, sides in snapshot_summary.items():
+#         if symbol not in historical_summary:
+#             # New symbol: take the snapshot and initialize extreme records.
+#             historical_summary[symbol] = sides
+#             for side in ('LONG', 'SHORT', 'NET'):
+#                 if side in historical_summary[symbol]:
+#                     # Initialize extremes with the current total side position.
+#                     historical_summary[symbol][side]["PROFIT_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
+#                     historical_summary[symbol][side]["LOSS_RECORD_TRACK"] = historical_summary[symbol][side]["UNREALIZED_PROFIT"]
+#                     historical_summary[symbol][side]["GOAL_MET"] = False
+#                     historical_summary[symbol][side]["TRAILING_CROSSED"] = False
+#                     historical_summary[symbol][side]["CLOSE_SIGNAL"] = False
+#                     
+#         else:
+#             for side in ('LONG', 'SHORT', 'NET'):
+#                 snap = sides.get(side, {})
+#                 hist = historical_summary[symbol].get(side, {})
+#
+#                 # Initialize missing extreme fields with the current aggregated unrealized profit.
+#                 if "PROFIT_RECORD_TRACK" not in hist:
+#                     hist["PROFIT_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
+#                 if "LOSS_RECORD_TRACK" not in hist:
+#                     hist["LOSS_RECORD_TRACK"] = snap.get("UNREALIZED_PROFIT", 0)
+#
+#                 if "PROFIT_GOAL" not in hist:
+#                     size = snap.get("SIZE_SUM", 0)
+#                     avg_price = snap.get("AVG_PRICE", 0)
+#                     investment = size * avg_price
+#                     target_profit = investment * CLOSE_PROFIT_THRESHOLD
+#                     hist["PROFIT_GOAL"] = target_profit
+#
+#                 if "TRAILING_PROFIT" not in hist:
+#                     size = snap.get("SIZE_SUM", 0)
+#                     avg_price = snap.get("AVG_PRICE", 0)
+#                     investment = size * avg_price
+#                     target_profit = investment * TRAILING_PROFIT_THRESHHOLD
+#                     hist["TRAILING_PROFIT"] = target_profit
+#
+#                 if not hist:
+#                     historical_summary[symbol][side] = snap
+#                 else:
+#                     # Update persistent extreme records based on the aggregated (total) unrealized profit.
+#                     hist["PROFIT_RECORD_TRACK"] = max(
+#                         hist.get("PROFIT_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
+#                         snap.get("UNREALIZED_PROFIT", 0)
+#                     )
+#                     hist["LOSS_RECORD_TRACK"] = min(
+#                         hist.get("LOSS_RECORD_TRACK", snap.get("UNREALIZED_PROFIT", 0)),
+#                         snap.get("UNREALIZED_PROFIT", 0)
+#                     )
+#                     # Overwrite snapshot-dependent fields.
+#                     hist["SIZE_SUM"] = snap["SIZE_SUM"]
+#                     hist["POSITION_COUNT"] = snap["POSITION_COUNT"]
+#                     hist["AVG_PRICE"] = snap["AVG_PRICE"]
+#                     hist["CURRENT_PRICE"] = snap["CURRENT_PRICE"]
+#                     hist["UNREALIZED_PROFIT"] = snap["UNREALIZED_PROFIT"]
+#                     hist["LAST_POSITION_TIME"] = snap["LAST_POSITION_TIME"]
+#                     hist["LAST_POSITION_TIME_RAW"] = snap["LAST_POSITION_TIME_RAW"]
+#
+#                     # Update profit goal and trailing profit
+#                     # size = snap.get("SIZE_SUM", 0)
+#                     # avg_price = snap.get("AVG_PRICE", 0)
+#                     # investment = size * avg_price
+#                     # target_profit = investment * CLOSE_PROFIT_THRESHOLD
+#                     # hist["PROFIT_GOAL"] = target_profit
+#
+#                     size = snap.get("SIZE_SUM", 0)
+#                     avg_price = snap.get("AVG_PRICE", 0)
+#                     investment = size * avg_price
+#                     target_profit = investment * TRAILING_PROFIT_THRESHHOLD
+#                     hist["TRAILING_PROFIT"] = target_profit
+#
+#                     # Reset extreme records if no positions are open.
+#                     if snap.get("SIZE_SUM", 0) == 0:
+#                         hist["PROFIT_RECORD_TRACK"] = 0
+#                         hist["LOSS_RECORD_TRACK"] = 0
+#                         hist["PROFIT_GOAL"] = 0
+#                         hist["TRAILING_PROFIT"] = 0
+#                         hist["GOAL_MET"] = False
+#                         hist["TRAILING_CROSSED"] = False
+#                     else:
+#                         # Set flags if thresholds are reached.
+#                         if snap.get("UNREALIZED_PROFIT", 0) >= hist.get("PROFIT_GOAL", 0):
+#                             hist["GOAL_MET"] = True
+#                         else:
+#                             hist["GOAL_MET"] = False
+#
+#                         if snap.get("UNREALIZED_PROFIT", 0) >= hist.get("TRAILING_PROFIT", 0):
+#                             hist["TRAILING_CROSSED"] = True
+#                         else:
+#                             hist["TRAILING_CROSSED"] = False
+#
+#                         if hist.get("GOAL_MET", False) and hist.get("TRAILING_CROSSED", False):
+#                             hist["CLOSE_SIGNAL"] = True
+#                         else:
+#                             hist["CLOSE_SIGNAL"] = False
+#
+#                     historical_summary[symbol][side] = hist
+#
+#     if save:
+#         save_total_positions(historical_summary)
+#
+#     # If report is True, print and log the summary.
+#     if report:
+#         logger.debug(
+#             "[SUMMARY 1649] ====== POSITIONS - Total positions summary ======"
+#         )
+#         for symbol, sides in snapshot_summary.items():
+#             logger.debug(f"[INFO 1649] Symbol: {symbol}")
+#             for side, data in sides.items():
+#                 logger.debug(f"[INFO 1649]  {side}: {data}")
+#
+#     return snapshot_summary
+#
+
 
 
 def save_total_positions(summary):
     """
     Saves the summarized positions to 'hard_memory/total_positions.json'.
     """
-    logger.info("Saving total positions...")
-    logger.info(f"Total positions: {summary}")
+    logger.debug(f"[1749:20] :: Saving Total positions: {summary}")
 
     try:
         with open(TOTAL_POSITIONS_FILE, 'w', encoding='utf-8') as f:
             json.dump(summary, f, indent=4)
-        logger.info(f"Total positions saved to {TOTAL_POSITIONS_FILE}")
+        logger.debug(f"[1749:30] :: Total positions saved to {TOTAL_POSITIONS_FILE}")
     except Exception as e:
-        logger.error(f"Failed to save total positions: {e}")
+        logger.error(f"[1749:40] :: Failed to save total positions: {e}")
 
 
 if __name__ == "__main__":
