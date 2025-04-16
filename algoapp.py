@@ -10,12 +10,22 @@ from src.trader.trade import open_trade, close_trade, manage_trade
 from src.portfolio.total_positions import get_total_positions
 from src.limits.limits import load_trade_limits
 from src.logger_config import logger
+from utils.config_watcher import ConfigWatcher
+
+
+override_watcher = ConfigWatcher("config/trade_overrride.json")
+limits_watcher = ConfigWatcher("config/trade_limits_config.json")
+indicator_config_watcher = ConfigWatcher("config/indicator_config.json")
 
 
 def on_tick(ticks):
     """
     Callback function to process tick events.
     """
+    override_watcher.load_if_changed()
+    limits_watcher.load_if_changed()
+    indicator_config_watcher.load_if_changed()
+
     for tick in ticks:
         logger.info(
             f"|~~|.AlgoOne.|~~~| -.-.- | Tick Event: {tick['symbol']} | "
@@ -23,10 +33,11 @@ def on_tick(ticks):
             f"Spread: {tick['spread']} | Time: {tick['time']}"
         )
 
-        # Note for self: this check positions as a dependency.
-        # it's not a waste to call it here, but mandatory status check.
-        get_total_positions(save=True, use_cache=False, report=True)
-        open_trade(tick['symbol'])
+        if not override_watcher.get("pause_open", False):
+            # Note for self: this check positions as a dependency.
+            # it's not a waste to call it here, but mandatory status check.
+            get_total_positions(save=True, use_cache=False, report=True)
+            open_trade(tick['symbol'])
 
         manage_trade(tick['symbol'])
 
