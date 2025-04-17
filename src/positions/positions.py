@@ -8,7 +8,6 @@ import time
 from src.config import HARD_MEMORY_DIR, POSITIONS_FILE
 from src.tools.server_time import get_server_time_from_tick
 from src.portfolio.position_state_tracker import process_all_positions
-# from src.portfolio.total_positions import get_total_positions
 
 
 def load_positions(symbol):
@@ -57,7 +56,6 @@ def save_positions(positions):
             "profit": pos.profit,
             "swap": pos.swap,
             "magic": pos.magic,
-            # "time_open": datetime.fromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
             "time_open": datetime.utcfromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
             "time_raw": pos.time,
             "comment": pos.comment
@@ -110,9 +108,6 @@ def get_positions():
 
     if positions:
         logger.info("=== Open Positions ===")
-        # for pos in positions:
-        #     # logger.info(f"Ticket: {pos.ticket} {pos.symbol} {('BUY' if pos.type == 0 else 'SELL')} {pos.volume} lots @ {pos.price_open}")
-        #     pass
 
         save_positions(positions)
         logger.info(f"Total open positions saved: {len(positions)}")
