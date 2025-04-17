@@ -635,10 +635,10 @@ def manage_trade(symbol):
         recommended_sl = None
 
         append_tracking(
-            ticket, 
-            current_profit=pos["profit"],
-            entry_price=pos["price_open"],
-            volume=pos["volume"],
+            ticket,
+            price_open=pos["price_open"],
+            price_current=pos["price_current"],
+            pos_type=pos["type"]
         )
 
         BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value

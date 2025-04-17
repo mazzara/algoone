@@ -8,6 +8,7 @@ from src.logger_config import logger
 
 JOURNAL_FILE = os.path.join(HARD_MEMORY_DIR, "position_journal.json")
 
+
 def load_journal():
     if os.path.exists(JOURNAL_FILE):
         try:
@@ -25,7 +26,16 @@ def save_journal(journal):
     except Exception as e:
         logger.error(f"[JOURNAL 8002] Failed to save journal: {e}")
 
-def log_open_trade(ticket, symbol, direction, volume, entry_price, indicators, rationale=None):
+
+def log_open_trade(
+        ticket,
+        symbol,
+        direction,
+        volume,
+        entry_price,
+        indicators,
+        rationale=None):
+
     journal = load_journal()
     journal[str(ticket)] = {
         "symbol": symbol,
@@ -42,18 +52,25 @@ def log_open_trade(ticket, symbol, direction, volume, entry_price, indicators, r
     save_journal(journal)
     logger.info(f"[JOURNAL] Trade opened: {ticket} | {symbol} | {direction}")
 
-def append_tracking(ticket, current_profit, entry_price, volume):
+
+def append_tracking(ticket, price_open, price_current, pos_type):
     journal = load_journal()
     ticket_str = str(ticket)
     if ticket_str in journal:
         trade = journal[ticket_str]
-        if entry_price and volume:
-            pct_profit = (current_profit / (entry_price * volume)) * 100
+
+        if price_open and price_current:
+            if pos_type == "SELL":
+                pct_profit = (price_open - price_current) / price_open * 100
+            else:
+                pct_profit = (price_current - price_open) / price_open * 100
+
             trade["profit_chain"].append(pct_profit)
             trade["peak_profit"] = max(trade["peak_profit"], pct_profit)
         save_journal(journal)
     else:
         logger.warning(f"[JOURNAL 2053:90] Tried to track unknown ticket {ticket}")
+
 
 def log_close_trade(ticket, close_reason, final_profit):
     journal = load_journal()

@@ -13,7 +13,7 @@ from src.logger_config import logger
 from utils.config_watcher import ConfigWatcher
 
 
-override_watcher = ConfigWatcher("config/trade_overrride.json")
+override_watcher = ConfigWatcher("config/trade_override.json")
 limits_watcher = ConfigWatcher("config/trade_limits_config.json")
 indicator_config_watcher = ConfigWatcher("config/indicator_config.json")
 
@@ -34,6 +34,10 @@ def on_tick(ticks):
         )
 
         if not override_watcher.get("pause_open", False):
+            # logger.debug(
+            #         f"[ON TICK 7715:50] :: "
+            #         f"Override watcher: {override_watcher.get('pause_open', False)}"
+            # )
             # Note for self: this check positions as a dependency.
             # it's not a waste to call it here, but mandatory status check.
             get_total_positions(save=True, use_cache=False, report=True)
