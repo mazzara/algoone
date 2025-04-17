@@ -1,5 +1,5 @@
 {
-  "pause_trading": true,
+  "pause_trading": false,
   "pause_open": false,
   "pause_close": false,
   "note": "Manual session active"

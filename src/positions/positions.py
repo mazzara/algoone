@@ -8,6 +8,26 @@ import time
 from src.config import HARD_MEMORY_DIR, POSITIONS_FILE
 from src.tools.server_time import get_server_time_from_tick
 from src.portfolio.position_state_tracker import process_all_positions
+# from src.portfolio.total_positions import get_total_positions
+
+
+def load_positions(symbol):
+    """Retrive open positions for a symbol."""
+    from src.portfolio.total_positions import get_total_positions
+    positions = get_total_positions(save=True, use_cache=False)
+    logger.info(f"Total positions: {positions}")
+
+    position_data = positions.get(symbol, {})
+    long_data = position_data.get('LONG', {})
+    short_data = position_data.get('SHORT', {})
+
+    return {
+        "current_long_size": long_data.get('SIZE_SUM', 0) or 0,
+        "current_short_size": short_data.get('SIZE_SUM', 0) or 0,
+        "long_data": long_data,
+        "short_data": short_data,
+    }
+
 
 
 def save_positions(positions):

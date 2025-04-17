@@ -8,7 +8,9 @@ from datetime import datetime, timezone, timedelta
 import pytz
 from src.logger_config import logger
 from src.portfolio.total_positions import get_total_positions, total_positions_cache
-from src.positions.positions import get_positions
+from src.limits.limits import get_limit_clearance, get_cooldown_clearance, get_symbol_limits
+from src.tools.server_time import parse_time
+from src.positions.positions import get_positions, load_positions
 from src.indicators.adx_indicator import calculate_adx
 from src.indicators.signal_indicator import dispatch_signals, dispatch_position_manager_indicator
 from src.journal.position_journal import log_open_trade, log_close_trade, append_tracking
@@ -28,7 +30,7 @@ from src.config import (
         MIN_ART_PCT)
 
 # Cash trade limits to avoid reloading
-trade_limits_cache = None
+# trade_limits_cache = None
 # total_positions_cache = {}
 
 # Global variable to hold cached symbol conficurations
@@ -86,27 +88,27 @@ def get_symbol_config(symbol):
 
 
 
-def load_trade_limits():
-    """
-    Loads trade limits configuration from JSON, creating a default file if missing.
-    """
-    global trade_limits_cache
-    if trade_limits_cache is not None:
-        return trade_limits_cache
-
-    if not os.path.exists(TRADE_LIMIT_FILE):
-        logger.warning(f"Trade limits file {TRADE_LIMIT_FILE} not found. Generating default.")
-        trade_limits_cache = {}
-        return trade_limits_cache
-    try:
-        with open(TRADE_LIMIT_FILE, "r", encoding="utf-8") as f:
-            trade_limits_cache = json.load(f)
-            return trade_limits_cache
-    except Exception as e:
-        logger.error(f"Failed to load trade limits: {e}")
-        trade_limits_cache = {}
-        return trade_limits_cache
-
+# def load_trade_limits():
+#     """
+#     Loads trade limits configuration from JSON, creating a default file if missing.
+#     """
+#     global trade_limits_cache
+#     if trade_limits_cache is not None:
+#         return trade_limits_cache
+#
+#     if not os.path.exists(TRADE_LIMIT_FILE):
+#         logger.warning(f"Trade limits file {TRADE_LIMIT_FILE} not found. Generating default.")
+#         trade_limits_cache = {}
+#         return trade_limits_cache
+#     try:
+#         with open(TRADE_LIMIT_FILE, "r", encoding="utf-8") as f:
+#             trade_limits_cache = json.load(f)
+#             return trade_limits_cache
+#     except Exception as e:
+#         logger.error(f"Failed to load trade limits: {e}")
+#         trade_limits_cache = {}
+#         return trade_limits_cache
+#
 
 def save_trade_decision(trade_data):
     """ Saves trade decisions to history for later analysis."""
@@ -127,64 +129,64 @@ def save_trade_decision(trade_data):
         logger.error(f"Failed to save trade decisions: {e}")
 
 
-def parse_time(value):
-    """Convert string timestamps to UNIX timestamps if needed."""
-    if not value:
-        return 0
-    if isinstance(value, str):
-        try:
-            dt = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
-            dt = dt.replace(tzinfo=timezone.utc)
-            return dt.timestamp()
-        except ValueError:
-            logger.warning(f"Invalid timestamp format: {value}")
-            return 0
-    return float(value) if value else 0
+# def parse_time(value):
+#     """Convert string timestamps to UNIX timestamps if needed."""
+#     if not value:
+#         return 0
+#     if isinstance(value, str):
+#         try:
+#             dt = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
+#             dt = dt.replace(tzinfo=timezone.utc)
+#             return dt.timestamp()
+#         except ValueError:
+#             logger.warning(f"Invalid timestamp format: {value}")
+#             return 0
+#     return float(value) if value else 0
 
 
-def get_server_time_from_tick(symbol):
-    """Get the current server time."""
-    tick_info = mt5.symbol_info_tick(symbol)
-    if not tick_info:
-        logger.warning(f"Failed to get tick data for {symbol}")
-        return datetime.utcnow().timestamp()
+# def get_server_time_from_tick(symbol):
+#     """Get the current server time."""
+#     tick_info = mt5.symbol_info_tick(symbol)
+#     if not tick_info:
+#         logger.warning(f"Failed to get tick data for {symbol}")
+#         return datetime.utcnow().timestamp()
+#
+#     server_time = tick_info.time  # This is a raw timestamp
+#
+#     # Convert MT5 server time (broker time) to its actual broker time zone
+#     broker_dt = datetime.fromtimestamp(server_time, tz=BROKER_TIMEZONE)
+#
+#     # Convert broker time to True UTC
+#     true_utc_dt = broker_dt.astimezone(timezone.utc)
+#     true_utc_timestamp = true_utc_dt.timestamp()
+#
+#     # Get system's current true UTC time
+#     system_utc_dt = datetime.now(timezone.utc)
+#     system_utc_timestamp = system_utc_dt.timestamp()
+#
+#     # Logging with clear distinctions
+#     logger.info(f"MT5 Server Time (Broker's Timezone): {broker_dt} | True UTC Server Time: {true_utc_dt}")
+#     logger.info(f"System UTC Time: {system_utc_dt} | System UTC Timestamp: {system_utc_timestamp}")
+#
+#     logger.debug(f"MT5 Server Timestamp: {server_time} | True UTC Timestamp: {true_utc_timestamp} | System UTC Timestamp: {system_utc_timestamp}")
+#
+#     return true_utc_timestamp
 
-    server_time = tick_info.time  # This is a raw timestamp
 
-    # Convert MT5 server time (broker time) to its actual broker time zone
-    broker_dt = datetime.fromtimestamp(server_time, tz=BROKER_TIMEZONE)
-
-    # Convert broker time to True UTC
-    true_utc_dt = broker_dt.astimezone(timezone.utc)
-    true_utc_timestamp = true_utc_dt.timestamp()
-
-    # Get system's current true UTC time
-    system_utc_dt = datetime.now(timezone.utc)
-    system_utc_timestamp = system_utc_dt.timestamp()
-
-    # Logging with clear distinctions
-    logger.info(f"MT5 Server Time (Broker's Timezone): {broker_dt} | True UTC Server Time: {true_utc_dt}")
-    logger.info(f"System UTC Time: {system_utc_dt} | System UTC Timestamp: {system_utc_timestamp}")
-
-    logger.debug(f"MT5 Server Timestamp: {server_time} | True UTC Timestamp: {true_utc_timestamp} | System UTC Timestamp: {system_utc_timestamp}")
-
-    return true_utc_timestamp
-
-
-def load_limits(symbol):
-    trade_limits = load_trade_limits()
-    if symbol not in trade_limits:
-        logger.warning(f"No Limits. Symbol {symbol} not found in trade limits.")
-        return None
-    limits = trade_limits[symbol]
-    logger.info(f"Trade limits found for {symbol}")
-
-    return {
-        "max_long_size": limits.get('MAX_LONG_SIZE', float('inf')),
-        "max_short_size": limits.get('MAX_SHORT_SIZE', float('inf')),
-        "max_orders": limits.get('MAX_ORDERS', 100),
-        "cooldown_seconds": limits.get('COOLDOWN_SECONDS', 120)
-    }
+# def load_limits(symbol):
+#     trade_limits = load_trade_limits()
+#     if symbol not in trade_limits:
+#         logger.warning(f"No Limits. Symbol {symbol} not found in trade limits.")
+#         return None
+#     limits = trade_limits[symbol]
+#     logger.info(f"Trade limits found for {symbol}")
+#
+#     return {
+#         "max_long_size": limits.get('MAX_LONG_SIZE', float('inf')),
+#         "max_short_size": limits.get('MAX_SHORT_SIZE', float('inf')),
+#         "max_orders": limits.get('MAX_ORDERS', 100),
+#         "cooldown_seconds": limits.get('COOLDOWN_SECONDS', 120)
+#     }
 
 def load_positions(symbol):
     """Retrive open positions for a symbol."""
@@ -203,116 +205,116 @@ def load_positions(symbol):
     }
 
 
-def get_cooldown_clearance(symbol):
-    """Cooldwn clearance - an arbitrary but necessary time limit between trades."""
-    current_time = datetime.utcnow().timestamp()
+# def get_cooldown_clearance(symbol):
+#     """Cooldwn clearance - an arbitrary but necessary time limit between trades."""
+#     current_time = datetime.utcnow().timestamp()
+#
+#     current_tick_time = get_server_time_from_tick(symbol)
+#
+#     limits = load_limits(symbol)
+#     if not limits:
+#         return None, None
+#
+#     cooldown_limit = limits.get('cooldown_seconds', 120)
+#     positions = load_positions(symbol)
+#
+#     long_positions = positions.get('long_data', {})
+#     short_positions = positions.get('short_data', {})
+#
+#     last_long_time = parse_time(long_positions.get('LAST_POSITION_TIME', 0))
+#     last_short_time = parse_time(short_positions.get('LAST_POSITION_TIME', 0))
+#
+#     logger.info(f"Last Position Time: LONG: {last_long_time}, SHORT: {last_short_time}")
+#
+#     # Calculate how long it has been since the last trade cached.
+#     long_time_diff = current_tick_time - last_long_time
+#     short_time_diff = current_tick_time - last_short_time
+#
+#     logger.debug(f"Cooldown Calculation: Current Tick Time: {current_tick_time} | Last Long Time: {last_long_time} | Last Short Time: {last_short_time}")
+#
+#     logger.info(f"Time since last position: LONG: {long_time_diff}, SHORT: {short_time_diff}")
+#
+#     allow_buy = long_time_diff > cooldown_limit
+#     allow_sell = short_time_diff > cooldown_limit
+#
+#     if not allow_buy:
+#         logger.info(f"Symbol {symbol} has not cleared cooldown for LONG positions.")
+#     if not allow_sell:
+#         logger.info(f"Symbol {symbol} has not cleared cooldown for SHORT positions.")
+#
+#     logger.info(f"Symbol Cooldown Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
+#
+#     ## Dumping to file for debugging
+#     with open(CLEARANCE_HEAT_FILE, "w", encoding="utf-8") as f:
+#         json.dump({
+#             "symbol": symbol,
+#             "current_tick_time": current_tick_time,
+#             "last_long_time": last_long_time,
+#             "last_short_time": last_short_time,
+#             "long_time_diff": long_time_diff,
+#             "short_time_diff": short_time_diff,
+#             "cooldown_limit": cooldown_limit,
+#             "allow_buy": allow_buy,
+#             "allow_sell": allow_sell
+#         }, f, indent=4)
+#
+#     return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
 
-    current_tick_time = get_server_time_from_tick(symbol)
 
-    limits = load_limits(symbol)
-    if not limits:
-        return None, None
-
-    cooldown_limit = limits.get('cooldown_seconds', 120)
-    positions = load_positions(symbol)
-
-    long_positions = positions.get('long_data', {})
-    short_positions = positions.get('short_data', {})
-
-    last_long_time = parse_time(long_positions.get('LAST_POSITION_TIME', 0))
-    last_short_time = parse_time(short_positions.get('LAST_POSITION_TIME', 0))
-
-    logger.info(f"Last Position Time: LONG: {last_long_time}, SHORT: {last_short_time}")
-
-    # Calculate how long it has been since the last trade cached.
-    long_time_diff = current_tick_time - last_long_time
-    short_time_diff = current_tick_time - last_short_time
-
-    logger.debug(f"Cooldown Calculation: Current Tick Time: {current_tick_time} | Last Long Time: {last_long_time} | Last Short Time: {last_short_time}")
-
-    logger.info(f"Time since last position: LONG: {long_time_diff}, SHORT: {short_time_diff}")
-
-    allow_buy = long_time_diff > cooldown_limit
-    allow_sell = short_time_diff > cooldown_limit
-
-    if not allow_buy:
-        logger.info(f"Symbol {symbol} has not cleared cooldown for LONG positions.")
-    if not allow_sell:
-        logger.info(f"Symbol {symbol} has not cleared cooldown for SHORT positions.")
-
-    logger.info(f"Symbol Cooldown Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
-
-    ## Dumping to file for debugging
-    with open(CLEARANCE_HEAT_FILE, "w", encoding="utf-8") as f:
-        json.dump({
-            "symbol": symbol,
-            "current_tick_time": current_tick_time,
-            "last_long_time": last_long_time,
-            "last_short_time": last_short_time,
-            "long_time_diff": long_time_diff,
-            "short_time_diff": short_time_diff,
-            "cooldown_limit": cooldown_limit,
-            "allow_buy": allow_buy,
-            "allow_sell": allow_sell
-        }, f, indent=4)
-
-    return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
-
-
-def get_limit_clearance(symbol):
-    """
-    Returns the limit clearance defined in limits file.
-    4 digit signature for this function: 1712
-    """
-    limits = load_limits(symbol)
-    if limits is None:
-        logger.warning(f"[WARNING 1712] :: No Limits. Symbol {symbol} not found in trade limits.")
-        return None, None
-
-    # limits = limits[symbol]
-    logger.info(f"Current {symbol} limits: {limits}")
-    max_long_size = limits.get('max_long_size', float('inf'))
-    max_short_size = limits.get('max_short_size', float('inf'))
-    max_orders = limits.get('max_orders', 100)
-
-    positions = load_positions(symbol)
-
-    current_long_size = positions.get('current_long_size', 0)
-    current_short_size = positions.get('current_short_size', 0)
-    total_positions = current_long_size + current_short_size
-
-    logger.info(f"[INFO 1712] :: Current Position Sizes: LONG: {current_long_size}, SHORT: {current_short_size}")
-
-    long_size_clarance = current_long_size < max_long_size
-    short_size_clarance = current_short_size < max_short_size
-
-    if long_size_clarance:
-        logger.info(f"[INFO 1712] :: Symbol {symbol} has LONG size clearance.")
-    if short_size_clarance:
-        logger.info(f"[INFO 1712] :: Symbol {symbol} has SHORT size clearance.")
-
-    allow_buy = long_size_clarance
-    allow_sell = short_size_clarance
-
-    logger.info(f"[INFO 1712] :: Symbol Limit Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
-
-    # Dumping to file for debugging
-    with open(CLEARANCE_LIMIT_FILE, "w", encoding="utf-8") as f:
-        json.dump({
-            "symbol": symbol,
-            "max_long_size": max_long_size,
-            "max_short_size": max_short_size,
-            "max_orders": max_orders,
-            "current_long_size": current_long_size,
-            "current_short_size": current_short_size,
-            "total_positions": total_positions,
-            "long_size_clarance": long_size_clarance,
-            "short_size_clarance": short_size_clarance,
-            "allow_buy": allow_buy,
-            "allow_sell": allow_sell
-        }, f, indent=4)
-
-    return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
+# def get_limit_clearance(symbol):
+#     """
+#     Returns the limit clearance defined in limits file.
+#     4 digit signature for this function: 1712
+#     """
+#     limits = load_limits(symbol)
+#     if limits is None:
+#         logger.warning(f"[WARNING 1712] :: No Limits. Symbol {symbol} not found in trade limits.")
+#         return None, None
+#
+#     # limits = limits[symbol]
+#     logger.info(f"Current {symbol} limits: {limits}")
+#     max_long_size = limits.get('max_long_size', float('inf'))
+#     max_short_size = limits.get('max_short_size', float('inf'))
+#     max_orders = limits.get('max_orders', 100)
+#
+#     positions = load_positions(symbol)
+#
+#     current_long_size = positions.get('current_long_size', 0)
+#     current_short_size = positions.get('current_short_size', 0)
+#     total_positions = current_long_size + current_short_size
+#
+#     logger.info(f"[INFO 1712] :: Current Position Sizes: LONG: {current_long_size}, SHORT: {current_short_size}")
+#
+#     long_size_clarance = current_long_size < max_long_size
+#     short_size_clarance = current_short_size < max_short_size
+#
+#     if long_size_clarance:
+#         logger.info(f"[INFO 1712] :: Symbol {symbol} has LONG size clearance.")
+#     if short_size_clarance:
+#         logger.info(f"[INFO 1712] :: Symbol {symbol} has SHORT size clearance.")
+#
+#     allow_buy = long_size_clarance
+#     allow_sell = short_size_clarance
+#
+#     logger.info(f"[INFO 1712] :: Symbol Limit Clearance {symbol} ALLOW BUY: {allow_buy}, ALLOW SELL: {allow_sell}")
+#
+#     # Dumping to file for debugging
+#     with open(CLEARANCE_LIMIT_FILE, "w", encoding="utf-8") as f:
+#         json.dump({
+#             "symbol": symbol,
+#             "max_long_size": max_long_size,
+#             "max_short_size": max_short_size,
+#             "max_orders": max_orders,
+#             "current_long_size": current_long_size,
+#             "current_short_size": current_short_size,
+#             "total_positions": total_positions,
+#             "long_size_clarance": long_size_clarance,
+#             "short_size_clarance": short_size_clarance,
+#             "allow_buy": allow_buy,
+#             "allow_sell": allow_sell
+#         }, f, indent=4)
+#
+#     return ('BUY' if allow_buy else None), ('SELL' if allow_sell else None)
 
 
 def get_open_trade_clearance(symbol):
@@ -369,13 +371,12 @@ def open_trade(symbol, lot_size=0.01):
     4 digit signature for this function: 1700
     """
 
-    global trade_limits_cache
+    # global trade_limits_cache
     global total_positions_cache
 
     logger.debug(
         f"[DEBUG 1700:10] :: "
         f"\n[1700:10] function open_trade({symbol}, {lot_size}) "
-        f"\n[1700:10] globals: trade_limits_cache: {trade_limits_cache}, "
         f"\n[1700:10] total_positions_cache: {total_positions_cache}"
     )
 
@@ -444,6 +445,15 @@ def open_trade(symbol, lot_size=0.01):
             f"[DEBUG 1700:61] :: "
             f"Signals for {symbol}: {signals}"
         )
+
+        # Just a deeper loging to check signals simply
+        for indicator_name, signal_data in signals.items():
+            indicator = signal_data.get("indicator", "Unknown")
+            sig = signal_data.get("signal", "NONE")
+            logger.debug(
+                f"[DEBUG 1700:b61] :: "
+                f"Signal {symbol}  {indicator_name} ({indicator}) {sig}"
+            )
 
         position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
         logger.debug(
