@@ -8,6 +8,10 @@ from datetime import datetime
 from src.logger_config import logger
 from src.config import HARD_MEMORY_DIR, INDICATOR_CONFIG_FILE, INDICATOR_RESULTS_FILE
 from src.tools.server_time import get_server_time_from_tick
+from utils.config_watcher import ConfigWatcher
+
+_config_watcher = ConfigWatcher(INDICATOR_CONFIG_FILE)
+
 
 
 def load_config():
@@ -77,7 +81,7 @@ def load_config():
 
 def get_indicator_signal(indicator_config, symbol, **kwargs):
     """
-    Dinamically load indicator module and calls its signal function.
+    Dynamically load indicator module and calls its signal function.
     4 digit function signature: 1918
     """
     module_name = indicator_config.get('module')
@@ -106,7 +110,10 @@ def dispatch_position_manager_indicator(symbol, indicator_name):
     the corresponding global indicator definition, merges its parameters with the
     position manager-specific overrides, and calls the indicator function.
     """
-    config = load_config()
+    # config = load_config()  # Old call - before config watcher
+
+    _config_watcher.load_if_changed()
+    config = _config_watcher.config
 
     # Retrieve position manager configuration.
     # Expected format: {"position_manager_indicator": { "ATR": { "period": 14 } } }
@@ -152,7 +159,11 @@ def dispatch_signals(symbol, **kwargs):
     Loads config, calls each indicator and saves results.
     4 digit function signature: 1715
     """
-    config = load_config()
+    # config = load_config()  # Old call - before config watcher
+
+    _config_watcher.load_if_changed()
+    config = _config_watcher.config
+
     global_indicators = config.get('indicators', [])
 
     symbol_config = config.get('symbols', {}).get(symbol, {})
