@@ -110,7 +110,6 @@ def dispatch_position_manager_indicator(symbol, indicator_name):
     the corresponding global indicator definition, merges its parameters with the
     position manager-specific overrides, and calls the indicator function.
     """
-    # config = load_config()  # Old call - before config watcher
 
     _config_watcher.load_if_changed()
     config = _config_watcher.config
@@ -159,7 +158,6 @@ def dispatch_signals(symbol, **kwargs):
     Loads config, calls each indicator and saves results.
     4 digit function signature: 1715
     """
-    # config = load_config()  # Old call - before config watcher
 
     _config_watcher.load_if_changed()
     config = _config_watcher.config
