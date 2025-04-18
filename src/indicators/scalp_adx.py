@@ -48,7 +48,6 @@ def indicator_result(symbol, indicator, signal, value,
             "tick_time": datetime.utcfromtimestamp(get_server_time_from_tick(symbol)).strftime("%Y-%m-%d %H:%M:%S")
         }
     }
-    # write_to_hard_memory(data)
 
 
 
@@ -190,42 +189,8 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
         f"SMAs for {symbol}: Short: {short_sma:.2f} | Long: {long_sma:.2f}"
     )
 
-    # # Calculate slope (as percent change over 3 bars)
-    # short_sma_3ago = calculate_sma(closing_prices[-(sma_short_period+3):-3], sma_short_period)
-    # logger.debug(
-    #     f"[ScalpADX 3700:31] :: "
-    #     f"Short SMA 3 bars ago for {symbol}: {short_sma_3ago:.2f}"
-    # )
-    # if not short_sma_3ago or short_sma_3ago == 0:
-    #     logger.warning(
-    #         f"[ScalpADX 3700:40] :: "
-    #         f"Escaped function calculate_scalp_adx "
-    #         f"Cannot calculate slope for {symbol}"
-    #     )
-    #     return None
 
-    # slope_pct = (short_sma - short_sma_3ago) / short_sma_3ago * 100
-    # min_slope_pct = 0.01  # 0.01% slope threshold to filter flat entries
-    # if abs(slope_pct) < min_slope_pct:
-    #     logger.debug(
-    #         f"[ScalpADX 3700:41] :: Escaped function. "
-    #         f"Slope filter: market too flat for {symbol} | Slope %: {slope_pct:.2f}"
-    #     )
-    #     return {
-    #         "indicator": "ScalpADX",
-    #         "signal": "HOLD",
-    #         "values": {
-    #             "adx": None,  # Not yet calculated
-    #             "plus_di": None,
-    #             "minus_di": None,
-    #             "sma_short": short_sma,
-    #             "sma_long": long_sma,
-    #             "slope_pct": slope_pct
-    #         }
-    #     }
-
-    
-    # Evaluate Slope 
+    # Evaluate Slope
     slope_data = calculate_sma_slope(closing_prices, sma_short_period, lookback_bars=3)
     slope = classify_slope(slope_data, min_slope_pct=0.01)
     slope_pct = slope_data["slope_pct"] if slope_data else None
