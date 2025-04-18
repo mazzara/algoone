@@ -52,7 +52,9 @@ def indicator_result(symbol, indicator, signal, value,
 
 
 def calculate_sma(prices, period):
-    """Calculate the simple moving average of the given prices."""
+    """
+    Calculate the simple moving average of the given prices.
+    """
     if len(prices) < period:
         return None
     return sum(prices[-period:]) / period
@@ -61,6 +63,11 @@ def calculate_sma(prices, period):
 def calculate_sma_slope(prices, sma_period=9, lookback_bars=3):
     """
     Calculate the slope of an SMA over a specified lookback period.
+
+    Args:
+        prices (list): List of closing prices.
+        sma_period (int): Period for the SMA calculation.
+        lookback_bars (int): Number of bars to look back for slope calculation.
 
     Returns:
         dict or None
