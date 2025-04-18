@@ -390,7 +390,7 @@ def open_buy(
     if take_profit is not None:
         order["tp"] = take_profit
 
-    return execute_trade(order)
+    return execute_trade(order, signals)
 
 
 def open_sell(
@@ -426,7 +426,7 @@ def open_sell(
     if take_profit is not None:
         order["tp"] = take_profit
 
-    return execute_trade(order)
+    return execute_trade(order, signals)
 
 
 
