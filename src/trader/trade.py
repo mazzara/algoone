@@ -296,7 +296,7 @@ def open_trade(symbol, lot_size=0.01):
         if consensus_signal == "BUY" and allow_buy:
             sl = tick.bid - (tick.ask * DEFAULT_VOLATILITY)
             tp = tick.bid + (tick.ask * DEFAULT_VOLATILITY * 2.0)
-            result = open_buy(symbol, lot_size, stop_loss=sl, take_profit=tp)
+            result = open_buy(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
             logger.debug(
                 f"[DEBUG 1700:73] :: "
                 f"System called open_buy({symbol}, {lot_size}) "
@@ -314,7 +314,7 @@ def open_trade(symbol, lot_size=0.01):
         elif consensus_signal == "SELL" and allow_sell:
             sl = tick.bid + (tick.ask * DEFAULT_VOLATILITY)
             tp = tick.bid - (tick.ask * DEFAULT_VOLATILITY * 2.0)
-            result = open_sell(symbol, lot_size, stop_loss=sl, take_profit=tp)
+            result = open_sell(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
             logger.debug(
                     f"[DEBUG 1700:75] :: "
                     f"System called open_sell({symbol}, {lot_size}) "
@@ -367,7 +367,8 @@ def open_buy(
         magic=None,
         comment="Python Auto Trading Bot",
         type_filling=None,
-        order_type=None):
+        order_type=None,
+        signals=None):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
         logger.error(f"Failed to get tick data for {symbol}")
@@ -402,7 +403,8 @@ def open_sell(
         magic=None,
         comment="Python Auto Trading Bot",
         type_filling=None,
-        order_type=None):
+        order_type=None,
+        signals=None):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
         logger.error(f"Failed to get tick data for {symbol}")
@@ -717,7 +719,7 @@ def manage_trade(symbol):
 
 
 
-def execute_trade(order):
+def execute_trade(order, signals):
     result = mt5.order_send(order)
     logger.info(f"Trade Order Sent: {order}")
     logger.info(f"Full Order Response: {result}")
@@ -725,8 +727,23 @@ def execute_trade(order):
     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
         logger.info(f"Trade opened: {result.order}")
         ticket = result.order
-        indicators = {"adx": 22.4, "sma_short": 102.3, "slope": "UP"}  # example - make it dynamic latter
-        log_open_trade(ticket, order["symbol"], "BUY", order["volume"], order["price"], indicators)
+        # indicators = {"adx": 22.4, "sma_short": 102.3, "slope": "UP"}  # example - make it dynamic latter
+
+        if order["type"] == mt5.ORDER_TYPE_BUY:
+            order_type = "BUY"
+        elif order["type"] == mt5.ORDER_TYPE_SELL:
+            order_type = "SELL"
+        else:
+            order_type = "UNKNOWN"
+
+        log_open_trade(
+            ticket,
+            order["symbol"],
+            order_type,
+            order["volume"],
+            order["price"],
+            signals
+        )
         return True
     else:
         logger.error(f"Trade failed: {result.retcode}")
