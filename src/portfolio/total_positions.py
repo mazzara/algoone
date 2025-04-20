@@ -24,19 +24,25 @@ from src.config import (
 
 
 total_positions_cache = {}
+# total_positions_cache = get_total_positions(save=True, use_cache=False)
 
 
-def load_cached_positions(retries=3, delay=0.2):
+
+def load_cached_positions(retries=3, delay=0.2, depth=0):
     """
     Loads cached positions from 'hard_memory/positions.json'.
     4 digit function signature: 6747
     """
+    if depth > 3:
+        logger.error('[6747:00] :: Maximum retries reached. Returning empty list.')
+        return []
+
     if not os.path.exists(POSITIONS_FILE):
         logger.debug('[6747:10] :: No cashed positions found. File not found.')
         get_positions()
         time.sleep(delay)
         logger.debug('[6747:20] :: Fallback: Positions just pulled from MT5.')
-        return load_cached_positions(retries=retries, delay=delay)
+        return load_cached_positions(retries=retries, delay=delay, depth=depth+1)
 
     file_age = time.time() - os.path.getmtime(POSITIONS_FILE)
 
@@ -49,7 +55,7 @@ def load_cached_positions(retries=3, delay=0.2):
         logger.debug('[6747:40] :: Cashed positions are outdated.')
         get_positions()
         time.sleep(delay)
-        return load_cached_positions(retries=retries, delay=delay)
+        return load_cached_positions(retries=retries, delay=delay, depth=depth+1)
 
     for attempt in range(retries):
         try:
@@ -361,6 +367,8 @@ if __name__ == "__main__":
     logger.info("Starting total_positions.py...")
     summary = get_total_positions(save=True, use_cache=False)
     if summary:
+        total_positions_cache.clear()
+        total_positions_cache.update(summary)
         save_total_positions(summary)
         logger.info("total_positions.py completed.")
         print(json.dumps(summary, indent=4))

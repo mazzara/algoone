@@ -34,10 +34,12 @@ def log_open_trade(
         volume,
         entry_price,
         indicators,
-        rationale=None):
+        rationale=None,
+        **kwargs):
 
     journal = load_journal()
-    journal[str(ticket)] = {
+
+    journal_entry = {
         "symbol": symbol,
         "direction": direction,
         "volume": volume,
@@ -49,6 +51,13 @@ def log_open_trade(
         "peak_profit": 0,
         "closed": False
     }
+
+    # Inject any optional kwargs directly into the journal entry
+    for key, value in kwargs.items():
+        if value is not None:
+            journal_entry[key] = value
+
+    journal[str(ticket)] = journal_entry
     save_journal(journal)
     logger.info(f"[JOURNAL] Trade opened: {ticket} | {symbol} | {direction}")
 

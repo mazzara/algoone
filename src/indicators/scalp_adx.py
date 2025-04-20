@@ -92,7 +92,7 @@ def calculate_sma_slope(prices, sma_period=9, lookback_bars=3):
     }
 
 
-def classify_slope(slope_data, min_slope_pct=0.01):
+def classify_slope(slope_data, min_slope_pct=0.02):
     """
     Classify the slope trend as UP, DOWN or FLAT.
 

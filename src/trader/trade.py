@@ -158,203 +158,445 @@ def aggregate_signals(signals):
     for name, result in signals.items():
         sig = result.get('signal', 'NONE')
         vote_counts[sig] += 1
-    logger.info(f"[INFO 1744] :: Signal Votes: {vote_counts}")
+    logger.info(f"[INFO 1744:20] :: Signal Votes: {vote_counts}")
 
     consensus_signal = max(vote_counts, key=vote_counts.get)
 
     if vote_counts[consensus_signal] >= 1:
-        logger.info(f"[INFO 1744] :: Consensus Signal: {consensus_signal}")
+        logger.info(f"[INFO 1744:30] :: Consensus Signal: {consensus_signal}")
         return consensus_signal
     return None
 
 
+####  Deprecated open_trade function --- new version bellow improved signature
+# def open_trade(symbol, lot_size=0.01):
+#     """
+#     Open a trade based on the symbol and lot size.
+#     This function checks the current market conditions, trade limits, and cooldown periods before executing a trade.
+#     It also aggregates signals from multiple indicators to determine the consensus signal for trading.
+#
+#     Supported kwargs:
+#         - lot_size
+#         - stop_loss
+#         - take_profit
+#         - signals
+#
+#     4 digit signature for this function: 1700
+#     """
+#
+#     # global trade_limits_cache
+#     global total_positions_cache
+#
+#     logger.debug(
+#         f"[DEBUG 1700:10] :: "
+#         f"\n[1700:10] function open_trade({symbol}, {lot_size}) "
+#         f"\n[1700:10] total_positions_cache: {total_positions_cache}"
+#     )
+#
+#     tick = mt5.symbol_info_tick(symbol)
+#     if not tick:
+#         logger.error(f"[ERROR 1700:12] :: Failed to get tick data for {symbol}")
+#         return False
+#
+#     spread = tick.ask - tick.bid
+#     logger.info(
+#         f"[INFO 1700:15] TICK: {symbol} | "
+#         f"Bid: {tick.bid} | Ask: {tick.ask} | "
+#         f"Spread: {spread} | Time: {tick.time}"
+#     )
+#
+#     # Call ATR - it is a core component of opening a trade logic.
+#     atr_calculation = dispatch_position_manager_indicator(symbol, 'ATR')
+#     # Properly extract ATR like in manage_trade. Latter YOU SHOULD (must) refactor this.
+#     atr_result = atr_calculation.get("ATR")
+#     if not atr_result:
+#         logger.error(f"[ERROR 1700:49] :: Failed to extract ATR result for {symbol}")
+#         return False
+#
+#     atr = atr_result.get("value", 0)
+#
+#     atr_pct = atr / tick.bid if tick and tick.bid else 0
+#
+#     # MIN_ART_PCT = 0.05/100.0
+#
+#     min_art_pct = MIN_ART_PCT
+#
+#     if atr_pct < min_art_pct:
+#         logger.error(
+#             f"[TRADE-LOGIC 1700:50:1] :: "
+#             f"atr_pct is low for {symbol}: {atr_pct:.6f} | "
+#             f"Expected > {min_art_pct:.6f} | "
+#         )
+#         return False
+#     else:
+#         logger.info(
+#             f"[TRADE-LOGIC 1700:50:2] :: "
+#             f"atr_pct for {symbol}: {atr_pct:.6f} | "
+#             f"Expected > {min_art_pct:.6f} | "
+#             f"Qualified ATR "
+#         )
+#
+#     logger.debug(
+#         f"[DEBUG 1700:51] :: "
+#         f"ATR for {symbol}: {atr} | Spread: {spread} | Tick: {tick.bid} | "
+#         f"Time: {tick.time} | ATR Multiplier: {DEFAULT_ATR_MULTIPLYER} | "
+#         f"Volatility: {DEFAULT_VOLATILITY} | Lot Size: {lot_size} | "
+#         f"Slippage: 20 | Magic Number: {random.randint(100000, 999999)} | "
+#         f"Comment: 'Python Auto Trading Bot' | "
+#         f"Type Filling: mt5.ORDER_FILLING_IOC"
+#     )
+#
+#     if spread <= atr:
+#         allow_buy, allow_sell = get_open_trade_clearance(symbol)
+#         logger.debug(
+#             f"[DEBUG 1700:60] :: "
+#             f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+#         )
+#
+#         signals = dispatch_signals(symbol)
+#         logger.debug(
+#             f"[DEBUG 1700:61] :: "
+#             f"Signals for {symbol}: {signals}"
+#         )
+#
+#         # Just a deeper loging to check signals simply
+#         for indicator_name, signal_data in signals.items():
+#             indicator = signal_data.get("indicator", "Unknown")
+#             sig = signal_data.get("signal", "NONE")
+#             logger.debug(
+#                 f"[DEBUG 1700:b61] :: "
+#                 f"Signal {symbol}  {indicator_name} ({indicator}) {sig}"
+#             )
+#
+#         position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
+#         logger.debug(
+#             f"[DEBUG 1700:62] :: "
+#             f"Position Manager for {symbol}: {position_manager}"
+#         )
+#
+#         trailing_stop = None
+#         if position_manager:
+#             trailing_stop = position_manager.get('value', {})
+#
+#         logger.debug(
+#             f"[DEBUG 1700:70] :: "
+#             f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+#         )
+#
+#         logger.info(
+#             f"[INFO 1700:71] :: "
+#             f"Trade Limits {symbol}: {allow_buy}, {allow_sell}"
+#         )
+#
+#         # Agregate the Signals to get a consensus
+#         consensus_signal = aggregate_signals(signals)
+#         logger.info(
+#             f"[INFO 1700:72] :: "
+#             f"Consensus Signal (open_trade): {symbol} {consensus_signal}"
+#         )
+#         if consensus_signal == 'NONE':
+#             return False
+#
+#         trade_executed = None
+#
+#         # if trade_signal == "BUY" and allow_buy:
+#         if consensus_signal == "BUY" and allow_buy:
+#             sl = tick.bid - (tick.ask * DEFAULT_VOLATILITY)
+#             tp = tick.bid + (tick.ask * DEFAULT_VOLATILITY * 2.0)
+#             result = open_buy(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
+#             logger.debug(
+#                 f"[DEBUG 1700:73] :: "
+#                 f"System called open_buy({symbol}, {lot_size}) "
+#                 f"with sl: {sl}, tp: {tp}"
+#                 )
+#             if result:
+#                 trade_executed = "BUY"
+#                 logger.debug(
+#                     f"[DEBUG 1700:74] :: "
+#                     f"Trade executed: {trade_executed} for {symbol} "
+#                     f"with result: {result}"
+#                 )
+#
+#         # elif trade_signal == "SELL" and allow_sell:
+#         elif consensus_signal == "SELL" and allow_sell:
+#             sl = tick.bid + (tick.ask * DEFAULT_VOLATILITY)
+#             tp = tick.bid - (tick.ask * DEFAULT_VOLATILITY * 2.0)
+#             result = open_sell(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
+#             logger.debug(
+#                     f"[DEBUG 1700:75] :: "
+#                     f"System called open_sell({symbol}, {lot_size}) "
+#                     f"with sl: {sl}, tp: {tp}"
+#                 )
+#             if result:
+#                 trade_executed = "SELL"
+#                 logger.debug(
+#                     f"[DEBUG 1700:76] :: "
+#                     f"Trade executed: {trade_executed} for {symbol} "
+#                     f"with result: {result}"
+#                 )
+#
+#         if trade_executed:
+#             trade_data = {
+#                 "symbol": symbol,
+#                 "local_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+#                 "spread": spread,
+#                 "trade_executed": trade_executed,
+#                 "result": result,
+#                 "signals": signals,
+#                 "trade_clearance": {
+#                     "allow_buy": allow_buy,
+#                     "allow_sell": allow_sell
+#                 },
+#                 "consensus_signal": consensus_signal
+#             }
+#             save_trade_decision(trade_data)
+#             logger.info(f"[INFO 1700] :: Trade executed for {symbol}")
+#             total_positions_cache = get_total_positions(save=True, use_cache=False)
+#
+#             logger.info(f"[INFO 1700] :: Total Positions Cached after trade: {total_positions_cache}")
+#
+#             time.sleep(9)  # Sleep for some seconds to assure data
+#
+#         else:
+#             logger.error(f"[ERROR 1700] :: Trade limits reached for {symbol}")
+#
+#     else:
+#         logger.error(f"[ERROR 1700] :: Spread too low, no trade executed for {symbol}")
+#
 
-def open_trade(symbol, lot_size=0.01):
+def fetch_tick(symbol: str):
     """
-    Open a trade based on the symbol and lot size.
-    This function checks the current market conditions, trade limits, and cooldown periods before executing a trade.
-    It also aggregates signals from multiple indicators to determine the consensus signal for trading.
-    4 digit signature for this function: 1700
+    Fetch the latest tick data for a symbol.
     """
-
-    # global trade_limits_cache
-    global total_positions_cache
-
-    logger.debug(
-        f"[DEBUG 1700:10] :: "
-        f"\n[1700:10] function open_trade({symbol}, {lot_size}) "
-        f"\n[1700:10] total_positions_cache: {total_positions_cache}"
-    )
-
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
-        logger.error(f"[ERROR 1700:12] :: Failed to get tick data for {symbol}")
-        return False
+        logger.error(f"[ERROR 1701:80] :: Failed to get tick data for {symbol}")
+        return None
+    return tick
 
-    spread = tick.ask - tick.bid
-    logger.info(
-        f"[INFO 1700:15] TICK: {symbol} | "
-        f"Bid: {tick.bid} | Ask: {tick.ask} | "
-        f"Spread: {spread} | Time: {tick.time}"
-    )
 
-    # Call ATR - it is a core component of opening a trade logic.
-    atr_calculation = dispatch_position_manager_indicator(symbol, 'ATR')
-    # Properly extract ATR like in manage_trade. Latter YOU SHOULD (must) refactor this.
-    atr_result = atr_calculation.get("ATR")
+def basic_atr_check(symbol: str, tick) -> bool:
+    """
+    Basic ATR verification for the symbol.
+    """
+    atr_result = None
+    atr_result = dispatch_position_manager_indicator(symbol, 'ATR')
     if not atr_result:
-        logger.error(f"[ERROR 1700:49] :: Failed to extract ATR result for {symbol}")
+        logger.error(f"[ERROR 1702:90] :: Failed to extract ATR result for {symbol}")
         return False
-
+    atr_result = atr_result.get("ATR")
     atr = atr_result.get("value", 0)
-
     atr_pct = atr / tick.bid if tick and tick.bid else 0
-
-    # MIN_ART_PCT = 0.05/100.0
-
     min_art_pct = MIN_ART_PCT
-
     if atr_pct < min_art_pct:
         logger.error(
-            f"[TRADE-LOGIC 1700:50:1] :: "
+            f"[TRADE-LOGIC 1702:90:1] :: "
             f"atr_pct is low for {symbol}: {atr_pct:.6f} | "
             f"Expected > {min_art_pct:.6f} | "
         )
         return False
     else:
         logger.info(
-            f"[TRADE-LOGIC 1700:50:2] :: "
+            f"[TRADE-LOGIC 1702:90:2] :: "
             f"atr_pct for {symbol}: {atr_pct:.6f} | "
             f"Expected > {min_art_pct:.6f} | "
             f"Qualified ATR "
         )
+        return True
 
-    logger.debug(
-        f"[DEBUG 1700:51] :: "
-        f"ATR for {symbol}: {atr} | Spread: {spread} | Tick: {tick.bid} | "
-        f"Time: {tick.time} | ATR Multiplier: {DEFAULT_ATR_MULTIPLYER} | "
-        f"Volatility: {DEFAULT_VOLATILITY} | Lot Size: {lot_size} | "
-        f"Slippage: 20 | Magic Number: {random.randint(100000, 999999)} | "
-        f"Comment: 'Python Auto Trading Bot' | "
-        f"Type Filling: mt5.ORDER_FILLING_IOC"
+
+def basic_spread_check(symbol: str, tick, atr) -> bool:
+    """
+    Check if the spread is within acceptable limits for the symbol.
+    """
+    spread = tick.ask - tick.bid
+    logger.info(
+        f"[INFO 1703:100] TICK: {symbol} | "
+        f"Bid: {tick.bid} | Ask: {tick.ask} | "
+        f"Spread: {spread} | Time: {tick.time}"
     )
-
     if spread <= atr:
-        allow_buy, allow_sell = get_open_trade_clearance(symbol)
-        logger.debug(
-            f"[DEBUG 1700:60] :: "
-            f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+        return True
+    else:
+        logger.error(
+            f"[ERROR 1703:200] :: "
+            f"Spread too wide, no trade executed for {symbol}"
         )
+        return False
 
+
+# NEW version of open_trade with better signature and data flow
+def open_trade(symbol: str, **kwargs) -> dict:
+    """
+    Open a trade based on the symbol and kwargs.
+
+    Supported kwargs:
+        - lot_size
+        - stop_loss
+        - take_profit
+        - signals
+    """
+
+    # global trade_limits_cache
+    global total_positions_cache
+
+    tick = fetch_tick(symbol)
+    if not tick:
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Tick fetch failed."
+        }
+
+    if not basic_atr_check(symbol, tick):
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "ATR check failed."
+        }
+
+
+    # Extract known parameters with defaults
+    lot_size = kwargs.get('lot_size', 0.01)
+    stop_loss = kwargs.get('stop_loss', None)
+    take_profit = kwargs.get('take_profit', None)
+    trailing_stop = kwargs.get('trailing_stop', None)
+    slippage = kwargs.get('slippage', 20)
+    signals = kwargs.get('signals', None)
+
+
+    atr_result = dispatch_position_manager_indicator(symbol, 'ATR')
+    atr_value = atr_result.get('ATR', {}).get('value', 0) if atr_result else 0
+
+    if not basic_spread_check(symbol, tick, atr_value):
+        return {"success": False, "executed_side": None, "order": None, "mt5_result": None, "message": "Spread check failed."}
+
+    # A simple signals verification
+    # if not signals:
+    #     signals = dispatch_signals(symbol)
+    #     logger.debug(f"[DEBUG 1700] :: Signals dispatched for {symbol}: {signals}")
+
+    # Enrich kwargs
+    kwargs['spread'] = tick.ask - tick.bid
+    kwargs['atr_value'] = atr_value
+    kwargs['atr_pct'] = (atr_value / tick.bid) if tick and tick.bid else 0
+    kwargs['volatility'] = kwargs.get('volatility', DEFAULT_VOLATILITY)
+    kwargs['tick_snapshot'] = {
+        "bid": tick.bid,
+        "ask": tick.ask,
+        "spread": tick.ask - tick.bid
+        }
+
+    if not signals:
+        logger.info(
+                f"[TRADE INFO 1700:15] :: "
+                f"No signals prvided for {symbol}. Dispatching signals... "
+        )
         signals = dispatch_signals(symbol)
         logger.debug(
-            f"[DEBUG 1700:61] :: "
-            f"Signals for {symbol}: {signals}"
+                f"[DEBUG 1700:17] :: "
+                f"Signals dispatched for {symbol}: {signals}"
         )
 
-        # Just a deeper loging to check signals simply
-        for indicator_name, signal_data in signals.items():
-            indicator = signal_data.get("indicator", "Unknown")
-            sig = signal_data.get("signal", "NONE")
-            logger.debug(
-                f"[DEBUG 1700:b61] :: "
-                f"Signal {symbol}  {indicator_name} ({indicator}) {sig}"
-            )
-
-        position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
-        logger.debug(
-            f"[DEBUG 1700:62] :: "
-            f"Position Manager for {symbol}: {position_manager}"
+    # A robutst data signals verificationis
+    # Now validate signals data structure
+    if not isinstance(signals, dict) or not all(isinstance(v, dict) and 'signal' in v for v in signals.values()):
+        logger.error(
+            f"[ERROR 1700:20] :: Invalid or incomplete signals received for {symbol}"
         )
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Invalid signals."
+        }
 
-        trailing_stop = None
-        if position_manager:
-            trailing_stop = position_manager.get('value', {})
+    consensus_signal = aggregate_signals(signals)
+    logger.info(f"[INFO 1700:30] :: Consensus signal for {symbol}: {consensus_signal}")
 
-        logger.debug(
-            f"[DEBUG 1700:70] :: "
-            f"Trade Clearance for {symbol}: {allow_buy}, {allow_sell}"
+    allow_buy, allow_sell = get_open_trade_clearance(symbol)
+    logger.debug(f"[DEBUG 1700:40] :: Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}")
+
+    if consensus_signal == "BUY" and allow_buy:
+        logger.info(f"[INFO 1700:50] :: Preparing BUY trade for {symbol}")
+        result = open_buy(
+            symbol,
+            lot_size=lot_size,
+            stop_loss=stop_loss,
+            take_profit=take_profit,
+            trailing_stop=trailing_stop,
+            slippage=slippage,
+            signals=signals,
+            **kwargs
         )
-
-        logger.info(
-            f"[INFO 1700:71] :: "
-            f"Trade Limits {symbol}: {allow_buy}, {allow_sell}"
+        executed_side = "BUY"
+    elif consensus_signal == "SELL" and allow_sell:
+        logger.info(f"[INFO 1700:60] :: Preparing SELL trade for {symbol}")
+        result = open_sell(
+            symbol,
+            lot_size=lot_size,
+            stop_loss=stop_loss,
+            take_profit=take_profit,
+            trailing_stop=trailing_stop,
+            slippage=slippage,
+            signals=signals,
+            **kwargs
         )
-
-        # Agregate the Signals to get a consensus
-        consensus_signal = aggregate_signals(signals)
-        logger.info(
-            f"[INFO 1700:72] :: "
-            f"Consensus Signal (open_trade): {symbol} {consensus_signal}"
-        )
-        if consensus_signal == 'NONE':
-            return False
-
-        trade_executed = None
-
-        # if trade_signal == "BUY" and allow_buy:
-        if consensus_signal == "BUY" and allow_buy:
-            sl = tick.bid - (tick.ask * DEFAULT_VOLATILITY)
-            tp = tick.bid + (tick.ask * DEFAULT_VOLATILITY * 2.0)
-            result = open_buy(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
-            logger.debug(
-                f"[DEBUG 1700:73] :: "
-                f"System called open_buy({symbol}, {lot_size}) "
-                f"with sl: {sl}, tp: {tp}"
-                )
-            if result:
-                trade_executed = "BUY"
-                logger.debug(
-                    f"[DEBUG 1700:74] :: "
-                    f"Trade executed: {trade_executed} for {symbol} "
-                    f"with result: {result}"
-                )
-
-        # elif trade_signal == "SELL" and allow_sell:
-        elif consensus_signal == "SELL" and allow_sell:
-            sl = tick.bid + (tick.ask * DEFAULT_VOLATILITY)
-            tp = tick.bid - (tick.ask * DEFAULT_VOLATILITY * 2.0)
-            result = open_sell(symbol, lot_size, stop_loss=sl, take_profit=tp, signals=signals)
-            logger.debug(
-                    f"[DEBUG 1700:75] :: "
-                    f"System called open_sell({symbol}, {lot_size}) "
-                    f"with sl: {sl}, tp: {tp}"
-                )
-            if result:
-                trade_executed = "SELL"
-                logger.debug(
-                    f"[DEBUG 1700:76] :: "
-                    f"Trade executed: {trade_executed} for {symbol} "
-                    f"with result: {result}"
-                )
-
-        if trade_executed:
-            trade_data = {
-                "symbol": symbol,
-                "local_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "spread": spread,
-                "trade_executed": trade_executed,
-                "result": result,
-                "signals": signals,
-                "trade_clearance": {
-                    "allow_buy": allow_buy,
-                    "allow_sell": allow_sell
-                },
-                "consensus_signal": consensus_signal
-            }
-            save_trade_decision(trade_data)
-            logger.info(f"[INFO 1700] :: Trade executed for {symbol}")
-            total_positions_cache = get_total_positions(save=True, use_cache=False)
-
-            logger.info(f"[INFO 1700] :: Total Positions Cached after trade: {total_positions_cache}")
-
-            time.sleep(9)  # Sleep for some seconds to assure data
-
-        else:
-            logger.error(f"[ERROR 1700] :: Trade limits reached for {symbol}")
-
+        executed_side = "SELL"
     else:
-        logger.error(f"[ERROR 1700] :: Spread too low, no trade executed for {symbol}")
+        logger.warning(f"[WARN 1700:70] :: No valid trade executed for {symbol} due to signal or clearance.")
+        return {"success": False, "executed_side": None, "order": None, "mt5_result": None, "message": "No trade executed (signal or clearance)."}
+
+    if result:
+        logger.info(f"[INFO 1700:80] :: Trade executed successfully: {executed_side} {symbol}")
+
+        # total_positions_cache = get_total_positions(save=True, use_cache=False)  # Refresh cache after trade
+
+
+        if result.get("success"):
+            logger.info(f"[INFO 1700:90] :: Trade executed successfully: {executed_side} {symbol}")
+
+            # === Refresh global total_positions_cache ===
+            new_positions = get_total_positions(save=True, use_cache=False)
+            total_positions_cache.clear()
+            total_positions_cache.update(new_positions)
+            logger.info(f"[INFO 1700:100] :: Total Positions Cache refreshed after trade.")
+
+
+        trade_record = {
+            "symbol": symbol,
+            "local_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "executed_side": executed_side,
+            "spread": tick.ask - tick.bid,
+            "signals": signals,
+            "consensus_signal": consensus_signal,
+            "atr_value": atr_value,
+        }
+        save_trade_decision(trade_record)
+
+        return {
+            "success": True,
+            "executed_side": executed_side,
+            "order": result.get('order', None),
+            "mt5_result": result.get('mt5_result', None),
+            "message": "Trade executed."
+        }
+    else:
+        logger.error(f"[ERROR 1700:110] :: Trade execution failed for {symbol}")
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Trade execution failed."
+        }
+
+
 
 
 def open_buy(
@@ -368,7 +610,8 @@ def open_buy(
         comment="Python Auto Trading Bot",
         type_filling=None,
         order_type=None,
-        signals=None):
+        signals=None,
+        **kwargs):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
         logger.error(f"Failed to get tick data for {symbol}")
@@ -379,10 +622,10 @@ def open_buy(
         "volume": lot_size,
         "type": mt5.ORDER_TYPE_BUY,
         "price": tick.ask,
-        "deviation": 20,
-        "magic": random.randint(100000, 599999),
+        "deviation": slippage,
+        "magic": magic if magic is not None else random.randint(100000, 599999),
         "comment": "Python Auto Trading Bot",
-        "type_filling": mt5.ORDER_FILLING_IOC
+        "type_filling": type_filling if type_filling is not None else mt5.ORDER_FILLING_IOC
     }
     # Only add stop loss and take profit if they are provided.
     if stop_loss is not None:
@@ -390,7 +633,7 @@ def open_buy(
     if take_profit is not None:
         order["tp"] = take_profit
 
-    return execute_trade(order, signals)
+    return execute_trade(order, signals, **kwargs)
 
 
 def open_sell(
@@ -404,7 +647,8 @@ def open_sell(
         comment="Python Auto Trading Bot",
         type_filling=None,
         order_type=None,
-        signals=None):
+        signals=None,
+        **kwargs):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
         logger.error(f"Failed to get tick data for {symbol}")
@@ -415,10 +659,10 @@ def open_sell(
         "volume": lot_size,
         "type": mt5.ORDER_TYPE_SELL,
         "price": tick.bid,
-        "deviation": 20,
-        "magic": random.randint(600000, 999999),
+        "deviation": slippage,
+        "magic": magic if magic is not None else random.randint(600000, 999999),
         "comment": "Python Auto Trading Bot",
-        "type_filling": mt5.ORDER_FILLING_IOC
+        "type_filling": type_filling if type_filling is not None else mt5.ORDER_FILLING_IOC
     }
     # Only add stop loss and take profit if they are provided.
     if stop_loss is not None:
@@ -426,7 +670,7 @@ def open_sell(
     if take_profit is not None:
         order["tp"] = take_profit
 
-    return execute_trade(order, signals)
+    return execute_trade(order, signals, **kwargs)
 
 
 
@@ -718,8 +962,54 @@ def manage_trade(symbol):
     return True
 
 
+# DEPRECATED  !!! ATENTION !!!  execute_trade version - below is an improved one.
+# def execute_trade(order, signals):
+#     result = mt5.order_send(order)
+#     logger.info(f"Trade Order Sent: {order}")
+#     logger.info(f"Full Order Response: {result}")
+#
+#     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+#         logger.info(f"Trade opened: {result.order}")
+#         ticket = result.order
+#         # indicators = {"adx": 22.4, "sma_short": 102.3, "slope": "UP"}  # example - make it dynamic latter
+#
+#         if order["type"] == mt5.ORDER_TYPE_BUY:
+#             order_type = "BUY"
+#         elif order["type"] == mt5.ORDER_TYPE_SELL:
+#             order_type = "SELL"
+#         else:
+#             order_type = "UNKNOWN"
+#
+#         log_open_trade(
+#             ticket,
+#             order["symbol"],
+#             order_type,
+#             order["volume"],
+#             order["price"],
+#             signals
+#         )
+#         return True
+#     else:
+#         logger.error(f"Trade failed: {result.retcode}")
+#         return False
 
-def execute_trade(order, signals):
+
+# NEW EXECUTE TRADE WITH UPGRADED SIGNATURE AND RETURNS
+def execute_trade(order, signals, **kwargs):
+    """
+    Execute a trade by sending an order to MT5.
+
+    Args:
+        order (dict): Order dictionary formatted for mt5.order_send
+        signals (dict): Signals at execution time
+        kwargs: Future flexibility (e.g., risk context)
+
+    Returns:
+        dict: 
+            - success (bool)
+            - order (dict of sent order)
+            - mt5_result (full mt5 response object)
+    """
     result = mt5.order_send(order)
     logger.info(f"Trade Order Sent: {order}")
     logger.info(f"Full Order Response: {result}")
@@ -727,7 +1017,6 @@ def execute_trade(order, signals):
     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
         logger.info(f"Trade opened: {result.order}")
         ticket = result.order
-        # indicators = {"adx": 22.4, "sma_short": 102.3, "slope": "UP"}  # example - make it dynamic latter
 
         if order["type"] == mt5.ORDER_TYPE_BUY:
             order_type = "BUY"
@@ -742,16 +1031,28 @@ def execute_trade(order, signals):
             order_type,
             order["volume"],
             order["price"],
-            signals
+            signals,
+            rationale=None, 
+            # rationale=None,  # optional
+            # spread=kwargs.get('spread'),  # new
+            # atr_value=kwargs.get('atr_value'),  # new
+            # atr_pct=kwargs.get('atr_pct'),  # new
+            # volatility=kwargs.get('volatility'),  # new
+            # tick_snapshot=kwargs.get('tick_snapshot')  # new
+            **kwargs
         )
-        return True
+        return {
+            "success": True,
+            "order": order,
+            "mt5_result": result,
+        }
     else:
-        logger.error(f"Trade failed: {result.retcode}")
-        return False
-
-
-
-
+        logger.error(f"Trade failed: {result.retcode if result else 'No Result'}")
+        return {
+            "success": False,
+            "order": order,
+            "mt5_result": result,
+        }
 
 
 if __name__ == "__main__":
