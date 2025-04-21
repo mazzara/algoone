@@ -546,12 +546,18 @@ def open_trade(symbol: str, **kwargs) -> dict:
         f"[INFO 1700:30] :: "
         f"Consensus signal for {symbol}: {consensus_signal}"
     )
+
+    # Save the original before possible inversion
+    original_signal = consensus_signal
+
     consensus_signal = maybe_invert_signal(symbol, consensus_signal)
     logger.info(
         f"[INFO 1700:31] :: "
         f"Consensus signal (after inversion check) for {symbol}: {consensus_signal}"
     )
 
+    # Inject fly_inverted marker into kwargs
+    kwargs['fly_inverted'] = (original_signal != consensus_signal)
 
     if not check_cycle_clearance(symbol):
         logger.warning(f"[CYCLE LIMIT] :: {symbol} blocked by liquidation cooldown. Skipping trade attempt.")
