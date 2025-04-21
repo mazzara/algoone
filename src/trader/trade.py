@@ -11,8 +11,10 @@ from src.portfolio.total_positions import (
     get_total_positions, total_positions_cache
 )
 from src.limits.limits import (
-    get_limit_clearance, get_cooldown_clearance, get_symbol_limits
+    get_limit_clearance, get_cooldown_clearance, get_symbol_limits,
+    get_trade_limits
 )
+from src.limits.cycle_limit import check_cycle_clearance
 from src.tools.server_time import parse_time
 from src.positions.positions import get_positions, load_positions
 from src.indicators.adx_indicator import calculate_adx
@@ -545,6 +547,16 @@ def open_trade(symbol: str, **kwargs) -> dict:
         f"Consensus signal for {symbol}: {consensus_signal}"
     )
 
+    if not check_cycle_clearance(symbol):
+        logger.warning(f"[CYCLE LIMIT] :: {symbol} blocked by liquidation cooldown. Skipping trade attempt.")
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Blocked by liquidation cooldown."
+        }
+
     allow_buy, allow_sell = get_open_trade_clearance(symbol)
     logger.debug(
         f"[DEBUG 1700:40] :: "
@@ -614,6 +626,11 @@ def open_trade(symbol: str, **kwargs) -> dict:
                 f"Total Positions Cache refreshed after trade."
             )
 
+        # === Check if liquidation cycle should be registered ===
+        for symb, symb_data in total_positions_cache.items():
+            net_data = symb_data.get('NET', {})
+            if net_data.get('SIZE_SUM', 0) == 0 and net_data.get('POSITION_COUNT', 0) == 0:
+                register_cycle(symb)
 
         trade_record = {
             "symbol": symbol,

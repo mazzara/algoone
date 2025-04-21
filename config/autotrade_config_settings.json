@@ -7,7 +7,8 @@
     "close_profit_threshold_decimal": 0.05,
     "close_profit_dollar_threshold": 0.25,
     "trailing_profit_threshold_decimal": 0.005,
-    "break_even_offset_decimal": 0.103
+    "break_even_offset_decimal": 0.103,
+    "liquidation_cycle_seconds": 900
   },
   "symbol_overrides": {
     "BTCUSD": {
