@@ -8,7 +8,8 @@
         "EURUSD": {
             "indicators": [
                 "ScalpADX"
-            ]
+            ],
+            "fly_inverted": false
         },
         "ETHUSD": {
             "indicators": [

@@ -152,6 +152,31 @@ def dispatch_position_manager_indicator(symbol, indicator_name):
     logger.debug(f"[DEBUG] :: Position manager indicator signal for {symbol}: {signals}")
     return signals
 
+# helper function to invert signal
+def maybe_invert_signal(symbol: str, signal: str) -> str:
+    """
+    Invert the trading signal for a symbol if 'fly_inverted' is enabled in indicator_config.json.
+    """
+    _config_watcher.load_if_changed()
+    config = _config_watcher.config
+    symbol_config = config.get('symbols', {}).get(symbol, {})
+    fly_inverted = symbol_config.get('fly_inverted', False)
+
+    if fly_inverted:
+        if signal == "BUY":
+            inverted = "SELL"
+        elif signal == "SELL":
+            inverted = "BUY"
+        else:
+            inverted = signal
+
+        if signal != inverted:
+            logger.info(f"[SIGNAL FLIP] :: {symbol} signal inverted from {signal} to {inverted}")
+
+        return inverted
+
+    return signal
+
 
 def dispatch_signals(symbol, **kwargs):
     """

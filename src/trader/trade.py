@@ -19,7 +19,7 @@ from src.tools.server_time import parse_time
 from src.positions.positions import get_positions, load_positions
 from src.indicators.adx_indicator import calculate_adx
 from src.indicators.signal_indicator import (
-    dispatch_signals, dispatch_position_manager_indicator
+    dispatch_signals, dispatch_position_manager_indicator, maybe_invert_signal
 )
 from src.journal.position_journal import (
     log_open_trade, log_close_trade, append_tracking
@@ -546,6 +546,12 @@ def open_trade(symbol: str, **kwargs) -> dict:
         f"[INFO 1700:30] :: "
         f"Consensus signal for {symbol}: {consensus_signal}"
     )
+    consensus_signal = maybe_invert_signal(symbol, consensus_signal)
+    logger.info(
+        f"[INFO 1700:31] :: "
+        f"Consensus signal (after inversion check) for {symbol}: {consensus_signal}"
+    )
+
 
     if not check_cycle_clearance(symbol):
         logger.warning(f"[CYCLE LIMIT] :: {symbol} blocked by liquidation cooldown. Skipping trade attempt.")
