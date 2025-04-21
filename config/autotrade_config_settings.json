@@ -8,7 +8,8 @@
     "close_profit_dollar_threshold": 0.25,
     "trailing_profit_threshold_decimal": 0.005,
     "break_even_offset_decimal": 0.103,
-    "liquidation_cycle_seconds": 900
+    "liquidation_cycle_seconds": 900,
+    "bias": "none"
   },
   "symbol_overrides": {
     "BTCUSD": {
@@ -16,7 +17,8 @@
       "default_slippage": 25
     },
     "XAUUSD": {
-      "default_volatility_decimal": 0.02
+      "default_volatility_decimal": 0.02,
+      "bias": "long"
     }
   }
 }
