@@ -591,6 +591,31 @@ def open_trade(symbol: str, **kwargs) -> dict:
         take_profit = tick.bid - (tick.bid * default_volatility * 2.0)
 
     logger.info(f"[INFO 1700:25] :: Calculated SL/TP for {symbol} - SL: {stop_loss} | TP: {take_profit}")
+    
+    # Bias gate verification - as per autotrade config
+    bias = get_autotrade_param(symbol, 'bias', default='none')
+    if bias == 'long' and consensus_signal == 'SELL':
+        logger.warning(
+            f"[BIASED BLOCK] :: {symbol} signal {consensus_signal} rejected by long-only bias."
+        )
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Blocked by long bias."
+        }
+    if bias == 'short' and consensus_signal == 'BUY':
+        logger.warning(
+            f"[BIASED BLOCK] :: {symbol} signal {consensus_signal} rejected by short-only bias."
+        )
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Blocked by long bias."
+        }
 
     if consensus_signal == "BUY" and allow_buy:
         logger.info(f"[INFO 1700:50] :: Preparing BUY trade for {symbol}")
