@@ -7,27 +7,37 @@ import time
 from datetime import datetime, timezone, timedelta
 import pytz
 from src.logger_config import logger
-from src.portfolio.total_positions import get_total_positions, total_positions_cache
-from src.limits.limits import get_limit_clearance, get_cooldown_clearance, get_symbol_limits
+from src.portfolio.total_positions import (
+    get_total_positions, total_positions_cache
+)
+from src.limits.limits import (
+    get_limit_clearance, get_cooldown_clearance, get_symbol_limits
+)
 from src.tools.server_time import parse_time
 from src.positions.positions import get_positions, load_positions
 from src.indicators.adx_indicator import calculate_adx
-from src.indicators.signal_indicator import dispatch_signals, dispatch_position_manager_indicator
-from src.journal.position_journal import log_open_trade, log_close_trade, append_tracking
+from src.indicators.signal_indicator import (
+    dispatch_signals, dispatch_position_manager_indicator
+)
+from src.journal.position_journal import (
+    log_open_trade, log_close_trade, append_tracking
+)
 from src.trader.awareness import evaluate_profit_awareness
+from src.trader.autotrade import get_autotrade_param
 from src.config import (
         HARD_MEMORY_DIR,
         POSITIONS_FILE,
-        BROKER_SYMBOLS, 
+        BROKER_SYMBOLS,
         TRADE_LIMIT_FILE,
         TRADE_DECISIONS_FILE,
-        CLOSE_PROFIT_THRESHOLD,
-        TRAILING_PROFIT_THRESHHOLD,
+        # CLOSE_PROFIT_THRESHOLD,
+        # TRAILING_PROFIT_THRESHHOLD,
         CLEARANCE_HEAT_FILE,
-        CLEARANCE_LIMIT_FILE,
-        DEFAULT_VOLATILITY,
-        DEFAULT_ATR_MULTIPLYER,
-        MIN_ART_PCT)
+        CLEARANCE_LIMIT_FILE
+        # DEFAULT_VOLATILITY,
+        # DEFAULT_ATR_MULTIPLYER,
+        # MIN_ART_PCT
+)
 
 # Cash trade limits to avoid reloading
 # trade_limits_cache = None
@@ -62,10 +72,12 @@ def get_symbols_config():
     global _SYMBOLS_CONFIG_CACHE
     if _SYMBOLS_CONFIG_CACHE is not None:
         return _SYMBOLS_CONFIG_CACHE
-    
+
     symbols_file = BROKER_SYMBOLS
     if not os.path.exists(symbols_file):
-        logger.error(f"[ERROR 1247] :: Symbol configuration file not found: {symbols_file}")
+        logger.error(
+            f"[ERROR 1247] :: "
+            f"Symbol configuration file not found: {symbols_file}")
         return None
     try:
         with open(symbols_file, 'r', encoding='utf-8') as f:
@@ -387,7 +399,8 @@ def basic_atr_check(symbol: str, tick) -> bool:
     atr_result = atr_result.get("ATR")
     atr = atr_result.get("value", 0)
     atr_pct = atr / tick.bid if tick and tick.bid else 0
-    min_art_pct = MIN_ART_PCT
+    # min_art_pct = MIN_ART_PCT
+    min_art_pct = get_autotrade_param(symbol, 'min_atr_pct', default=0.0005)
     if atr_pct < min_art_pct:
         logger.error(
             f"[TRADE-LOGIC 1702:90:1] :: "
@@ -473,18 +486,27 @@ def open_trade(symbol: str, **kwargs) -> dict:
     atr_value = atr_result.get('ATR', {}).get('value', 0) if atr_result else 0
 
     if not basic_spread_check(symbol, tick, atr_value):
-        return {"success": False, "executed_side": None, "order": None, "mt5_result": None, "message": "Spread check failed."}
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "Spread check failed."
+        }
 
     # A simple signals verification
     # if not signals:
     #     signals = dispatch_signals(symbol)
     #     logger.debug(f"[DEBUG 1700] :: Signals dispatched for {symbol}: {signals}")
 
+    default_volatility = get_autotrade_param(symbol, 'default_volatility_decimal', default=0.03)
+
     # Enrich kwargs
     kwargs['spread'] = tick.ask - tick.bid
     kwargs['atr_value'] = atr_value
     kwargs['atr_pct'] = (atr_value / tick.bid) if tick and tick.bid else 0
-    kwargs['volatility'] = kwargs.get('volatility', DEFAULT_VOLATILITY)
+    # kwargs['volatility'] = kwargs.get('volatility', DEFAULT_VOLATILITY)
+    kwargs['volatility'] = kwargs.get('volatility', default_volatility)
     kwargs['tick_snapshot'] = {
         "bid": tick.bid,
         "ask": tick.ask,
@@ -506,7 +528,8 @@ def open_trade(symbol: str, **kwargs) -> dict:
     # Now validate signals data structure
     if not isinstance(signals, dict) or not all(isinstance(v, dict) and 'signal' in v for v in signals.values()):
         logger.error(
-            f"[ERROR 1700:20] :: Invalid or incomplete signals received for {symbol}"
+            f"[ERROR 1700:20] :: "
+            f"Invalid or incomplete signals received for {symbol}"
         )
         return {
             "success": False,
@@ -517,10 +540,16 @@ def open_trade(symbol: str, **kwargs) -> dict:
         }
 
     consensus_signal = aggregate_signals(signals)
-    logger.info(f"[INFO 1700:30] :: Consensus signal for {symbol}: {consensus_signal}")
+    logger.info(
+        f"[INFO 1700:30] :: "
+        f"Consensus signal for {symbol}: {consensus_signal}"
+    )
 
     allow_buy, allow_sell = get_open_trade_clearance(symbol)
-    logger.debug(f"[DEBUG 1700:40] :: Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}")
+    logger.debug(
+        f"[DEBUG 1700:40] :: "
+        f"Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}"
+    )
 
     if consensus_signal == "BUY" and allow_buy:
         logger.info(f"[INFO 1700:50] :: Preparing BUY trade for {symbol}")
@@ -549,23 +578,41 @@ def open_trade(symbol: str, **kwargs) -> dict:
         )
         executed_side = "SELL"
     else:
-        logger.warning(f"[WARN 1700:70] :: No valid trade executed for {symbol} due to signal or clearance.")
-        return {"success": False, "executed_side": None, "order": None, "mt5_result": None, "message": "No trade executed (signal or clearance)."}
+        logger.warning(
+            f"[WARN 1700:70] :: "
+            f"No valid trade executed for {symbol} due to signal or clearance."
+        )
+        return {
+            "success": False,
+            "executed_side": None,
+            "order": None,
+            "mt5_result": None,
+            "message": "No trade executed (signal or clearance)."
+        }
 
     if result:
-        logger.info(f"[INFO 1700:80] :: Trade executed successfully: {executed_side} {symbol}")
+        logger.info(
+            f"[INFO 1700:80] :: "
+            f"Trade executed successfully: {executed_side} {symbol}"
+        )
 
         # total_positions_cache = get_total_positions(save=True, use_cache=False)  # Refresh cache after trade
 
 
         if result.get("success"):
-            logger.info(f"[INFO 1700:90] :: Trade executed successfully: {executed_side} {symbol}")
+            logger.info(
+                f"[INFO 1700:90] :: "
+                f"Trade executed successfully: {executed_side} {symbol}"
+            )
 
             # === Refresh global total_positions_cache ===
             new_positions = get_total_positions(save=True, use_cache=False)
             total_positions_cache.clear()
             total_positions_cache.update(new_positions)
-            logger.info(f"[INFO 1700:100] :: Total Positions Cache refreshed after trade.")
+            logger.info(
+                f"[INFO 1700:100] :: "
+                f"Total Positions Cache refreshed after trade."
+            )
 
 
         trade_record = {
@@ -595,8 +642,6 @@ def open_trade(symbol: str, **kwargs) -> dict:
             "mt5_result": None,
             "message": "Trade execution failed."
         }
-
-
 
 
 def open_buy(
@@ -679,20 +724,33 @@ def close_trade(symbol=None):
     Close a trade based on profit threshold.
     4 digit signature for this function: 1038
     """
-    close_profit_threshold = CLOSE_PROFIT_THRESHOLD
-    logger.info(f"[INFO 1038] :: Closing trades with profit threshold: {close_profit_threshold}")
+    # close_profit_threshold = CLOSE_PROFIT_THRESHOLD
+    close_profit_threshold = get_autotrade_param(
+        symbol, 'close_profit_threshold_decimal', default=0.05)
+
+    logger.info(
+        f"[INFO 1038] :: "
+        f"Closing trades with profit threshold: {close_profit_threshold}"
+    )
     if not symbol:
-        logger.error("[ERROR 1038] :: close_trade() called without a valid symbol.")
+        logger.error(
+            "[ERROR 1038] :: close_trade() called without a valid symbol."
+        )
         return False
 
     symbol_config = get_symbol_config(symbol)
     if symbol_config:
         symbol_contract_size = symbol_config.get('contract_size', 1)
-        logger.info(f"[INFO 1038] :: Symbol {symbol} contract size: {symbol_contract_size}")
+        logger.info(
+            f"[INFO 1038] :: "
+            f"Symbol {symbol} contract size: {symbol_contract_size}"
+        )
 
     signals = dispatch_signals(symbol)
     consensus_signal = aggregate_signals(signals)
-    logger.info(f"[INFO 1038] :: Consensus Signal (close_trade): {consensus_signal}")
+    logger.info(
+        f"[INFO 1038] :: Consensus Signal (close_trade): {consensus_signal}"
+    )
 
     position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
     trailing_stop = None
@@ -708,18 +766,27 @@ def close_trade(symbol=None):
     logger.info(f"[INFO 1038] :: Loading positions from {file_path}")
 
     if not os.path.exists(file_path):
-        logger.warning(f"[WARNING 1038] :: File positions not found. I am unable to close trades.")
+        logger.warning(
+            f"[WARNING 1038] :: "
+            f"File positions not found. I am unable to close trades."
+        )
         return
 
     with open(file_path, 'r', encoding='utf-8') as f:
         positions_data = json.load(f)
-        logger.info(f"[INFO 1038] :: close_trade() - Positions loaded from cache 'positions_data': {len(positions_data)}")
+        logger.info(
+            f"[INFO 1038] :: close_trade() - "
+            f"Positions loaded from cache 'positions_data': {len(positions_data)}"
+        )
 
     positions = positions_data['positions']
     logger.info(f"[INFO 1038] :: Positions loaded from cache: {len(positions)}")
 
     if not positions:
-        logger.warning(f"[WARNING 1038] :: No open positions found on {file_path}.")
+        logger.warning(
+            f"[WARNING 1038] :: "
+            f"No open positions found on {file_path}."
+        )
         return
 
     for pos in positions:
@@ -736,7 +803,15 @@ def close_trade(symbol=None):
 
         min_profit = position_pnl > close_profit_threshold
 
-        logger.info(f"[INFO 1038] :: Position PnL: {position_pnl} | Invested Amount: {invested_amount} | Profit: {profit} | Symbol: {symbol} | Volume: {volume} | Type: {pos_type} | Ticket: {ticket} | Price Open: {price_open} | Min Profit: {min_profit} | Close Profit Threshold: {close_profit_threshold} | Contract Size: {symbol_contract_size} | Trailing Stop: {trailing_stop}")
+        logger.info(
+            f"[INFO 1038] :: "
+            f"Position PnL: {position_pnl} | Invested Amount: {invested_amount} "
+            f"| Profit: {profit} | Symbol: {symbol} | Volume: {volume} | "
+            f"Type: {pos_type} | Ticket: {ticket} | Price Open: {price_open} "
+            f"| Min Profit: {min_profit} | "
+            f"Close Profit Threshold: {close_profit_threshold} | "
+            f"Contract Size: {symbol_contract_size} | "
+            f"Trailing Stop: {trailing_stop}")
 
         if invested_amount > 0 and min_profit:
             logger.info(f"Closing trade on {symbol} - Profit reached: {profit}")
@@ -753,20 +828,34 @@ def close_trade(symbol=None):
                 "type_filling": mt5.ORDER_FILLING_IOC
             }
             close_result = mt5.order_send(close_request)
-            logger.info(f"[INFO 1038] :: Close request sent as mt5.position_close: {close_request}")
+            logger.info(
+                f"[INFO 1038] :: "
+                f"Close request sent as mt5.position_close: {close_request}"
+            )
             logger.error(f"[INFO 1038] :: MT5 last error: {mt5.last_error()}")
 
             if close_result is None:
-                logger.error(f"[ERROR 1038] :: Failed to close position on {symbol}. `mt5.order_send()` returned None.")
+                logger.error(
+                    f"[ERROR 1038] :: "
+                    f"Failed to close position on {symbol}. "
+                    f"`mt5.order_send()` returned None."
+                )
                 continue
 
             logger.info(f"[INFO 1038] :: Close order response: {close_result}")
 
             if close_result.retcode == mt5.TRADE_RETCODE_DONE:
-                logger.info(f"[INFO 1038] :: Successfully closed position on {symbol}")
+                logger.info(
+                    f"[INFO 1038] :: Successfully closed position on {symbol}"
+                )
                 log_close_trade(ticket, close_reason="TP Triggered", final_profit=profit)
             else:
-                logger.error(f"[ERROR 1038] :: Failed to close position on {symbol}. Error Code: {close_result.retcode}, Message: {close_result.comment}")
+                logger.error(
+                    f"[ERROR 1038] :: "
+                    f"Failed to close position on {symbol}. "
+                    f"Error Code: {close_result.retcode}, "
+                    f"Message: {close_result.comment}"
+                )
 
             if close_result and close_result.retcode == mt5.TRADE_RETCODE_DONE:
                 logger.info(f"[INFO 1038] :: Close order result: {close_result}")
@@ -777,7 +866,10 @@ def close_trade(symbol=None):
 def close_position_by_ticket(ticket, symbol, pos_type, volume):
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
-        logger.error(f"[CloseByTicket 2606:03] :: Failed to get tick data for {symbol}")
+        logger.error(
+            f"[CloseByTicket 2606:03] :: "
+            f"Failed to get tick data for {symbol}"
+        )
         return False
 
     price = tick.bid if pos_type == 'SELL' else tick.ask
@@ -800,10 +892,16 @@ def close_position_by_ticket(ticket, symbol, pos_type, volume):
     logger.info(f"[CloseByTicket 2606:05] :: MT5 response: {result}")
 
     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
-        logger.info(f"[CloseByTicket 2606:07] :: Successfully closed ticket {ticket} for {symbol}")
+        logger.info(
+            f"[CloseByTicket 2606:07] :: "
+            f"Successfully closed ticket {ticket} for {symbol}"
+        )
         return True
     else:
-        logger.error(f"[CloseByTicket 2606:08] :: Failed to close ticket {ticket}. Error: {mt5.last_error()}")
+        logger.error(
+            f"[CloseByTicket 2606:08] :: "
+            f"Failed to close ticket {ticket}. Error: {mt5.last_error()}"
+        )
         return False
 
 
@@ -829,13 +927,20 @@ def manage_trade(symbol):
     # Dispatch the position manager indicator (e.g., ATR must be set in the config file)
     pm_result = dispatch_position_manager_indicator(symbol, 'ATR')
     if not pm_result:
-        logger.info(f"[INFO 0625] :: No position manager signal for {symbol}; no adjustments will be made.")
+        logger.info(
+            f"[INFO 0625] :: "
+            f"No position manager signal for {symbol}; "
+            f"no adjustments will be made."
+        )
         return True
 
     # Extract the ATR result dictionary from pm_result.
     atr_result = pm_result.get("ATR")
     if not atr_result:
-        logger.error(f"[ERROR 0625] :: ATR result is missing from the position manager indicators.")
+        logger.error(
+            f"[ERROR 0625] :: "
+            f"ATR result is missing from the position manager indicators."
+        )
         return False
 
     # Retrieve the ATR value from the indicator result.
@@ -844,7 +949,8 @@ def manage_trade(symbol):
         logger.error(f"[ERROR 0625] :: ATR value is not available for {symbol}.")
         return False
 
-    multiplier = DEFAULT_ATR_MULTIPLYER
+    # multiplier = DEFAULT_ATR_MULTIPLYER
+    multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=1.5)
 
     # Get current open positions for the symbol.
     # (Assuming get_positions() returns a dict containing a list of positions under 'positions')
@@ -853,7 +959,10 @@ def manage_trade(symbol):
     logger.info(f"[INFO 0625] :: Loading positions from {file_path}")
 
     if not os.path.exists(file_path):
-        logger.warning(f"[WARNING 0625] :: File positions not found. Unable to manage trades.")
+        logger.warning(
+            f"[WARNING 0625] :: "
+            f"File positions not found. Unable to manage trades."
+        )
         return
     with open(file_path, 'r', encoding='utf-8') as f:
         positions_data = json.load(f)
@@ -875,7 +984,7 @@ def manage_trade(symbol):
     for pos in positions:
         pos_type = pos.get("type")
         ticket = pos.get("ticket")
-        current_sl = pos.get("sl", None)  # current stop loss; may be None if not set
+        current_sl = pos.get("sl", None)
         open_price = pos.get("price_open", None)
         volume = pos.get("volume", 0)
         recommended_sl = None
@@ -887,16 +996,25 @@ def manage_trade(symbol):
             pos_type=pos["type"]
         )
 
-        BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
+        # BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
+        break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.103)
 
         # Evaluate Awareness
         take_profit = False
         take_profit = evaluate_profit_awareness(symbol, tick, atr_value,
                                                      open_price, pos_type)
-        logger.debug(f"[DEBUG 0625:02] :: Evaluating profit awareness for {symbol} - Take Profit: {take_profit} | ATR Value: {atr_value} | Open Price: {open_price} | Position Type: {pos_type} | Current SL: {current_sl} | Ticket: {ticket}")
+        logger.debug(
+            f"[DEBUG 0625:02] :: Evaluating profit awareness for {symbol} - "
+            f"Take Profit: {take_profit} | ATR Value: {atr_value} | "
+            f"Open Price: {open_price} | Position Type: {pos_type} | "
+            f"Current SL: {current_sl} | Ticket: {ticket}"
+        )
 
         if take_profit:
-            logger.info(f"[INFO 0625:03] :: Closing Symbol {symbol} position {ticket} due to profit awareness.")
+            logger.info(
+                f"[INFO 0625:03] :: Closing Symbol {symbol} "
+                f"position {ticket} due to profit awareness."
+            )
             close_position_by_ticket(ticket, symbol, pos_type, volume)
             continue
 
@@ -906,15 +1024,26 @@ def manage_trade(symbol):
 
             if has_moved_1_atr and in_trailing_range:
                 # Break-even logic
-                recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: Break-even zone. Recommending SL to {recommended_sl}")
+                # recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
+                recommended_sl = open_price + (atr_value * break_even_offset)
+                logger.info(
+                    f"[INFO 0625] :: BUY position {ticket}: "
+                    f"Break-even zone. Recommending SL to {recommended_sl}"
+                )
             else:
                 # Trailing logic
                 recommended_sl = tick.bid - multiplier * atr_value
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: Trailing SL calculated at {recommended_sl}")
+                logger.info(
+                    f"[INFO 0625] :: BUY position {ticket}: "
+                    f"Trailing SL calculated at {recommended_sl}"
+                )
 
             if current_sl is not None and recommended_sl <= current_sl:
-                logger.info(f"[INFO 0625] :: BUY position {ticket}: SL {recommended_sl} not better than current {current_sl}. Skipping update.")
+                logger.info(
+                    f"[INFO 0625] :: BUY position {ticket}: "
+                    f"SL {recommended_sl} not better than current {current_sl}."
+                    f" Skipping update."
+                )
                 continue
 
         elif pos_type == "SELL":
@@ -923,19 +1052,32 @@ def manage_trade(symbol):
 
             if has_moved_1_atr and in_trailing_range:
                 # Break-even logic
-                recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: Break-even zone. Recommending SL to {recommended_sl}")
+                # recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
+                recommended_sl = open_price - (atr_value * break_even_offset)
+                logger.info(
+                    f"[INFO 0625] :: SELL position {ticket}: Break-even zone."
+                    f" Recommending SL to {recommended_sl}"
+                )
             else:
                 # Trailing logic
                 recommended_sl = tick.ask + multiplier * atr_value
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: Trailing SL calculated at {recommended_sl}")
+                logger.info(
+                    f"[INFO 0625] :: SELL position {ticket}: "
+                    f"Trailing SL calculated at {recommended_sl}"
+                )
 
             if current_sl is not None and recommended_sl >= current_sl:
-                logger.info(f"[INFO 0625] :: SELL position {ticket}: SL {recommended_sl} not better than current {current_sl}. Skipping update.")
+                logger.info(
+                    f"[INFO 0625] :: SELL position {ticket}: SL {recommended_sl}"
+                    f" not better than current {current_sl}. Skipping update."
+                )
                 continue
 
         else:
-            logger.warning(f"[WARNING 0625] :: Position {ticket} has unknown type: {pos_type}. Skipping.")
+            logger.warning(
+                f"[WARNING 0625] :: Position {ticket} "
+                f"has unknown type: {pos_type}. Skipping."
+            )
             continue
 
 
@@ -950,14 +1092,26 @@ def manage_trade(symbol):
             "magic": pos.get("magic", random.randint(100000, 999999)),
             "comment": "Trailing Stop Adjustment"
         }
-        logger.info(f"[INFO 0625] :: Sending modify request for position {ticket}: {modify_request}")
+        logger.info(
+            f"[INFO 0625] :: Sending modify request for "
+            f"position {ticket}: {modify_request}"
+        )
         modify_result = mt5.order_send(modify_request)
-        logger.info(f"[INFO 0625] :: Modify result for position {ticket}: {modify_result}")
+        logger.info(
+            f"[INFO 0625] :: Modify result for "
+            f"position {ticket}: {modify_result}"
+        )
 
         if modify_result is not None and modify_result.retcode == mt5.TRADE_RETCODE_DONE:
-            logger.info(f"[INFO 0625] :: Successfully updated trailing stop for position {ticket}.")
+            logger.info(
+                f"[INFO 0625] :: Successfully updated trailing stop for "
+                f"position {ticket}."
+            )
         else:
-            logger.error(f"[0625] :: Failed to update trailing stop for position {ticket}. MT5 Error: {mt5.last_error()}")
+            logger.error(
+                f"[0625] :: Failed to update trailing stop for "
+                f"position {ticket}. MT5 Error: {mt5.last_error()}"
+            )
 
     return True
 
@@ -1005,7 +1159,7 @@ def execute_trade(order, signals, **kwargs):
         kwargs: Future flexibility (e.g., risk context)
 
     Returns:
-        dict: 
+        dict:
             - success (bool)
             - order (dict of sent order)
             - mt5_result (full mt5 response object)

@@ -6,7 +6,8 @@
     "default_slippage": 20,
     "close_profit_threshold_decimal": 0.05,
     "close_profit_dollar_threshold": 0.25,
-    "trailing_profit_threshold_decimal": 0.005
+    "trailing_profit_threshold_decimal": 0.005,
+    "break_even_offset_decimal": 0.103
   },
   "symbol_overrides": {
     "BTCUSD": {

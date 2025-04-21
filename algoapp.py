@@ -16,7 +16,6 @@ from utils.config_watcher import ConfigWatcher
 override_watcher = ConfigWatcher("config/trade_override.json")
 limits_watcher = ConfigWatcher("config/trade_limits_config.json")
 indicator_config_watcher = ConfigWatcher("config/indicator_config.json")
-autotrade_config_watcher = ConfigWatcher("config/autotrade_config_settings.json")
 
 
 
@@ -27,7 +26,6 @@ def on_tick(ticks):
     override_watcher.load_if_changed()
     limits_watcher.load_if_changed()
     indicator_config_watcher.load_if_changed()
-    autotrade_config_watcher.load_if_changed()
 
     for tick in ticks:
         logger.info(
