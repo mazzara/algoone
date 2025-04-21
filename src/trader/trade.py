@@ -569,6 +569,23 @@ def open_trade(symbol: str, **kwargs) -> dict:
         f"Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}"
     )
 
+
+    # Calculate stop loss and take profit if not provided
+    if stop_loss is None or take_profit is None:
+        default_volatility = get_autotrade_param(
+            symbol, 'default_volatility_decimal', default=0.03
+        )
+
+    if consensus_signal == "BUY":
+        stop_loss = tick.bid - (tick.bid * default_volatility)
+        take_profit = tick.bid + (tick.bid * default_volatility * 2.0)
+
+    elif consensus_signal == "SELL":
+        stop_loss = tick.bid + (tick.bid * default_volatility)
+        take_profit = tick.bid - (tick.bid * default_volatility * 2.0)
+
+    logger.info(f"[INFO 1700:25] :: Calculated SL/TP for {symbol} - SL: {stop_loss} | TP: {take_profit}")
+
     if consensus_signal == "BUY" and allow_buy:
         logger.info(f"[INFO 1700:50] :: Preparing BUY trade for {symbol}")
         result = open_buy(
