@@ -72,15 +72,22 @@ def get_limit_clearance(symbol):
     4 digit signature for this function: 1712
     """
     limits = get_symbol_limits(symbol)
-    if limits is None:
+    if limits is None or not isinstance(limits, dict) or not limits:
         logger.warning(f"[WARNING 1712] :: No Limits. Symbol {symbol} not found in trade limits.")
         return None, None
 
-    # limits = limits[symbol]
-    logger.info(f"Current {symbol} limits: {limits}")
-    max_long_size = limits.get('max_long_size', float('inf'))
-    max_short_size = limits.get('max_short_size', float('inf'))
-    max_orders = limits.get('max_orders', 100)
+    # Safe fallback: 0 (no clearance) and log if key missing
+    max_long_size = limits.get('MAX_LONG_SIZE')
+    if max_long_size is None:
+        logger.warning(f"[WARNING 1712] :: MAX_LONG_SIZE missing for {symbol}. Defaulting to 0.")
+        max_long_size = 0
+
+    max_short_size = limits.get('MAX_SHORT_SIZE')
+    if max_short_size is None:
+        logger.warning(f"[WARNING 1712] :: MAX_SHORT_SIZE missing for {symbol}. Defaulting to 0.")
+        max_short_size = 0
+
+    max_orders = limits.get('MAX_ORDERS', 100)
 
     positions = load_positions(symbol)
 

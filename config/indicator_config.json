@@ -109,7 +109,7 @@
             "function": "calculate_scalp_adx",
             "parameters": {
                 "period": 14,
-                "threshold": 20,
+                "threshold": 10,
                 "sma_short_period": 9,
                 "sma_long_period": 21
             }
