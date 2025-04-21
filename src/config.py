@@ -24,6 +24,7 @@ ensure_directories_exist()
 PAUSE_FILE = os.path.join(CONFIG_DIR, 'pause.json')
 INDICATOR_CONFIG_FILE = os.path.join(CONFIG_DIR, 'indicator_config.json')
 TRADE_LIMIT_FILE = os.path.join(CONFIG_DIR, 'trade_limits_config.json')
+AUTOTRADE_CONFIG_FILE = os.path.join(CONFIG_DIR, 'autotrade_config_settings.json')
 # Trade files #
 BROKER_SYMBOLS = os.path.join(HARD_MEMORY_DIR, 'symbols.json')
 ACCOUNT_INFO_FILE = os.path.join(HARD_MEMORY_DIR, 'account_info.json')

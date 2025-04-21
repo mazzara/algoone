@@ -1,0 +1,20 @@
+{
+  "defaults": {
+    "min_atr_pct": 0.0005,
+    "default_atr_multiplier": 1.5,
+    "default_volatility_decimal": 0.03,
+    "default_slippage": 20,
+    "close_profit_threshold_decimal": 0.05,
+    "close_profit_dollar_threshold": 0.25,
+    "trailing_profit_threshold_decimal": 0.005
+  },
+  "symbol_overrides": {
+    "BTCUSD": {
+      "default_volatility_decimal": 0.05,
+      "default_slippage": 25
+    },
+    "XAUUSD": {
+      "default_volatility_decimal": 0.02
+    }
+  }
+}
