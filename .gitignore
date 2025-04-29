@@ -1,5 +1,9 @@
 # .gitignore
 
+# macOS metadata
+.DS_Store
+__MACOSX/
+
 # Ignore .env files
 .env
 .env.*
@@ -13,6 +17,10 @@ src/hard_memory/
 logs/
 *.log
 *.tmp
+
+# Temporary or redundant configs
+config/trade_limits_config_1.json
+config/trade_limits_config_2.json
 
 # Sensitive Files
 *.pem
@@ -28,5 +36,4 @@ dist/
 build/
 __pycache__/
 *.pyc
-__MACOSX/
-.DS_Store
+
