@@ -62,22 +62,25 @@ def save_positions(positions):
     }
 
     for pos in positions:
-        positions_data.append({
-            "ticket": pos.ticket,
-            "symbol": pos.symbol,
-            "type": "BUY" if pos.type == 0 else "SELL",
-            "volume": pos.volume,
-            "price_open": pos.price_open,
-            "sl": pos.sl,
-            "tp": pos.tp,
-            "price_current": pos.price_current,
-            "profit": pos.profit,
-            "swap": pos.swap,
-            "magic": pos.magic,
-            "time_open": datetime.utcfromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
-            "time_raw": pos.time,
-            "comment": pos.comment
-        })
+        if isinstance(pos, dict):
+            positions_data.append(pos)
+        else:
+            positions_data.append({
+                "ticket": pos.ticket,
+                "symbol": pos.symbol,
+                "type": "BUY" if pos.type == 0 else "SELL",
+                "volume": pos.volume,
+                "price_open": pos.price_open,
+                "sl": pos.sl,
+                "tp": pos.tp,
+                "price_current": pos.price_current,
+                "profit": pos.profit,
+                "swap": pos.swap,
+                "magic": pos.magic,
+                "time_open": datetime.utcfromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
+                "time_raw": pos.time,
+                "comment": pos.comment
+            })
 
     # Resolving in-memory traking vs. stateless update issue.
     # Load previously saved state if available
@@ -134,6 +137,42 @@ def get_positions():
         save_positions([])
     
     return positions
+
+
+def return_positions():
+    """
+    Retrieves and logs all open positions from MT5.
+    """
+    positions = mt5.positions_get()
+
+    if positions:
+        logger.info("=== Open Positions ===")
+
+        # save_positions(positions)
+        logger.info(f"Total open positions saved: {len(positions)}")
+    else:
+        logger.info("No open positions found.")
+        # save_positions([])
+    
+    return [
+    {
+        "ticket": pos.ticket,
+        "symbol": pos.symbol,
+        "type": "BUY" if pos.type == 0 else "SELL",
+        "volume": pos.volume,
+        "price_open": pos.price_open,
+        "sl": pos.sl,
+        "tp": pos.tp,
+        "price_current": pos.price_current,
+        "profit": pos.profit,
+        "swap": pos.swap,
+        "magic": pos.magic,
+        "time_open": datetime.utcfromtimestamp(pos.time).strftime("%Y-%m-%d %H:%M:%S"),
+        "time_raw": pos.time,
+        "comment": pos.comment,
+    }
+    for pos in positions
+]
 
 
 # Run standalone

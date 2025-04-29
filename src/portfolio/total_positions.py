@@ -6,6 +6,7 @@ import time
 # from src.positions.positions import get_positions
 from src.data.loaders import fetch_mt5_positions as get_positions
 
+
 from src.config import (
     TOTAL_POSITIONS_FILE,
     POSITIONS_FILE,

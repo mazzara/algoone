@@ -41,8 +41,14 @@ LOG_FILE = os.path.join(LOG_DIR, 'app.log')
 LOGGER_NAME = 'AlgoOne'
 
 # ==== Symbol Settings ==== #
-SYMBOLS_CONFIG_FILE = os.path.join(HARD_MEMORY_DIR, 'symbols_allowed.json')
+SYMBOLS_CONFIG_FILE = os.path.join(CONFIG_DIR, 'symbols_allowed.json')
 FOREX_MAJORS = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDCHF', 'USDCAD', 'AUDUSD', 'NZDUSD']
+CRYPTO_ONLY = ['BTCUSD', 'ETHUSD']
+DEFAULT_SYMBOLS = ['BTCUSD', 'ETHUSD', 'Crude-F', 'SpotCrude', 'EURUSD', 'GBPUSD',
+            'Brent-F', 'SpotBrent', 'NaturalGas', 'Gold', 'Silver',
+            'Coffee', 'Sugar', 'Corn', 'Soybeans',
+            'EUSTX50', 'DAX', 'FTSE', 'SP500',
+            'USDJPY', 'USDCHF', 'XAUUSD' ]
 
 def load_allowed_symbols():
     """
@@ -56,11 +62,7 @@ def load_allowed_symbols():
         with open(SYMBOLS_CONFIG_FILE, 'r') as file:
             return json.load(file).get('SYMBOLS_ALLOWED', [])
 
-    return ['BTCUSD', 'ETHUSD', 'Crude-F', 'SpotCrude', 'EURUSD', 'GBPUSD',
-            'Brent-F', 'SpotBrent', 'NaturalGas', 'Gold', 'Silver',
-            'Coffee', 'Sugar', 'Corn', 'Soybeans',
-            'EUSTX50', 'DAX', 'FTSE', 'SP500',
-            'USDJPY', 'USDCHF', 'XAUUSD' ] # Default
+    return CRYPTO_ONLY
 
 SYMBOLS_ALLOWED = load_allowed_symbols()
 

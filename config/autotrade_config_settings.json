@@ -1,13 +1,20 @@
 {
   "defaults": {
     "min_atr_pct": 0.0005,
-    "default_atr_multiplier": 1.5,
+    "default_atr_multiplier": 2.8,
+    "atr_multiplier": 2.8,
+    "atr_buffer": 2.0,
+    "initial_sl_buffer_atr_dec": 2.0,
+    "max_loss_decimal": 0.005,
+    "min_candles_hold": 3,
+    "min_ticks_to_hold": 9,
     "default_volatility_decimal": 0.03,
+    "volatility_cap_decimal": 0.03,
     "default_slippage": 20,
     "close_profit_threshold_decimal": 0.05,
     "close_profit_dollar_threshold": 0.25,
-    "trailing_profit_threshold_decimal": 0.005,
-    "break_even_offset_decimal": 0.103,
+    "trailing_profit_threshold_decimal": 0.0012,
+    "break_even_offset_decimal": 0.193,
     "liquidation_cycle_seconds": 900,
     "bias": "none"
   },

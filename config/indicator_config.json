@@ -19,7 +19,8 @@
         "GBPUSD": {
             "indicators": [
                 "ScalpADX"
-            ]
+            ],
+            "fly_inverted": true
         },
         "Crude-F": {
             "indicators": [
@@ -110,7 +111,7 @@
             "function": "calculate_scalp_adx",
             "parameters": {
                 "period": 14,
-                "threshold": 10,
+                "threshold": 20,
                 "sma_short_period": 9,
                 "sma_long_period": 21
             }

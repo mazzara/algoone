@@ -3,43 +3,32 @@ import MetaTrader5 as mt5
 import os
 import random
 import json
-import time
-from datetime import datetime, timezone, timedelta
 import pytz
 from src.logger_config import logger
 from src.portfolio.total_positions import (
-    get_total_positions, total_positions_cache
-)
+    get_total_positions
+    )
 from src.limits.limits import (
-    get_limit_clearance, get_cooldown_clearance, get_symbol_limits,
-    get_trade_limits
-)
+    get_limit_clearance, get_cooldown_clearance
+    )
 from src.limits.cycle_limit import check_cycle_clearance
-from src.tools.server_time import parse_time
-from src.positions.positions import get_positions, load_positions
-from src.indicators.adx_indicator import calculate_adx
+from src.positions.positions import get_positions, load_positions, save_positions, return_positions
 from src.indicators.signal_indicator import (
     dispatch_signals, dispatch_position_manager_indicator, maybe_invert_signal
-)
+    )
 from src.journal.position_journal import (
     log_open_trade, log_close_trade, append_tracking
-)
+    )
 from src.trader.awareness import evaluate_profit_awareness
 from src.trader.autotrade import get_autotrade_param
+from src.trader.volatility_ladder import trailing_staircase
+from src.trader.sl_managers import simple_manage_sl, set_volatility_sl, sl_trailing_staircase
+
 from src.config import (
-        HARD_MEMORY_DIR,
         POSITIONS_FILE,
         BROKER_SYMBOLS,
-        TRADE_LIMIT_FILE,
         TRADE_DECISIONS_FILE,
-        # CLOSE_PROFIT_THRESHOLD,
-        # TRAILING_PROFIT_THRESHHOLD,
-        CLEARANCE_HEAT_FILE,
-        CLEARANCE_LIMIT_FILE
-        # DEFAULT_VOLATILITY,
-        # DEFAULT_ATR_MULTIPLYER,
-        # MIN_ART_PCT
-)
+    )
 
 # Cash trade limits to avoid reloading
 # trade_limits_cache = None
@@ -976,89 +965,744 @@ def close_position_by_ticket(ticket, symbol, pos_type, volume):
         return False
 
 
-def manage_trade(symbol):
-    """
-    Manage open positions for a symbol by updating trailing stops based on 
-    a volatility indicator (e.g. ATR). This function:
-      - Retrieves current tick data and the position management indicator result.
-      - Calculates a recommended trailing stop level using an ATR-based multiplier.
-      - Iterates over open positions for the symbol and, if the recommended stop is more favorable,
-        submits an order modification to adjust the position's stop loss.
-
-    Returns True if management actions (or no action) complete successfully.
-    4 digit signature for this function: 0625
-    """
-    logger.info(f"[INFO 0625] :: Managing trade for {symbol}")
+def simple_manage_trade(symbol):
+    logger.info(f"[SimpleManage 9121:00] Managing trade for {symbol}")
 
     tick = mt5.symbol_info_tick(symbol)
     if not tick:
-        logger.error(f"[ERROR 0625] :: Failed to get tick data for {symbol}.")
+        logger.error(f"[SimpleManage 9121:10] Failed to get tick for {symbol}")
         return False
 
-    # Dispatch the position manager indicator (e.g., ATR must be set in the config file)
-    pm_result = dispatch_position_manager_indicator(symbol, 'ATR')
-    if not pm_result:
-        logger.info(
-            f"[INFO 0625] :: "
-            f"No position manager signal for {symbol}; "
-            f"no adjustments will be made."
-        )
-        return True
-
-    # Extract the ATR result dictionary from pm_result.
-    atr_result = pm_result.get("ATR")
-    if not atr_result:
-        logger.error(
-            f"[ERROR 0625] :: "
-            f"ATR result is missing from the position manager indicators."
-        )
+    atr_result = dispatch_position_manager_indicator(symbol, 'ATR')
+    atr = atr_result.get("ATR", {}).get("value", None) if atr_result else None
+    if atr is None:
+        logger.error(f"[SimpleManage 9121:15] ATR missing for {symbol}")
         return False
 
-    # Retrieve the ATR value from the indicator result.
-    atr_value = atr_result.get("value", {})
-    if atr_value is None:
-        logger.error(f"[ERROR 0625] :: ATR value is not available for {symbol}.")
-        return False
+    multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=2.0)
+    break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.1)
 
-    # multiplier = DEFAULT_ATR_MULTIPLYER
-    multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=1.5)
-
-    # Get current open positions for the symbol.
-    # (Assuming get_positions() returns a dict containing a list of positions under 'positions')
-    get_positions()
-    file_path = os.path.join(POSITIONS_FILE)
-    logger.info(f"[INFO 0625] :: Loading positions from {file_path}")
-
-    if not os.path.exists(file_path):
-        logger.warning(
-            f"[WARNING 0625] :: "
-            f"File positions not found. Unable to manage trades."
-        )
-        return
-    with open(file_path, 'r', encoding='utf-8') as f:
-        positions_data = json.load(f)
-        logger.info(f"[INFO 0625] :: manage_trade() - Positions loaded from cache 'positions_data': {len(positions_data)}")
-        
-    positions = positions_data.get('positions', [])
-
-    if not positions_data or "positions" not in positions_data:
-        logger.info(f"[INFO 0625] :: No open positions found for {symbol}.")
-        return True
-
-    # Filter only positions matching the symbol.
-    positions = [pos for pos in positions_data.get("positions", []) if pos.get("symbol") == symbol]
+    positions = mt5.positions_get(symbol=symbol)
     if not positions:
-        logger.info(f"[INFO 0625] :: No open positions for {symbol} to manage.")
+        logger.info(f"[SimpleManage 9121:20] No open positions for {symbol}")
         return True
 
-    # Iterate over each open position and update stop loss if appropriate.
     for pos in positions:
-        pos_type = pos.get("type")
-        ticket = pos.get("ticket")
-        current_sl = pos.get("sl", None)
-        open_price = pos.get("price_open", None)
-        volume = pos.get("volume", 0)
-        recommended_sl = None
+        open_price = pos.price_open
+        ticket = pos.ticket
+        volume = pos.volume
+        pos_type = "BUY" if pos.type == mt5.ORDER_TYPE_BUY else "SELL"
+        current_sl = pos.sl
+        price_now = tick.bid if pos_type == "BUY" else tick.ask
+
+        logger.debug(
+            f"[SimpleManage 9121:30] "
+            f"Position {ticket} for {symbol}: "
+            f"Type: {pos_type}, Open Price: {open_price}, "
+            f"Current Price: {price_now}, "
+            f"Current SL: {current_sl}, Volume: {volume}"
+            f"ATR: {atr}, Multiplier: {multiplier}"
+        )
+
+        # Fallback for missing sl
+        if not current_sl or current_sl == 0.0:
+            volatility_cap = get_autotrade_param(symbol, 'default_volatility_decimal', default=0.03)
+
+            if pos_type == "BUY":
+                recommended_sl = open_price * (1 - volatility_cap)
+            else:  # SELL
+                recommended_sl = open_price * (1 + volatility_cap)
+
+            logger.info(
+                f"[SimpleManage 9121:35] {pos_type} {ticket}: "
+                f"No SL set. Applying default volatility-based SL: {recommended_sl}"
+            )
+
+            # Skip breakeven/trailing, go straight to order_send
+            req = {
+                "action": mt5.TRADE_ACTION_SLTP,
+                "position": ticket,
+                "symbol": symbol,
+                "sl": recommended_sl,
+                "tp": pos.tp,
+                "deviation": 20,
+                "magic": pos.magic,
+                "comment": "Initial Volatility SL"
+            }
+
+            result = mt5.order_send(req)
+            if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                logger.info(f"[SimpleManage 9121:36] Initial SL set for {ticket} at {recommended_sl}")
+            else:
+                logger.error(f"[SimpleManage 9121:37] Failed to set initial SL for {ticket}. Retcode: {getattr(result, 'retcode', None)}")
+
+            continue
+
+
+        # Calculate recommended SL
+        if pos_type == "BUY":
+            if price_now >= open_price + atr:
+                new_sl = max(current_sl, open_price + atr * break_even_offset)
+                trail_sl = price_now - atr * multiplier
+                recommended_sl = max(new_sl, trail_sl)
+                
+                logger.debug(
+                    f"[SimpleManage 9121:40] "
+                    f"Recommended SL for {ticket}: {recommended_sl}"
+                )
+            else:
+                continue  # no move yet
+        else:  # SELL
+            if price_now <= open_price - atr:
+                new_sl = min(current_sl or float('inf'), open_price - atr * break_even_offset)
+                trail_sl = price_now + atr * multiplier
+                recommended_sl = min(new_sl, trail_sl)
+
+                logger.debug(
+                    f"[SimpleManage 9121:50] "
+                    f"Recommended SL for {ticket}: {recommended_sl}"
+                )
+            else:
+                continue  # no move yet
+
+        # Don't send same or worse SL
+        if current_sl and ((pos_type == "BUY" and recommended_sl <= current_sl) or
+                           (pos_type == "SELL" and recommended_sl >= current_sl)):
+            logger.info(f"[SimpleManage 9121:50] {pos_type} {ticket}: SL not improved")
+            continue
+
+        # Send modify request
+        req = {
+            "action": mt5.TRADE_ACTION_SLTP,
+            "position": ticket,
+            "symbol": symbol,
+            "sl": recommended_sl,
+            "tp": pos.tp,
+            "deviation": 20,
+            "magic": pos.magic,
+            "comment": "Simple Trailing SL"
+        }
+
+        result = mt5.order_send(req)
+        if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+            logger.info(f"[SimpleManage 9121:60] Updated SL for {ticket} to {recommended_sl}")
+        else:
+            logger.error(f"[SimpleManage 9121:70] Failed to update SL for {ticket}. Retcode: {getattr(result, 'retcode', None)}")
+
+    return True
+
+# ORIGINAL manage_trade CODE - This is working
+# def manage_trade(symbol):
+#     """
+#     Manage open positions for a symbol by updating trailing stops based on 
+#     a volatility indicator (e.g. ATR). This function:
+#       - Retrieves current tick data and the position management indicator result.
+#       - Calculates a recommended trailing stop level using an ATR-based multiplier.
+#       - Iterates over open positions for the symbol and, if the recommended stop is more favorable,
+#         submits an order modification to adjust the position's stop loss.
+#
+#     Returns True if management actions (or no action) complete successfully.
+#     4 digit signature for this function: 0625
+#     """
+#     logger.info(f"[INFO 0625] :: Managing trade for {symbol}")
+#
+#     tick = mt5.symbol_info_tick(symbol)
+#     if not tick:
+#         logger.error(f"[ERROR 0625] :: Failed to get tick data for {symbol}.")
+#         return False
+#
+#     # Dispatch the position manager indicator (e.g., ATR must be set in the config file)
+#     pm_result = dispatch_position_manager_indicator(symbol, 'ATR')
+#     if not pm_result:
+#         logger.info(
+#             f"[INFO 0625] :: "
+#             f"No position manager signal for {symbol}; "
+#             f"no adjustments will be made."
+#         )
+#         return True
+#
+#     # Extract the ATR result dictionary from pm_result.
+#     atr_result = pm_result.get("ATR")
+#     if not atr_result:
+#         logger.error(
+#             f"[ERROR 0625] :: "
+#             f"ATR result is missing from the position manager indicators."
+#         )
+#         return False
+#
+#     # Retrieve the ATR value from the indicator result.
+#     atr_value = atr_result.get("value", {})
+#     if atr_value is None:
+#         logger.error(f"[ERROR 0625] :: ATR value is not available for {symbol}.")
+#         return False
+#
+#     # multiplier = DEFAULT_ATR_MULTIPLYER
+#     multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=2.5)
+#
+#     # Get current open positions for the symbol.
+#     # (Assuming get_positions() returns a dict containing a list of positions under 'positions')
+#     get_positions()
+#     file_path = os.path.join(POSITIONS_FILE)
+#     logger.info(f"[INFO 0625] :: Loading positions from {file_path}")
+#
+#     if not os.path.exists(file_path):
+#         logger.warning(
+#             f"[WARNING 0625] :: "
+#             f"File positions not found. Unable to manage trades."
+#         )
+#         return
+#     with open(file_path, 'r', encoding='utf-8') as f:
+#         positions_data = json.load(f)
+#         logger.info(f"[INFO 0625] :: manage_trade() - Positions loaded from cache 'positions_data': {len(positions_data)}")
+#
+#     positions = positions_data.get('positions', [])
+#
+#     if not positions_data or "positions" not in positions_data:
+#         logger.info(f"[INFO 0625] :: No open positions found for {symbol}.")
+#         return True
+#
+#     # Filter only positions matching the symbol.
+#     positions = [pos for pos in positions_data.get("positions", []) if pos.get("symbol") == symbol]
+#     if not positions:
+#         logger.info(f"[INFO 0625] :: No open positions for {symbol} to manage.")
+#         return True
+#
+#     # Iterate over each open position and update stop loss if appropriate.
+#     for pos in positions:
+#         pos_type = pos.get("type")
+#         ticket = pos.get("ticket")
+#         current_sl = pos.get("sl", None)
+#         open_price = pos.get("price_open", None)
+#         volume = pos.get("volume", 0)
+#         recommended_sl = None
+#
+#         append_tracking(
+#             ticket,
+#             price_open=pos["price_open"],
+#             price_current=pos["price_current"],
+#             pos_type=pos["type"]
+#         )
+#
+#         # BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
+#         break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.103)
+#
+#         # Evaluate Awareness
+#         take_profit = False
+#         take_profit = evaluate_profit_awareness(symbol, tick, atr_value,
+#                                                      open_price, pos_type)
+#         logger.debug(
+#             f"[DEBUG 0625:02] :: Evaluating profit awareness for {symbol} - "
+#             f"Take Profit: {take_profit} | ATR Value: {atr_value} | "
+#             f"Open Price: {open_price} | Position Type: {pos_type} | "
+#             f"Current SL: {current_sl} | Ticket: {ticket}"
+#         )
+#
+#         if take_profit:
+#             logger.info(
+#                 f"[INFO 0625:03] :: Closing Symbol {symbol} "
+#                 f"position {ticket} due to profit awareness."
+#             )
+#             close_position_by_ticket(ticket, symbol, pos_type, volume)
+#             continue
+#
+#         if pos_type == "BUY":
+#             has_moved_1_atr = tick.bid >= open_price + atr_value
+#             in_trailing_range = tick.bid < open_price + (atr_value * multiplier)
+#
+#             if has_moved_1_atr and in_trailing_range:
+#                 # Break-even logic
+#                 # recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
+#                 recommended_sl = open_price + (atr_value * break_even_offset)
+#                 logger.info(
+#                     f"[INFO 0625] :: BUY position {ticket}: "
+#                     f"Break-even zone. Recommending SL to {recommended_sl}"
+#                 )
+#             else:
+#                 # Trailing logic
+#                 recommended_sl = tick.bid - multiplier * atr_value
+#                 logger.info(
+#                     f"[INFO 0625] :: BUY position {ticket}: "
+#                     f"Trailing SL calculated at {recommended_sl}"
+#                 )
+#
+#             if current_sl is not None and recommended_sl <= current_sl:
+#                 logger.info(
+#                     f"[INFO 0625] :: BUY position {ticket}: "
+#                     f"SL {recommended_sl} not better than current {current_sl}."
+#                     f" Skipping update."
+#                 )
+#                 continue
+#
+#         elif pos_type == "SELL":
+#             has_moved_1_atr = tick.ask <= open_price - atr_value
+#             in_trailing_range = tick.ask > open_price - (atr_value * multiplier)
+#
+#             if has_moved_1_atr and in_trailing_range:
+#                 # Break-even logic
+#                 # recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
+#                 recommended_sl = open_price - (atr_value * break_even_offset)
+#                 logger.info(
+#                     f"[INFO 0625] :: SELL position {ticket}: Break-even zone."
+#                     f" Recommending SL to {recommended_sl}"
+#                 )
+#             else:
+#                 # Trailing logic
+#                 recommended_sl = tick.ask + multiplier * atr_value
+#                 logger.info(
+#                     f"[INFO 0625] :: SELL position {ticket}: "
+#                     f"Trailing SL calculated at {recommended_sl}"
+#                 )
+#
+#             if current_sl is not None and recommended_sl >= current_sl:
+#                 logger.info(
+#                     f"[INFO 0625] :: SELL position {ticket}: SL {recommended_sl}"
+#                     f" not better than current {current_sl}. Skipping update."
+#                 )
+#                 continue
+#
+#         else:
+#             logger.warning(
+#                 f"[WARNING 0625] :: Position {ticket} "
+#                 f"has unknown type: {pos_type}. Skipping."
+#             )
+#             continue
+#
+#
+#         # Build a modify request.
+#         modify_request = {
+#             "action": mt5.TRADE_ACTION_SLTP,
+#             "position": ticket,
+#             "symbol": symbol,
+#             "sl": recommended_sl,
+#             "tp": pos.get("tp", 0),  # keep current TP unchanged
+#             "deviation": 20,
+#             "magic": pos.get("magic", random.randint(100000, 999999)),
+#             "comment": "Trailing Stop Adjustment"
+#         }
+#         logger.info(
+#             f"[INFO 0625] :: Sending modify request for "
+#             f"position {ticket}: {modify_request}"
+#         )
+#         modify_result = mt5.order_send(modify_request)
+#         logger.info(
+#             f"[INFO 0625] :: Modify result for "
+#             f"position {ticket}: {modify_result}"
+#         )
+#
+#         if modify_result is not None and modify_result.retcode == mt5.TRADE_RETCODE_DONE:
+#             logger.info(
+#                 f"[INFO 0625] :: Successfully updated trailing stop for "
+#                 f"position {ticket}."
+#             )
+#         else:
+#             logger.error(
+#                 f"[0625] :: Failed to update trailing stop for "
+#                 f"position {ticket}. MT5 Error: {mt5.last_error()}"
+#             )
+#
+#     return True
+
+
+
+# NEW VERSION OF `manage_trade` with dedicated helper function `trailing_staircase` specialized in recommend stop loss 
+# def manage_trade(symbol):
+#     """
+#     Manage open positions for a symbol by updating trailing stops based on 
+#     a volatility indicator (e.g. ATR). This function:
+#       - Retrieves current tick data and the position management indicator result.
+#       - Calculates a recommended trailing stop level using an ATR-based multiplier.
+#       - Iterates over open positions for the symbol and, if the recommended stop is more favorable,
+#         submits an order modification to adjust the position's stop loss.
+#
+#     Returns True if management actions (or no action) complete successfully.
+#     4 digit signature for this function: 0625
+#     """
+#     logger.info(f"[INFO 0625:00] :: Managing trade for {symbol}")
+#
+#     tick = mt5.symbol_info_tick(symbol)
+#     if not tick:
+#         logger.error(f"[ERROR 0625:00] :: Failed to get tick data for {symbol}.")
+#         return False
+#
+#     # Dispatch the position manager indicator (e.g., ATR must be set in the config file)
+#     pm_result = dispatch_position_manager_indicator(symbol, 'ATR')
+#     if not pm_result:
+#         logger.info(
+#             f"[INFO 0625:10] :: "
+#             f"No position manager signal for {symbol}; "
+#             f"no adjustments will be made."
+#         )
+#         return True
+#
+#     # Extract the ATR result dictionary from pm_result.
+#     atr_result = pm_result.get("ATR")
+#     if not atr_result:
+#         logger.error(
+#             f"[ERROR 0625:10] :: "
+#             f"ATR result is missing from the position manager indicators."
+#         )
+#         return False
+#
+#     # Retrieve the ATR value from the indicator result.
+#     atr_value = atr_result.get("value", {})
+#     if atr_value is None:
+#         logger.error(f"[ERROR 0625:10] :: ATR value is not available for {symbol}.")
+#         return False
+#
+#     # multiplier = DEFAULT_ATR_MULTIPLYER
+#     multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=2.0)
+#
+#     logger.debug(
+#         f"[DEBUG 0625:11] :: "
+#         f"ATR value for {symbol}: {atr_value} | Multiplier: {multiplier}"
+#     )
+#
+#     # Get current open positions for the symbol.
+#     # (Assuming get_positions() returns a dict containing a list of positions under 'positions')
+#     raw_positions = get_positions()
+#     positions = [p for p in raw_positions if p.symbol == symbol]
+#
+#     # positions_data = get_positions()
+#     # file_path = os.path.join(POSITIONS_FILE)
+#     # logger.info(f"[INFO 0625:15] :: Loading positions from {file_path}")
+#
+#     # if not os.path.exists(file_path):
+#     #     logger.warning(
+#     #         f"[WARNING 0625:15] :: "
+#     #         f"File positions not found. Unable to manage trades."
+#     #     )
+#     #     return
+#     # with open(file_path, 'r', encoding='utf-8') as f:
+#     #     positions_data = json.load(f)
+#     #     logger.info(f"[INFO 0625:16] :: manage_trade() - Positions loaded from cache 'positions_data': {len(positions_data)}")
+#     #
+#     #     logger.debug(
+#     #         f"[DEBUG 0625:16] :: "
+#     #         f"Positions data loaded: {positions_data}"
+#     #     )
+#
+#     logger.info(f"[INFO 0625:17] :: Loading {len(positions)} positions data from cache")
+#
+#     logger.debug(
+#         f"[DEBUG 0625:17] :: "
+#         f"Positions data loaded: {positions}"
+#     )
+#
+#     # positions = positions_data.get('positions', [])
+#
+#     # if not positions_data or "positions" not in positions_data:
+#     #     logger.info(f"[INFO 0625:17] :: No open positions found for {symbol}.")
+#     #     return True
+#
+#     # Filter only positions matching the symbol.
+#     # positions = [pos for pos in positions_data.get("positions", []) if pos.get("symbol") == symbol]
+#     # if not positions:
+#     #     logger.info(f"[INFO 0625:17] :: No open positions for {symbol} to manage.")
+#     #     return True
+#
+#     # Iterate over each open position and update stop loss if appropriate.
+#     for pos in positions:
+#         pos_type = pos.get("type")
+#         ticket = pos.get("ticket")
+#         current_sl = pos.get("sl", None)
+#         open_price = pos.get("price_open", None)
+#         volume = pos.get("volume", 0)
+#         recommended_sl = None
+#         recommended_tp = None
+#
+#         append_tracking(
+#             ticket,
+#             price_open=pos["price_open"],
+#             price_current=pos["price_current"],
+#             pos_type=pos["type"]
+#         )
+#
+#         # recommended_sl, take_profit = trailing_staircase(symbol, pos, tick)
+#
+#         # BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
+#         break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.103)
+#
+#         # Evaluate Awareness
+#         take_profit = False
+#         take_profit = evaluate_profit_awareness(symbol, tick, atr_value,
+#                                                      open_price, pos_type)
+#         logger.debug(
+#             f"[DEBUG 0625:22] :: Evaluating profit awareness for {symbol} - "
+#             f"Take Profit: {take_profit} | ATR Value: {atr_value} | "
+#             f"Open Price: {open_price} | Position Type: {pos_type} | "
+#             f"Current SL: {current_sl} | Ticket: {ticket}"
+#         )
+#
+#         if take_profit:
+#             logger.info(
+#                 f"[INFO 0625:23] :: Closing Symbol {symbol} "
+#                 f"position {ticket} due to profit awareness."
+#             )
+#             close_position_by_ticket(ticket, symbol, pos_type, volume)
+#             continue
+#
+#         if pos_type == "BUY":
+#             has_moved_1_atr = tick.bid >= open_price + (atr_value * multiplier / 2.0)
+#             in_trailing_range = tick.bid < open_price + (atr_value * multiplier)
+#
+#             if has_moved_1_atr and in_trailing_range:
+#                 # Break-even logic
+#                 # recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
+#                 recommended_sl = open_price + (atr_value * break_even_offset)
+#                 # recommended_sl, take_profit = trailing_staircase(symbol, pos, tick)
+#                 logger.info(
+#                     f"[INFO 0625:30] :: {symbol} BUY position {ticket}: "
+#                     f" | open price {open_price} | ATR value {atr_value} | "
+#                     f" Multiplier {multiplier} | Lower Bound {open_price + (atr_value * multiplier)} | "
+#                     f"Upper Bound {open_price + (atr_value * multiplier / 2.0)} | "
+#                     f"Break-even zone. Recommending SL to {recommended_sl}"
+#                 )
+#                 if recommended_sl is None:
+#                     logger.error(
+#                         f"[ERROR 0625:31] :: BUY position {ticket}: "
+#                         f"Break-even SL recommendation failed - None value."
+#                     )
+#                     continue
+#             else:
+#                 # Trailing logic
+#                 # recommended_sl = tick.bid - multiplier * atr_value
+#                 recommended_sl, recommended_tp = trailing_staircase(symbol, pos, tick)
+#                 logger.info(
+#                     f"[INFO 0625:45:35] :: BUY position {ticket}: "
+#                     f"Trailing SL calculated at {recommended_sl}"
+#                 )
+#
+#             if current_sl not in (None, 0.0) and recommended_sl <= current_sl:
+#                 logger.info(
+#                     f"[INFO 0625:37] :: BUY position {ticket}: "
+#                     f"SL {recommended_sl} not better than current {current_sl}."
+#                     f" Skipping update."
+#                 )
+#                 continue
+#
+#         elif pos_type == "SELL":
+#             has_moved_1_atr = tick.ask <= open_price - (atr_value * multiplier / 2.0)
+#             in_trailing_range = tick.ask > open_price - (atr_value * multiplier)
+#
+#             if has_moved_1_atr and in_trailing_range:
+#                 # Break-even logic
+#                 # recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
+#                 recommended_sl = open_price - (atr_value * break_even_offset)
+#                 # recommended_sl, take_profit = trailing_staircase(symbol, pos, tick)
+#                 logger.info(
+#                     f"[INFO 0625:40] :: SELL position {ticket}: Break-even zone."
+#                     f" Recommending SL to {recommended_sl}"
+#                 )
+#                 if recommended_sl is None:
+#                     logger.error(
+#                         f"[ERROR 0625:41] :: SELL position {ticket}: "
+#                         f"Break-even SL recommendation failed - None value."
+#                     )
+#                     continue
+#             else:
+#                 # Trailing logic
+#                 # recommended_sl = tick.ask + multiplier * atr_value
+#                 recommended_sl, recommended_tp = trailing_staircase(symbol, pos, tick)
+#                 logger.info(
+#                     f"[INFO 0625:45] :: SELL position {ticket}: "
+#                     f"Trailing SL calculated at {recommended_sl}"
+#                 )
+#
+#             if current_sl not in (None, 0.0) and recommended_sl >= current_sl:
+#                 logger.info(
+#                     f"[INFO 0625:47] :: SELL position {ticket}: SL {recommended_sl}"
+#                     f" not better than current {current_sl}. Skipping update."
+#                 )
+#                 continue
+#
+#         else:
+#             logger.warning(
+#                 f"[WARNING 0625:50] :: Position {ticket} "
+#                 f"has unknown type: {pos_type}. Skipping."
+#             )
+#             continue
+#
+#
+#         # Build a modify request.
+#         modify_request = {
+#             "action": mt5.TRADE_ACTION_SLTP,
+#             "position": ticket,
+#             "symbol": symbol,
+#             "sl": recommended_sl,
+#             "tp": pos.get("tp", 0),  # keep current TP unchanged
+#             "deviation": 20,
+#             "magic": pos.get("magic", random.randint(100000, 999999)),
+#             "comment": "Trailing Stop Adjustment"
+#         }
+#         logger.info(
+#             f"[INFO 0625:61] :: Sending modify request for "
+#             f"position {ticket}: {modify_request}"
+#         )
+#         modify_result = mt5.order_send(modify_request)
+#         logger.info(
+#             f"[INFO 0625:62] :: Modify result for "
+#             f"position {ticket}: {modify_result}"
+#         )
+#
+#         if modify_result is not None and modify_result.retcode == mt5.TRADE_RETCODE_DONE:
+#             logger.info(
+#                 f"[INFO 0625:63] :: Successfully updated trailing stop for "
+#                 f"position {ticket}."
+#             )
+#         else:
+#             logger.error(
+#                 f"[0625:64] :: Failed to update trailing stop for "
+#                 f"position {ticket}. MT5 Error: {mt5.last_error()}"
+#                 f" | Modify Result: {modify_result}"
+#                 f" | Modify Request: {modify_request}"
+#             )
+#
+#     return True
+#
+
+
+
+
+# NEW SIMPLIFIED VERSION
+# def manage_trade(symbol):
+#     """
+#     Manage open positions for a symbol by updating trailing stops based on
+#     a volatility indicator (e.g. ATR). Uses SL managers from sl_managers.py.
+#     """
+#
+#     logger.info(f"[INFO 0625] :: Managing trade for {symbol}")
+#
+#     tick = mt5.symbol_info_tick(symbol)
+#     if not tick:
+#         logger.error(f"[ERROR 0625] :: Failed to get tick data for {symbol}.")
+#         return False
+#
+#     atr_result = dispatch_position_manager_indicator(symbol, 'ATR')
+#     atr = atr_result.get("ATR", {}).get("value") if atr_result else None
+#     if atr is None:
+#         logger.error(f"[ERROR 0625] :: ATR value is not available for {symbol}.")
+#         return False
+#
+#     positions = mt5.positions_get(symbol=symbol)
+#     if not positions:
+#         logger.info(f"[INFO 0625] :: No open positions for {symbol} to manage.")
+#         return True
+#
+#     for pos in positions:
+#         current_sl = pos.sl
+#
+#         # Config fallback container
+#         config = {
+#             "atr_multiplier": get_autotrade_param(symbol, "atr_multiplier", default=2.0),
+#             "break_even_offset": get_autotrade_param(symbol, "break_even_offset_decimal", default=0.1),
+#             "volatility_cap_decimal": get_autotrade_param(symbol, "volatility_cap_decimal", default=0.03)
+#         }
+#
+#         # Step 1: Set SL if not yet set
+#         if not current_sl or current_sl == 0.0:
+#             initial_sl = set_volatility_sl(pos, config)
+#             logger.info(f"[INFO 0625] :: Setting initial SL for {symbol} position {pos.ticket} to {initial_sl}")
+#
+#             req = {
+#                 "action": mt5.TRADE_ACTION_SLTP,
+#                 "position": pos.ticket,
+#                 "symbol": symbol,
+#                 "sl": initial_sl,
+#                 "tp": pos.tp,
+#                 "deviation": 20,
+#                 "magic": pos.magic,
+#                 "comment": "Volatility SL Init"
+#             }
+#             result = mt5.order_send(req)
+#             if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+#                 logger.info(f"[INFO 0625] :: Initial SL set for position {pos.ticket}.")
+#             else:
+#                 logger.error(f"[ERROR 0625] :: Failed to set initial SL for position {pos.ticket}. Retcode: {getattr(result, 'retcode', None)}")
+#             continue
+#
+#         # Step 2: Trail SL using simple_manage_sl
+#         new_sl = simple_manage_sl(pos, tick, atr, config)
+#         if new_sl and ((pos.type == mt5.ORDER_TYPE_BUY and new_sl > current_sl) or
+#                        (pos.type == mt5.ORDER_TYPE_SELL and new_sl < current_sl)):
+#             logger.info(f"[INFO 0625] :: Trailing SL update for position {pos.ticket} to {new_sl}")
+#
+#             req = {
+#                 "action": mt5.TRADE_ACTION_SLTP,
+#                 "position": pos.ticket,
+#                 "symbol": symbol,
+#                 "sl": new_sl,
+#                 "tp": pos.tp,
+#                 "deviation": 20,
+#                 "magic": pos.magic,
+#                 "comment": "Trailing SL Update"
+#             }
+#             result = mt5.order_send(req)
+#             if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+#                 logger.info(f"[INFO 0625] :: Successfully updated SL for position {pos.ticket}.")
+#             else:
+#                 logger.error(f"[ERROR 0625] :: Failed to update SL for position {pos.ticket}. Retcode: {getattr(result, 'retcode', None)}")
+#
+#     return True
+
+
+
+# REFACTORED manage_trade
+def manage_trade(symbol):
+    logger.debug(f"[INFO 0625:00] :: Managing trade for {symbol}")
+
+    tick = mt5.symbol_info_tick(symbol)
+    if not tick:
+        logger.error(
+            f"[ERROR 0625:03] :: Failed to get tick data for {symbol}."
+        )
+        return False
+
+    pm_result = dispatch_position_manager_indicator(symbol, 'ATR')
+    atr_result = pm_result.get("ATR") if pm_result else None
+    atr = atr_result.get("value") if atr_result else None
+    if atr is None:
+        logger.error(
+            f"[ERROR 0625:07] :: ATR value is not available for {symbol}."
+        )
+        return False
+    logger.debug(
+        f"[DISPATCH ATR 0625:08] :: "
+        f"ATR value for {symbol}: {atr} | "
+        f"Multiplier: {get_autotrade_param(symbol, 'default_atr_multiplier', default=2.0)}"
+        f"pm_result: {pm_result} | atr_result: {atr_result}"
+    )
+
+    # === LOAD full cached memory ===
+    from src.portfolio.total_positions import load_cached_positions  # preferred to keep clean access
+    full_cached_positions = load_cached_positions()
+    if not full_cached_positions:
+        logger.warning(f"[0625:09] :: No cached positions found. Managing based on MT5 only.")
+
+
+    # Refresh all positions and filter for this symbol
+    raw_positions = return_positions()
+    positions = [p for p in raw_positions if p["symbol"] == symbol]
+    if not positions:
+        logger.warning(
+            f"[INFO 0625:09] :: No open positions for {symbol} to manage."
+        )
+        return True
+    # selfnote: unpack postions to see what is going on - latter delete this once setble
+    if positions:
+        for pos in positions:
+            logger.debug(
+                f"[DEBUG 0625:09] :: Position data: {pos}"
+            )
+
+
+    updated_positions = []
+    updated_positions_map = {}
+
+    for pos in positions:
+        ticket = pos["ticket"]
+        pos_type = pos["type"]
+        volume = pos["volume"]
+        current_sl = pos.get("sl")
 
         append_tracking(
             ticket,
@@ -1067,124 +1711,116 @@ def manage_trade(symbol):
             pos_type=pos["type"]
         )
 
-        # BREAK_EVEN_OFFSET = 0.103  # 10.3% of ATR value
-        break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.103)
+        recommended_sl, close_signal = sl_trailing_staircase(symbol, pos, tick, atr)
 
-        # Evaluate Awareness
-        take_profit = False
-        take_profit = evaluate_profit_awareness(symbol, tick, atr_value,
-                                                     open_price, pos_type)
         logger.debug(
-            f"[DEBUG 0625:02] :: Evaluating profit awareness for {symbol} - "
-            f"Take Profit: {take_profit} | ATR Value: {atr_value} | "
-            f"Open Price: {open_price} | Position Type: {pos_type} | "
+            f"[DEBUG 0625:10] :: Evaluating STOP LOSS STAIRCASE for {symbol} - "
+            f"Take Profit: {close_signal} | ATR Value: {atr} | "
+            f"Open Price: {pos['price_open']} | Position Type: {pos_type} | "
             f"Current SL: {current_sl} | Ticket: {ticket}"
+            f" | Recommended SL: {recommended_sl}"
         )
 
-        if take_profit:
-            logger.info(
-                f"[INFO 0625:03] :: Closing Symbol {symbol} "
-                f"position {ticket} due to profit awareness."
+        logger.debug(
+            f"[DEBUG 0625:11] :: SL Trailing Context: "
+            f"Price Now: {tick.bid if pos_type == 'BUY' else tick.ask} | "
+            f"ATR: {atr} | ATR Multiplier: {get_autotrade_param(symbol, 'atr_multiplier', default=2.0)} | "
+            f"Break Even Offset: {get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.1)}"
+        )
+
+        # if close_signal:
+        #     logger.info(f"[INFO 0625] :: Closing {symbol} ticket {ticket} due to stop logic.")
+        #     close_position_by_ticket(ticket, symbol, pos_type, volume)
+        #     pos["CLOSE_SIGNAL"] = True
+        #     updated_positions.append(pos)
+        #     continue
+
+        #selfnote: for better debugin - once stable delete this 
+        if recommended_sl is None:
+            logger.debug(
+                f"[DEBUG 0625:12] :: No SL recommended for {ticket}. "
+                f"Skipping SL update."
             )
-            close_position_by_ticket(ticket, symbol, pos_type, volume)
-            continue
+        price_now = tick.bid if pos_type == "BUY" else tick.ask
+        pct_profit = (price_now - pos["price_open"]) / pos["price_open"] if pos_type == "BUY" else (pos["price_open"] - price_now) / pos["price_open"]
 
-        if pos_type == "BUY":
-            has_moved_1_atr = tick.bid >= open_price + atr_value
-            in_trailing_range = tick.bid < open_price + (atr_value * multiplier)
+        logger.debug(
+            f"[DEBUG 0625:13] :: {pos_type} {ticket} Profit %: {pct_profit:.5f}"
+        )
 
-            if has_moved_1_atr and in_trailing_range:
-                # Break-even logic
-                # recommended_sl = open_price + (atr_value * BREAK_EVEN_OFFSET)
-                recommended_sl = open_price + (atr_value * break_even_offset)
-                logger.info(
-                    f"[INFO 0625] :: BUY position {ticket}: "
-                    f"Break-even zone. Recommending SL to {recommended_sl}"
-                )
-            else:
-                # Trailing logic
-                recommended_sl = tick.bid - multiplier * atr_value
-                logger.info(
-                    f"[INFO 0625] :: BUY position {ticket}: "
-                    f"Trailing SL calculated at {recommended_sl}"
-                )
+        if recommended_sl is not None and current_sl not in (None, 0.0):
+            sl_better = (
+                (pos_type == "BUY" and recommended_sl > current_sl) or
+                (pos_type == "SELL" and recommended_sl < current_sl)
+            )
 
-            if current_sl is not None and recommended_sl <= current_sl:
-                logger.info(
-                    f"[INFO 0625] :: BUY position {ticket}: "
-                    f"SL {recommended_sl} not better than current {current_sl}."
-                    f" Skipping update."
-                )
-                continue
+            logger.debug(
+                f"[SL EVAL 0625:20] :: {pos_type} {ticket}: "
+                f"SL recommendation {recommended_sl:.2f} "
+                f"{'is better' if sl_better else 'is not better'} than current SL {current_sl:.2f} | "
+                f"sl_better: {sl_better}"
+            )
 
-        elif pos_type == "SELL":
-            has_moved_1_atr = tick.ask <= open_price - atr_value
-            in_trailing_range = tick.ask > open_price - (atr_value * multiplier)
+            if sl_better:
+                logger.debug(f"[SL EVAL 0625:22] :: Preparing to update SL for {ticket} to {recommended_sl:.2f}")
 
-            if has_moved_1_atr and in_trailing_range:
-                # Break-even logic
-                # recommended_sl = open_price - (atr_value * BREAK_EVEN_OFFSET)
-                recommended_sl = open_price - (atr_value * break_even_offset)
-                logger.info(
-                    f"[INFO 0625] :: SELL position {ticket}: Break-even zone."
-                    f" Recommending SL to {recommended_sl}"
-                )
-            else:
-                # Trailing logic
-                recommended_sl = tick.ask + multiplier * atr_value
-                logger.info(
-                    f"[INFO 0625] :: SELL position {ticket}: "
-                    f"Trailing SL calculated at {recommended_sl}"
-                )
+                req = {
+                    "action": mt5.TRADE_ACTION_SLTP,
+                    "position": ticket,
+                    "symbol": symbol,
+                    "sl": recommended_sl,
+                    "tp": pos.get("tp", 0),
+                    "deviation": 20,
+                    "magic": pos.get("magic", 0),
+                    "comment": "SL Trailing Adjust"
+                }
 
-            if current_sl is not None and recommended_sl >= current_sl:
-                logger.info(
-                    f"[INFO 0625] :: SELL position {ticket}: SL {recommended_sl}"
-                    f" not better than current {current_sl}. Skipping update."
-                )
-                continue
+                result = mt5.order_send(req)
 
+                if result and hasattr(result, "retcode") and result.retcode == mt5.TRADE_RETCODE_DONE:
+                    logger.info(f"[INFO 0625] :: SL updated successfully for {ticket}.")
+                else:
+                    if result is None:
+                        logger.error(f"[ERROR 0625] :: Request: {req} | Response: No result (MT5 disconnected?)")
+                    else:
+                        try:
+                            logger.error(f"[ERROR 0625] :: Request: {req} | Response: {vars(result)}")
+                        except TypeError:
+                            logger.error(f"[ERROR 0625] :: Request: {req} | Response: {result} (non-object)")
+
+
+        updated_positions.append(pos)
+        updated_positions_map[ticket] = pos  # <- keep updated ticket
+
+    # === MERGE and SAVE positions ===
+    final_positions = []
+    for p in full_cached_positions:
+        if p["ticket"] in updated_positions_map:
+            final_positions.append(updated_positions_map[p["ticket"]])
         else:
-            logger.warning(
-                f"[WARNING 0625] :: Position {ticket} "
-                f"has unknown type: {pos_type}. Skipping."
-            )
-            continue
+            final_positions.append(p)
 
+    # If a position was newly opened (not yet cached), include it
+    existing_tickets = {p["ticket"] for p in full_cached_positions}
+    for ticket, pos in updated_positions_map.items():
+        if ticket not in existing_tickets:
+            final_positions.append(pos)
 
-        # Build a modify request.
-        modify_request = {
-            "action": mt5.TRADE_ACTION_SLTP,
-            "position": ticket,
-            "symbol": symbol,
-            "sl": recommended_sl,
-            "tp": pos.get("tp", 0),  # keep current TP unchanged
-            "deviation": 20,
-            "magic": pos.get("magic", random.randint(100000, 999999)),
-            "comment": "Trailing Stop Adjustment"
-        }
-        logger.info(
-            f"[INFO 0625] :: Sending modify request for "
-            f"position {ticket}: {modify_request}"
-        )
-        modify_result = mt5.order_send(modify_request)
-        logger.info(
-            f"[INFO 0625] :: Modify result for "
-            f"position {ticket}: {modify_result}"
-        )
+    from src.positions.positions import save_positions
+    save_positions(final_positions)
 
-        if modify_result is not None and modify_result.retcode == mt5.TRADE_RETCODE_DONE:
-            logger.info(
-                f"[INFO 0625] :: Successfully updated trailing stop for "
-                f"position {ticket}."
-            )
-        else:
-            logger.error(
-                f"[0625] :: Failed to update trailing stop for "
-                f"position {ticket}. MT5 Error: {mt5.last_error()}"
-            )
-
+    # save_positions(updated_positions)
     return True
+
+
+
+
+
+
+
+
+
+
 
 
 # DEPRECATED  !!! ATENTION !!!  execute_trade version - below is an improved one.

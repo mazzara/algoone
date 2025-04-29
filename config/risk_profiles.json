@@ -1,0 +1,23 @@
+{
+  "defaults":{
+    "1m": {"mean_atr_pct": 0.0604},
+    "5m": {"mean_atr_pct": 0.1308},
+    "15m": {"mean_atr_pct": 0.2954},
+    "1h": {"mean_atr_pct": 0.5248},
+    "1d": {"mean_atr_pct": 2.7451}
+  },
+  "Crude-F":{
+    "1m": {"mean_atr_pct": 0.0604},
+    "5m": {"mean_atr_pct": 0.2308},
+    "15m": {"mean_atr_pct": 0.2954},
+    "1h": {"mean_atr_pct": 0.5248},
+    "1d": {"mean_atr_pct": 2.7451}
+  },
+    "EURUSD":{
+    "1m": {"mean_atr_pct": 0.0604},
+    "5m": {"mean_atr_pct": 0.2308},
+    "15m": {"mean_atr_pct": 0.2954},
+    "1h": {"mean_atr_pct": 0.5248},
+    "1d": {"mean_atr_pct": 2.7451}
+  }
+}
