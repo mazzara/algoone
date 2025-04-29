@@ -1,6 +1,6 @@
 {
   "pause_trading": false,
-  "pause_open": true,
+  "pause_open": false,
   "pause_close": false,
   "note": "Manual session active"
 }

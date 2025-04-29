@@ -1,6 +1,6 @@
 {
   "defaults": {
-    "min_atr_pct": 0.0005,
+    "min_atr_pct": 0.00005,
     "default_atr_multiplier": 2.8,
     "atr_multiplier": 2.8,
     "atr_buffer": 2.0,

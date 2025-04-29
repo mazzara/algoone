@@ -39,12 +39,17 @@ def log_open_trade(
 
     journal = load_journal()
 
+    open_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    open_dt = datetime.strptime(open_time, "%Y-%m-%d %H:%M:%S")
+
     journal_entry = {
         "symbol": symbol,
         "direction": direction,
         "volume": volume,
         "entry_price": entry_price,
         "open_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "open_hour": open_dt.hour,
+        "open_weekday": open_dt.weekday(),
         "indicators": indicators,
         "rationale": rationale,
         "profit_chain": [],
@@ -73,6 +78,17 @@ def append_tracking(ticket, price_open, price_current, pos_type):
                 pct_profit = (price_open - price_current) / price_open * 100
             else:
                 pct_profit = (price_current - price_open) / price_open * 100
+
+            pct_profit = round(pct_profit, 6)
+
+            # Selfnote: Remember — left this here for later production tuning.
+            # Intended to use profit_chain filtered to meaningful movements only, filtering out micromovements.
+
+            # profit_chain = trade.get("profit_chain", [])
+            # if not profit_chain or abs(pct_profit - profit_chain[-1]) > 0.01:  # optional: skip noisy ticks
+            #     profit_chain.append(pct_profit)
+            #     trade["profit_chain"] = profit_chain
+            #     trade["peak_profit"] = max(trade.get("peak_profit", pct_profit), pct_profit)
 
             trade["profit_chain"].append(pct_profit)
             trade["peak_profit"] = max(trade["peak_profit"], pct_profit)

@@ -62,7 +62,7 @@ def load_allowed_symbols():
         with open(SYMBOLS_CONFIG_FILE, 'r') as file:
             return json.load(file).get('SYMBOLS_ALLOWED', [])
 
-    return CRYPTO_ONLY
+    return DEFAULT_SYMBOLS
 
 SYMBOLS_ALLOWED = load_allowed_symbols()
 

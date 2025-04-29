@@ -4,6 +4,7 @@ import os
 import random
 import json
 import pytz
+from datetime import datetime
 from src.logger_config import logger
 from src.portfolio.total_positions import (
     get_total_positions
@@ -23,7 +24,7 @@ from src.trader.awareness import evaluate_profit_awareness
 from src.trader.autotrade import get_autotrade_param
 from src.trader.volatility_ladder import trailing_staircase
 from src.trader.sl_managers import simple_manage_sl, set_volatility_sl, sl_trailing_staircase
-
+from src.limits.cycle_limit import register_cycle
 from src.config import (
         POSITIONS_FILE,
         BROKER_SYMBOLS,
@@ -439,6 +440,8 @@ def open_trade(symbol: str, **kwargs) -> dict:
         - stop_loss
         - take_profit
         - signals
+
+    4 digit signature: 1700
     """
 
     # global trade_limits_cache
@@ -446,6 +449,11 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     tick = fetch_tick(symbol)
     if not tick:
+        logger.debug(
+                f"[OPEN TRADE 1700:01:01] :: "
+                f"Tick data not available for {symbol}. "
+                f"Trade execution skipped."
+        )
         return {
             "success": False,
             "executed_side": None,
@@ -455,6 +463,12 @@ def open_trade(symbol: str, **kwargs) -> dict:
         }
 
     if not basic_atr_check(symbol, tick):
+        logger.debug(
+                f"[OPEN TRADE 1700:01:02] :: "
+                f"ATR check failed for {symbol}. "
+                f"ATR is bellow minimum threshold. "
+                f"Trade execution skipped."
+        )
         return {
             "success": False,
             "executed_side": None,
@@ -477,6 +491,12 @@ def open_trade(symbol: str, **kwargs) -> dict:
     atr_value = atr_result.get('ATR', {}).get('value', 0) if atr_result else 0
 
     if not basic_spread_check(symbol, tick, atr_value):
+        logger.debug(
+                f"[OPEN TRADE 1700:01:03] :: "
+                f"Spread check failed for {symbol}. "
+                f"Spread is wider than ATR. "
+                f"Trade execution skipped."
+        )
         return {
             "success": False,
             "executed_side": None,
@@ -661,16 +681,29 @@ def open_trade(symbol: str, **kwargs) -> dict:
             )
 
             # === Refresh global total_positions_cache ===
-            new_positions = get_total_positions(save=True, use_cache=False)
-            total_positions_cache.clear()
-            total_positions_cache.update(new_positions)
+            # new_positions = get_total_positions(save=True, use_cache=False)
+            # total_positions_cache.clear()
+            # total_positions_cache.update(new_positions)
+            # logger.info(
+            #     f"[INFO 1700:100] :: "
+            #     f"Total Positions Cache refreshed after trade."
+            # )
+            get_total_positions(save=True, use_cache=False)  # refreshes and saves total_positions.json
             logger.info(
-                f"[INFO 1700:100] :: "
-                f"Total Positions Cache refreshed after trade."
+                f"[INFO 1700:100] :: Total Positions refreshed after trade (dynamic loading, no manual cache)."
             )
 
         # === Check if liquidation cycle should be registered ===
-        for symb, symb_data in total_positions_cache.items():
+        # total_positions_cache = {}  # gosting this variabele to fix runtime error
+        # for symb, symb_data in total_positions_cache.items():
+        #     net_data = symb_data.get('NET', {})
+        #     if net_data.get('SIZE_SUM', 0) == 0 and net_data.get('POSITION_COUNT', 0) == 0:
+        #         register_cycle(symb)
+
+        # === Check if liquidation cycle should be registered ===
+        total_positions = get_total_positions(save=False, use_cache=True)
+
+        for symb, symb_data in total_positions.items():
             net_data = symb_data.get('NET', {})
             if net_data.get('SIZE_SUM', 0) == 0 and net_data.get('POSITION_COUNT', 0) == 0:
                 register_cycle(symb)
