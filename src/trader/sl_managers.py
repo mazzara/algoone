@@ -158,6 +158,10 @@ def sl_trailing_staircase(symbol, pos, tick, atr):
     profit_chain = cached.get("profit_chain", [])
     elapsed_candles = len(profit_chain)
     elapsed_ticks = len(profit_chain)
+    atr_buffer_cutoff = -atr * config["initial_sl_buffer_atr"] / open_price
+
+    logger.debug(f"[SL-Manage 0625:10:20] ATR buffer cutoff: {atr_buffer_cutoff} | Current Profit: {pct_profit}")
+
 
     logger.debug(
         f"[SL-Manage 0625:10:05] {pos['type']} {symbol} | "
@@ -169,7 +173,22 @@ def sl_trailing_staircase(symbol, pos, tick, atr):
             f"ATR: {atr} | "
             f"Profit Chain: {profit_chain} | "
             f"Config: {config}"
+            f" | Pct Profit: {pct_profit*100:.2f} | "
+            f"ATR Buffer Cutoff: {atr_buffer_cutoff:.6f} | "
+            f"trailing_profit_threshold_decimal: {config['trailing_profit_threshold_decimal']}"
     )
+
+    # Checking dead zone
+    lower_bound = atr_buffer_cutoff
+    upper_bound = config["trailing_profit_threshold_decimal"]
+
+    dead_zone_width = upper_bound - lower_bound
+
+    logger.debug(
+        f"[Logic Check 0625:10:09] :: Dead Zone Range: ({lower_bound:.6f} to {upper_bound:.6f}) "
+        f"=> Width: {dead_zone_width:.6f}"
+    )
+
 
     # -- Initial SL: Hard max loss cut
     if pct_profit < -config["max_loss_decimal"]:
@@ -180,9 +199,6 @@ def sl_trailing_staircase(symbol, pos, tick, atr):
     if elapsed_ticks < config["min_ticks_to_hold"]:
         logger.debug(f"[SL-Manage 0625:10:15] Waiting for {config['min_ticks_to_hold']} ticks before SL adjustment.")
         return None, False
-
-    atr_buffer_cutoff = -atr * config["initial_sl_buffer_atr"] / open_price
-    logger.debug(f"[SL-Manage 0625:10:20] ATR buffer cutoff: {atr_buffer_cutoff} | Current Profit: {pct_profit}")
 
     if pct_profit < atr_buffer_cutoff:
         logger.info(f"[SL-Manage 0625:10:25] ATR buffer stop triggered for {pos['symbol']} ticket {pos['ticket']}")
