@@ -184,11 +184,20 @@ def sl_trailing_staircase(symbol, pos, tick, atr):
 
     dead_zone_width = upper_bound - lower_bound
 
-    logger.debug(
-        f"[Logic Check 0625:10:09] :: Dead Zone Range: ({lower_bound:.6f} to {upper_bound:.6f}) "
-        f"=> Width: {dead_zone_width:.6f}"
-    )
+    # Warn if we are inside the dead zone right now
+    if lower_bound < pct_profit < upper_bound:
+        logger.warning(
+            f"[Dead Zone Detected 0625:10:09] :: {symbol} ticket {pos['ticket']} is inside an unmanaged zone "
+            f"({lower_bound:.6f} < {pct_profit:.6f} < {upper_bound:.6f}). "
+            f"Neither ATR SL nor trailing logic will trigger under current config."
+        )
 
+    # Optional: detect too-wide zones
+    if dead_zone_width > 0.005:
+        logger.warning(
+            f"[Config Risk 0625:10:09] :: Dead zone width ({dead_zone_width:.6f}) exceeds 0.5%. "
+            f"Consider tuning 'initial_sl_buffer_atr' or 'trailing_profit_threshold_decimal'."
+        )
 
     # -- Initial SL: Hard max loss cut
     if pct_profit < -config["max_loss_decimal"]:

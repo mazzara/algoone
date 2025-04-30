@@ -818,6 +818,144 @@ def open_sell(
 
 
 
+def abort_trade(symbol=None):
+    """
+    Abort a trade based on max acceptable loss threshold.
+    4 digit signature for this function: 1041
+    """
+    abort_loss_threshold = get_autotrade_param(
+        symbol, 'abort_loss_threshold_decimal', default=-0.0015)
+
+    logger.info(f"[INFO 1041:02] :: Checking for trades to abort below loss threshold: {abort_loss_threshold}")
+    get_positions()
+    file_path = os.path.join(POSITIONS_FILE)
+    logger.info(f"[INFO 1041:04] :: Loading positions from {file_path}")
+
+    if not os.path.exists(file_path):
+        logger.warning(f"[WARN 1041:05] :: Positions file not found.")
+        return False
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        positions_data = json.load(f)
+
+    positions = positions_data.get('positions', [])
+    if not positions:
+        logger.warning(f"[WARN 1041:06] :: No open positions found.")
+        return False
+
+    for pos in positions:
+        if symbol and pos['symbol'] != symbol:
+            continue
+
+        symbol = pos['symbol']
+        symbol_config = get_symbol_config(symbol)
+        ticket = pos['ticket']
+        pos_type = pos['type']
+        volume = pos['volume']
+        profit = pos['profit']
+        price_open = pos['price_open']
+        # contract_size = symbol_config.get('contract_size', 1)
+        # Hard patch for USDJPY (and possibly other forex pairs)
+        if symbol == "USDJPY":
+            contract_size = 1  # Override the default 100,000 to prevent mis-scaling
+        else:
+            contract_size = symbol_config.get('contract_size', 1)
+        invested_amount = volume * price_open * contract_size
+        position_pnl = profit / invested_amount if invested_amount else 0
+
+        logger.debug(
+            f"[DEBUG 1041:12] :: "
+            f"Symbol: {symbol} | Ticket: {ticket} | PnL: {position_pnl:.5f} | "
+            f"Volume: {volume} | Price Open: {price_open:.5f} | "
+            f"Contract Size: {contract_size} | "
+            f"Profit: {profit:.2f} | "
+            f"Threshold: {abort_loss_threshold} | Invested: {invested_amount:.2f}"
+        )
+
+        if invested_amount > 0 and position_pnl < abort_loss_threshold:
+            logger.warning(f"[WARNING 1041:13] :: Aborting trade on {symbol} due to loss: {profit:.2f}")
+
+            symbol_info = mt5.symbol_info(symbol)
+            if symbol_info is None:
+                logger.error(f"[ERROR 1041:13.2] :: Could not get symbol info for {symbol}")
+                continue
+
+            tick = mt5.symbol_info_tick(symbol)
+            if not tick:
+                logger.error(f"[ERROR 1041:13.1] :: Could not get tick for {symbol}")
+                continue
+
+            close_price = tick.bid if pos_type == "SELL" else tick.ask
+            close_success = False
+
+            # Try multiple filling modes
+            filling_mode_candidates = [mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_FOK]
+
+            for filling_mode in filling_mode_candidates:
+                close_request = {
+                    "action": mt5.TRADE_ACTION_DEAL,
+                    "position": ticket,
+                    "symbol": symbol,
+                    "volume": volume,
+                    "type": mt5.ORDER_TYPE_BUY if pos_type == "SELL" else mt5.ORDER_TYPE_SELL,
+                    "price": close_price,
+                    "deviation": 20,
+                    "magic": random.randint(100000, 999999),
+                    "comment": "Auto Abort SL",
+                    "type_filling": filling_mode
+                }
+
+                close_result = mt5.order_send(close_request)
+                logger.info(f"[INFO 1041:14] :: Close request with mode {filling_mode}: {close_request}")
+                logger.info(f"[INFO 1041:15] :: MT5 last error: {mt5.last_error()}")
+                logger.info(f"[INFO 1041:15.1] :: Full close_result for {ticket}: {close_result._asdict() if hasattr(close_result, '_asdict') else close_result}")
+
+                if close_result and hasattr(close_result, "retcode"):
+                    if close_result.retcode == mt5.TRADE_RETCODE_DONE:
+                        logger.info(f"[INFO 1041:17] :: Position {ticket} aborted successfully.")
+                        log_close_trade(ticket, close_reason="SL Triggered", final_profit=profit)
+                        close_success = True
+                        break
+                    elif close_result.retcode == 10030:
+                        logger.warning(f"[WARN] Filling mode {filling_mode} unsupported for {symbol}, trying next.")
+                        continue
+                    else:
+                        logger.error(f"[ERROR 1041:18] :: Failed to abort position {ticket}. "
+                                     f"Retcode: {close_result.retcode} | Message: {close_result.comment}")
+                else:
+                    logger.error(f"[ERROR 1041:16] :: Invalid or empty close_result for ticket {ticket}. Got: {close_result}")
+
+            # === Fallback: modify SL to enforce stop-out ===
+            if not close_success:
+                logger.warning(f"[WARN 1041:19] :: Falling back to SL modification for {symbol} ticket {ticket}")
+
+                forced_sl = tick.bid - 10.0 if pos_type == "BUY" else tick.ask + 10.0
+
+                sl_request = {
+                    "action": mt5.TRADE_ACTION_SLTP,
+                    "position": ticket,
+                    "symbol": symbol,
+                    "sl": forced_sl,
+                    "tp": 0,
+                    "deviation": 20,
+                    "magic": random.randint(100000, 999999),
+                    "comment": "Abort SL fallback"
+                }
+
+                sl_result = mt5.order_send(sl_request)
+                if sl_result and sl_result.retcode == mt5.TRADE_RETCODE_DONE:
+                    logger.info(f"[INFO 1041:20] :: SL modified to {forced_sl:.5f} for {symbol} ticket {ticket}")
+                else:
+                    logger.error(
+                        f"[ERROR 1041:21] :: Failed to modify SL for ticket {ticket}. "
+                        f"Response: {sl_result._asdict() if sl_result else 'None'}"
+                    )
+
+    return True
+
+
+
+
 def close_trade(symbol=None):
     """
     Close a trade based on profit threshold.
@@ -825,15 +963,11 @@ def close_trade(symbol=None):
     """
     # close_profit_threshold = CLOSE_PROFIT_THRESHOLD
     close_profit_threshold = get_autotrade_param(
-        symbol, 'close_profit_threshold_decimal', default=0.05)
+        symbol, 'close_profit_threshold_decimal', default=0.0555)
 
-    logger.info(
-        f"[INFO 1038] :: "
-        f"Closing trades with profit threshold: {close_profit_threshold}"
-    )
     if not symbol:
         logger.error(
-            "[ERROR 1038] :: close_trade() called without a valid symbol."
+            "[ERROR 1038:04] :: close_trade() called without a valid symbol."
         )
         return False
 
@@ -841,20 +975,35 @@ def close_trade(symbol=None):
     if symbol_config:
         symbol_contract_size = symbol_config.get('contract_size', 1)
         logger.info(
-            f"[INFO 1038] :: "
+            f"[INFO 1038:06] :: "
             f"Symbol {symbol} contract size: {symbol_contract_size}"
         )
 
     signals = dispatch_signals(symbol)
+    logger.debug(
+        f"[DEBUG 1038:08] :: "
+        f"Signals for {symbol}: {signals}"
+    )
+
     consensus_signal = aggregate_signals(signals)
     logger.info(
-        f"[INFO 1038] :: Consensus Signal (close_trade): {consensus_signal}"
+        f"[INFO 1038:10] :: Consensus Signal (close_trade): {consensus_signal}"
     )
 
     position_manager = dispatch_position_manager_indicator(symbol, 'ATR')
+    logger.debug(
+        f"[DEBUG 1038:12] :: "
+        f"Position Manager for {symbol}: {position_manager}"
+    )
+
+    # This is not really being used in the current logic
     trailing_stop = None
     if position_manager:
         trailing_stop = position_manager.get('value', {})
+        logger.debug(
+            f"[DEBUG 1038:13] :: "
+            f"Trailing stop for {symbol}: {trailing_stop}"
+        )
 
     # if consensus_signal in ['BUY', 'SELL']:
     #     logger.error(f"[ERROR 1038] :: No consensus signal to close trade.")
@@ -862,11 +1011,11 @@ def close_trade(symbol=None):
 
     get_positions()
     file_path = os.path.join(POSITIONS_FILE)
-    logger.info(f"[INFO 1038] :: Loading positions from {file_path}")
+    logger.info(f"[INFO 1038:14] :: Loading positions from {file_path}")
 
     if not os.path.exists(file_path):
         logger.warning(
-            f"[WARNING 1038] :: "
+            f"[WARNING 1038:16] :: "
             f"File positions not found. I am unable to close trades."
         )
         return
@@ -874,16 +1023,16 @@ def close_trade(symbol=None):
     with open(file_path, 'r', encoding='utf-8') as f:
         positions_data = json.load(f)
         logger.info(
-            f"[INFO 1038] :: close_trade() - "
+            f"[INFO 1038:18] :: close_trade() - "
             f"Positions loaded from cache 'positions_data': {len(positions_data)}"
         )
 
     positions = positions_data['positions']
-    logger.info(f"[INFO 1038] :: Positions loaded from cache: {len(positions)}")
+    logger.info(f"[INFO 1038:20] :: Positions loaded from cache: {len(positions)}")
 
     if not positions:
         logger.warning(
-            f"[WARNING 1038] :: "
+            f"[WARNING 1038:22] :: "
             f"No open positions found on {file_path}."
         )
         return
@@ -902,8 +1051,16 @@ def close_trade(symbol=None):
 
         min_profit = position_pnl > close_profit_threshold
 
-        logger.info(
-            f"[INFO 1038] :: "
+        logger.debug(
+            f"[BEDUB 1038:29] :: "
+                f"Profit: {profit} | Invested Amount: {invested_amount} "
+                f" | pnl%_decimal {position_pnl} | "
+                f" | Close Profit Threshold: {close_profit_threshold} | "
+                f"| Min Profit: {min_profit} | "
+        )
+
+        logger.debug(
+            f"[DEBUG 1038:30] :: "
             f"Position PnL: {position_pnl} | Invested Amount: {invested_amount} "
             f"| Profit: {profit} | Symbol: {symbol} | Volume: {volume} | "
             f"Type: {pos_type} | Ticket: {ticket} | Price Open: {price_open} "
@@ -928,37 +1085,37 @@ def close_trade(symbol=None):
             }
             close_result = mt5.order_send(close_request)
             logger.info(
-                f"[INFO 1038] :: "
+                f"[INFO 1038:35] :: "
                 f"Close request sent as mt5.position_close: {close_request}"
             )
-            logger.error(f"[INFO 1038] :: MT5 last error: {mt5.last_error()}")
+            logger.error(f"[INFO 1038:33] :: MT5 last error: {mt5.last_error()}")
 
             if close_result is None:
                 logger.error(
-                    f"[ERROR 1038] :: "
+                    f"[ERROR 1038:36] :: "
                     f"Failed to close position on {symbol}. "
                     f"`mt5.order_send()` returned None."
                 )
                 continue
 
-            logger.info(f"[INFO 1038] :: Close order response: {close_result}")
+            logger.info(f"[INFO 1038:38] :: Close order response: {close_result}")
 
             if close_result.retcode == mt5.TRADE_RETCODE_DONE:
                 logger.info(
-                    f"[INFO 1038] :: Successfully closed position on {symbol}"
+                    f"[INFO 1038:39] :: Successfully closed position on {symbol}"
                 )
                 log_close_trade(ticket, close_reason="TP Triggered", final_profit=profit)
             else:
                 logger.error(
-                    f"[ERROR 1038] :: "
+                    f"[ERROR 1038:39] :: "
                     f"Failed to close position on {symbol}. "
                     f"Error Code: {close_result.retcode}, "
                     f"Message: {close_result.comment}"
                 )
 
             if close_result and close_result.retcode == mt5.TRADE_RETCODE_DONE:
-                logger.info(f"[INFO 1038] :: Close order result: {close_result}")
-                logger.info(f"[INFO 1038] :: Closed position on {symbol}")
+                logger.info(f"[INFO 1038:44] :: Close order result: {close_result}")
+                logger.info(f"[INFO 1038:44] :: Closed position on {symbol}")
     return True
 
 

@@ -6,7 +6,7 @@ from src.history.history import get_trade_history
 from src.symbols.symbols import get_symbols
 from src.pending.orders import get_orders
 from src.tick_listener import listen_to_ticks
-from src.trader.trade import open_trade, close_trade, manage_trade, simple_manage_trade
+from src.trader.trade import open_trade, close_trade, abort_trade, manage_trade, simple_manage_trade
 from src.portfolio.total_positions import get_total_positions
 from src.limits.limits import load_trade_limits
 from src.logger_config import logger
@@ -49,6 +49,7 @@ def on_tick(ticks):
         # Note for self: this check positions as a dependency
         # it's not a waste to call it here, but mandatory status check.
         get_total_positions(save=True, use_cache=False)
+        abort_trade(tick['symbol'])
         close_trade(tick['symbol'])
 
 
