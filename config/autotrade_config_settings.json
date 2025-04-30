@@ -1,31 +1,139 @@
 {
   "defaults": {
     "min_atr_pct": 0.00005,
-    "default_atr_multiplier": 2.8,
-    "atr_multiplier": 2.8,
+    "default_atr_multiplier": 3.2,
+    "atr_multiplier": 3.2,
     "atr_buffer": 2.0,
     "initial_sl_buffer_atr_dec": 2.0,
     "max_loss_decimal": 0.005,
-    "min_candles_hold": 3,
-    "min_ticks_to_hold": 9,
+    "min_candles_hold": 20,
+    "min_ticks_to_hold": 20,
     "default_volatility_decimal": 0.03,
     "volatility_cap_decimal": 0.03,
     "default_slippage": 20,
-    "close_profit_threshold_decimal": 0.05,
+    "close_profit_threshold_decimal": 0.15,
     "close_profit_dollar_threshold": 0.25,
     "trailing_profit_threshold_decimal": 0.0012,
-    "break_even_offset_decimal": 0.193,
+    "break_even_offset_decimal": 0.123,
     "liquidation_cycle_seconds": 900,
     "bias": "none"
   },
   "symbol_overrides": {
     "BTCUSD": {
-      "default_volatility_decimal": 0.05,
-      "default_slippage": 25
+      "default_volatility_decimal": 0.01,
+      "default_slippage": 25,
+      "bias": "long",
+      "atr_multiplier": 1.0
     },
     "XAUUSD": {
-      "default_volatility_decimal": 0.02,
-      "bias": "long"
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 1.5
+    },
+    "EURUSD": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.0
+    },
+    "ETHGBP": {
+      "default_volatility_decimal": 0.01,
+      "bias": "short",
+      "atr_multiplier": 4.5
+    },
+    "ETHUSD": {
+      "default_volatility_decimal": 0.01,
+      "bias": "short",
+      "atr_multiplier": 1.0
+    },
+    "GBPUSD": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.5
+    },
+    "USDJPY": {
+      "default_volatility_decimal": 0.01,
+      "bias": "short",
+      "atr_multiplier": 3.0
+    },
+    "USDCHF": {
+      "default_volatility_decimal": 0.01,
+      "bias": "short",
+      "atr_multiplier": 4.5
+    },
+    "Brent-F": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 1.0
+    },
+    "Gold": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.5
+    },
+    "NaturalGas": {
+      "default_volatility_decimal": 0.01,
+      "bias": "none",
+      "atr_multiplier": 1.0
+    },
+    "Silver": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.5
+    },
+    "SpotBrent": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 4.0
+    },
+    "SpotCrude": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 1.5
+    },
+    "Coffee": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.0
+    },
+    "Corn": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 4.5
+    },
+    "Crude-F": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.0
+    },
+    "DAX": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 1.5
+    },
+    "EUSTX50": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.0
+    },
+    "FTSE": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 3.5
+    },
+    "SP500": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 4.0
+    },
+    "Soybeans": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 1.5
+    },
+    "Sugar": {
+      "default_volatility_decimal": 0.01,
+      "bias": "long",
+      "atr_multiplier": 2.0
     }
   }
 }

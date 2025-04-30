@@ -2,6 +2,9 @@
 
 
 from copy import deepcopy
+from utils.config_watcher import ConfigWatcher
+
+autotrade_config = ConfigWatcher("config/autotrade_config_settings.json")
 
 
 def calculate_profit_pct(position):
@@ -87,7 +90,13 @@ def process_position_state(position):
     Updates a single position with profit_chain tracking and close_signal logic.
     Returns updated position.
     """
-    updated = update_position_profit_chain(position)
+    symbol = position.get("symbol")
+    max_chain_length = autotrade_config.get_param(
+        symbol, "min_ticks_to_hold", fallback=10)
+
+    updated = update_position_profit_chain(
+        position, max_chain_length=max_chain_length)
+
     if check_trailing_retrace(updated) or check_failed_bounce(updated):
         updated["CLOSE_SIGNAL"] = True
     else:

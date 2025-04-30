@@ -523,6 +523,12 @@ def open_trade(symbol: str, **kwargs) -> dict:
         "ask": tick.ask,
         "spread": tick.ask - tick.bid
         }
+    # Enrich with key configuration metadata for journaling and analysis
+    kwargs["atr_multiplier"] = get_autotrade_param(symbol, "atr_multiplier", default=3.2)
+    kwargs["initial_sl_buffer_atr_dec"] = get_autotrade_param(symbol, "initial_sl_buffer_atr_dec", default=2.0)
+    kwargs["trailing_profit_threshold_decimal"] = get_autotrade_param(symbol, "trailing_profit_threshold_decimal", default=0.0012)
+    kwargs["break_even_offset_decimal"] = get_autotrade_param(symbol, "break_even_offset_decimal", default=0.123)
+    kwargs["bias"] = get_autotrade_param(symbol, "bias", default="none")
 
     if not signals:
         logger.info(
@@ -1012,7 +1018,7 @@ def simple_manage_trade(symbol):
         logger.error(f"[SimpleManage 9121:15] ATR missing for {symbol}")
         return False
 
-    multiplier = get_autotrade_param(symbol, 'default_atr_multiplier', default=2.0)
+    multiplier = get_autotrade_param(symbol, 'atr_multiplier', default=2.0)
     break_even_offset = get_autotrade_param(symbol, 'break_even_offset_decimal', default=0.1)
 
     positions = mt5.positions_get(symbol=symbol)
@@ -1778,7 +1784,7 @@ def manage_trade(symbol):
         pct_profit = (price_now - pos["price_open"]) / pos["price_open"] if pos_type == "BUY" else (pos["price_open"] - price_now) / pos["price_open"]
 
         logger.debug(
-            f"[DEBUG 0625:13] :: {pos_type} {ticket} Profit %: {pct_profit:.5f}"
+            f"[DEBUG 0625:13] :: {symbol} {pos_type} {ticket} Profit %: {pct_profit * 100:.5f} | SL: {current_sl} | Recommend: {recommended_sl} | "
         )
 
         if recommended_sl is not None and current_sl not in (None, 0.0):

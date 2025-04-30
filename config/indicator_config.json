@@ -81,6 +81,24 @@
             "indicators": [
                 "ScalpADX"
             ]
+        },
+        "Brent-F": {
+          "indicators": ["ScalpADX"]
+        },
+        "Gold": {
+          "indicators": ["ScalpADX"]
+        },
+        "NaturalGas": {
+          "indicators": ["ScalpADX"]
+        },
+        "Silver": {
+          "indicators": ["ScalpADX"]
+        },
+        "SpotBrent": {
+          "indicators": ["ScalpADX"]
+        },
+        "SpotCrude": {
+          "indicators": ["ScalpADX"]
         }
     },            
     "position_manager_indicator": {
