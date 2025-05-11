@@ -2,12 +2,11 @@
 
 import MetaTrader5 as mt5
 import json
-import os
 from datetime import datetime
 from src.logger_config import logger
 from src.config import INDICATOR_RESULTS_FILE
 from src.tools.server_time import get_server_time_from_tick
-from src.indicators.adx_indicator import calculate_adx  # reusing your ADX calculation
+from src.indicators.adx_indicator import calculate_adx  # reusing ADX calc.
 
 
 def get_signal(symbol, **kwargs):
@@ -196,7 +195,6 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
         f"SMAs for {symbol}: Short: {short_sma:.2f} | Long: {long_sma:.2f}"
     )
 
-
     # Evaluate Slope
     slope_data = calculate_sma_slope(closing_prices, sma_short_period, lookback_bars=3)
     slope = classify_slope(slope_data, min_slope_pct=0.01)
@@ -224,7 +222,6 @@ def calculate_scalp_adx(symbol, period=14, threshold=20,
     #             "slope_pct": slope_data["slope_pct"]
     #         }
     #     }
-
 
     # Calculate ADX (which also computes DI+ and DI-) using existing function
     adx_data = calculate_adx(symbol, period=period)

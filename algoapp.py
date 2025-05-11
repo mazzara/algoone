@@ -6,20 +6,24 @@ from src.history.history import get_trade_history
 from src.symbols.symbols import get_symbols
 from src.pending.orders import get_orders
 from src.tick_listener import listen_to_ticks
-from src.trader.trade import open_trade, close_trade, abort_trade, manage_trade, simple_manage_trade
+from src.trader.trade import (open_trade,
+                              close_trade,
+                              abort_trade,
+                              manage_trade,
+                              simple_manage_trade)
 from src.portfolio.total_positions import get_total_positions
 from src.limits.limits import load_trade_limits
 from src.logger_config import logger
 from utils.config_watcher import ConfigWatcher
-
+from random import randint
+from typing import List, Dict, Any
 
 override_watcher = ConfigWatcher("config/trade_override.json")
 limits_watcher = ConfigWatcher("config/trade_limits_config.json")
 indicator_config_watcher = ConfigWatcher("config/indicator_config.json")
 
 
-
-def on_tick(ticks):
+def on_tick(ticks: List[Dict[str, Any]]) -> None:
     """
     Callback function to process tick events.
     """
@@ -27,9 +31,17 @@ def on_tick(ticks):
     limits_watcher.load_if_changed()
     indicator_config_watcher.load_if_changed()
 
+    # Unpack the tick data for debugging
+    logger.debug(
+        f"[ON TICK 7715:00:00] :: "
+        f"Tick dictionary: {ticks} "
+    )
+
     for tick in ticks:
+        tickid = randint(1000, 9999)
+        tick['tickid'] = tickid
         logger.info(
-            f"|~~|.AlgoOne.|~~~| -.-.- | Tick Event: {tick['symbol']} | "
+            f"|~~|.AlgoOne.|~~~| -.-.- | tickid:{tickid} | Tick Event: {tick['symbol']} | "
             f"Bid: {tick['bid']} | Ask: {tick['ask']} | "
             f"Spread: {tick['spread']} | Time: {tick['time']}"
         )
@@ -70,11 +82,21 @@ if __name__ == "__main__":
         # Process Positions - check your positions, mate!
         get_total_positions(save=True, use_cache=False)
 
+        limits_watcher.load_if_changed()
+        symbols = limits_watcher.keys()
+        if not symbols:
+            logger.warning(
+                "[WARNING 7715:00] :: "
+                "No symbols found in limits watcher. Using default symbols."
+            )
+            from src.config import DEFAULT_SYMBOLS
+            symbols = DEFAULT_SYMBOLS
+
         # Listen to ticks for all symbols, relax and let it roll.
         try:
             listen_to_ticks(forex_mode=False,
                             only_major_forex=False,
-                            on_tick=on_tick)
+                            on_tick=on_tick, symbols=symbols,)
         except KeyboardInterrupt:
             logger.info("[MAIN EXCEPTION] :: Tick listener stopped by user.")
         finally:

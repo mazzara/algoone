@@ -27,3 +27,9 @@ class ConfigWatcher:
     def get_param(self, symbol, param, fallback=None):
         self.load_if_changed()  # ensure latest config is always loaded
         return self.config.get(symbol, {}).get(param, self.config.get("defaults", {}).get(param, fallback))
+
+    def keys(self):
+        self.load_if_changed()
+        if isinstance(self.config, dict):
+            return list(self.config.keys())
+        return []

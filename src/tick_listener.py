@@ -2,13 +2,13 @@
 import MetaTrader5 as mt5
 import time
 import random
+from typing import List
 from src.logger_config import logger
 from src.config import SYMBOLS_ALLOWED
 
 
 # Store last tick data for comparison
 last_ticks = {}
-
 
 def get_forex_symbols(limit=5, only_major_forex=False):
     """
@@ -36,22 +36,32 @@ def get_forex_symbols(limit=5, only_major_forex=False):
     return selected_symbols
 
 
-def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False, on_tick=None):
+def listen_to_ticks(sleep_time=0.1,
+                    forex_mode=False,
+                    only_major_forex=False,
+                    on_tick=None,
+                    symbols=None):
     """
     Listens to market ticks for all symbols or selected Forex symbols.
     """
     global last_ticks
 
-    if forex_mode:
-        symbols = get_forex_symbols(200, only_major_forex=only_major_forex)  # Development mode: 5 random Forex symbols
-    else:
-        symbols = [s.name for s in mt5.symbols_get()]  # Production mode: all active symbols
+    if symbols is None:
+        if forex_mode:
+            symbols = get_forex_symbols(200, only_major_forex=only_major_forex)  # Development mode: 5 random Forex symbols
+        else:
+            symbols = [s.name for s in mt5.symbols_get()]  # Production mode: all active symbols
 
     if not symbols:
         logger.error("No symbols available for listening.")
         return
 
-    mode_text = "Major Forex Symbols" if only_major_forex else "Random 5 Forex Symbols" if forex_mode else "All Symbols"
+    mode_text = (
+        "Major Forex Symbols" if only_major_forex else
+        "Random 5 Forex Symbols" if forex_mode else
+        "Custom Symbol List" if symbols else
+        "All Symbols"
+    )
     logger.info(f"Listening for ticks on {len(symbols)} ({mode_text})...")
 
     while True:
@@ -62,6 +72,9 @@ def listen_to_ticks(sleep_time=0.1, forex_mode=False, only_major_forex=False, on
             tick = mt5.symbol_info_tick(symbol)
             if tick:
                 last_bid, last_ask = last_ticks.get(symbol, (None, None))
+
+                # Inspect tick data for debugging
+                logger.debug(f"[DEBUG 11749:00] Symbol: {symbol} | Tick Data: {tick}")
 
                 if last_bid != tick.bid or last_ask != tick.ask:
                     last_ticks[symbol] = (tick.bid, tick.ask)

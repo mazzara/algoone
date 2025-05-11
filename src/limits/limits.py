@@ -194,7 +194,7 @@ def load_trade_limits():
     if not os.path.exists(TRADE_LIMIT_FILE):
         logger.warning(f"Trade limits file {TRADE_LIMIT_FILE} not found. Generating default.")
         generate_default_trade_limits()
-    
+
     try:
         with open(TRADE_LIMIT_FILE, "r", encoding="utf-8") as f:
             limits = json.load(f)

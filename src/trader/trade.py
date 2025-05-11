@@ -479,6 +479,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
 
     # Extract known parameters with defaults
+    tickid = kwargs.get('tickid', None)
     lot_size = kwargs.get('lot_size', 0.01)
     stop_loss = kwargs.get('stop_loss', None)
     take_profit = kwargs.get('take_profit', None)
@@ -492,7 +493,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     if not basic_spread_check(symbol, tick, atr_value):
         logger.debug(
-                f"[OPEN TRADE 1700:01:03] :: "
+            f"[OPEN TRADE 1700:01:03] :: [tickid:{tickid}] :: "
                 f"Spread check failed for {symbol}. "
                 f"Spread is wider than ATR. "
                 f"Trade execution skipped."
@@ -532,20 +533,20 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     if not signals:
         logger.info(
-                f"[TRADE INFO 1700:15] :: "
-                f"No signals prvided for {symbol}. Dispatching signals... "
+            f"[TRADE INFO 1700:15] :: [tickid:{tickid}] :: "
+            f"No signals prvided for {symbol}. Dispatching signals... "
         )
         signals = dispatch_signals(symbol)
         logger.debug(
-                f"[DEBUG 1700:17] :: "
-                f"Signals dispatched for {symbol}: {signals}"
+            f"[DEBUG 1700:17] :: [tickid:{tickid}] :: "
+            f"Signals dispatched for {symbol}: {signals}"
         )
 
     # A robutst data signals verificationis
     # Now validate signals data structure
     if not isinstance(signals, dict) or not all(isinstance(v, dict) and 'signal' in v for v in signals.values()):
         logger.error(
-            f"[ERROR 1700:20] :: "
+            f"[ERROR 1700:20] :: [tickid:{tickid}] :: "
             f"Invalid or incomplete signals received for {symbol}"
         )
         return {
@@ -558,7 +559,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     consensus_signal = aggregate_signals(signals)
     logger.info(
-        f"[INFO 1700:30] :: "
+        f"[INFO 1700:30] :: [tickid:{tickid}] :: "
         f"Consensus signal for {symbol}: {consensus_signal}"
     )
 
@@ -567,7 +568,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     consensus_signal = maybe_invert_signal(symbol, consensus_signal)
     logger.info(
-        f"[INFO 1700:31] :: "
+        f"[INFO 1700:31] :: [tickid:{tickid}] :: "
         f"Consensus signal (after inversion check) for {symbol}: {consensus_signal}"
     )
 
@@ -575,7 +576,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
     kwargs['fly_inverted'] = (original_signal != consensus_signal)
 
     if not check_cycle_clearance(symbol):
-        logger.warning(f"[CYCLE LIMIT] :: {symbol} blocked by liquidation cooldown. Skipping trade attempt.")
+        logger.warning(f"[CYCLE LIMIT] :: [tickid:{tickid}] :: {symbol} blocked by liquidation cooldown. Skipping trade attempt.")
         return {
             "success": False,
             "executed_side": None,
@@ -586,7 +587,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     allow_buy, allow_sell = get_open_trade_clearance(symbol)
     logger.debug(
-        f"[DEBUG 1700:40] :: "
+        f"[DEBUG 1700:40] :: [tickid:{tickid}] :: "
         f"Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}"
     )
 
@@ -605,13 +606,13 @@ def open_trade(symbol: str, **kwargs) -> dict:
         stop_loss = tick.bid + (tick.bid * default_volatility)
         take_profit = tick.bid - (tick.bid * default_volatility * 2.0)
 
-    logger.info(f"[INFO 1700:25] :: Calculated SL/TP for {symbol} - SL: {stop_loss} | TP: {take_profit}")
+    logger.info(f"[INFO 1700:25] [tickid:{tickid}] :: Calculated SL/TP for {symbol} - SL: {stop_loss} | TP: {take_profit}")
     
     # Bias gate verification - as per autotrade config
     bias = get_autotrade_param(symbol, 'bias', default='none')
     if bias == 'long' and consensus_signal == 'SELL':
         logger.warning(
-            f"[BIASED BLOCK] :: {symbol} signal {consensus_signal} rejected by long-only bias."
+            f"[BIASED BLOCK] [tickid:{tickid}] :: {symbol} signal {consensus_signal} rejected by long-only bias."
         )
         return {
             "success": False,
@@ -622,7 +623,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
         }
     if bias == 'short' and consensus_signal == 'BUY':
         logger.warning(
-            f"[BIASED BLOCK] :: {symbol} signal {consensus_signal} rejected by short-only bias."
+            f"[BIASED BLOCK] [tickid:{tickid}] :: {symbol} signal {consensus_signal} rejected by short-only bias."
         )
         return {
             "success": False,
@@ -633,7 +634,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
         }
 
     if consensus_signal == "BUY" and allow_buy:
-        logger.info(f"[INFO 1700:50] :: Preparing BUY trade for {symbol}")
+        logger.info(f"[INFO 1700:50] [tickid:{tickid}] :: Preparing BUY trade for {symbol}")
         result = open_buy(
             symbol,
             lot_size=lot_size,
@@ -646,7 +647,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
         )
         executed_side = "BUY"
     elif consensus_signal == "SELL" and allow_sell:
-        logger.info(f"[INFO 1700:60] :: Preparing SELL trade for {symbol}")
+        logger.info(f"[INFO 1700:60] [tickid:{tickid}]:: Preparing SELL trade for {symbol}")
         result = open_sell(
             symbol,
             lot_size=lot_size,
@@ -660,7 +661,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
         executed_side = "SELL"
     else:
         logger.warning(
-            f"[WARN 1700:70] :: "
+            f"[WARN 1700:70] :: [tickid:{tickid}] :: "
             f"No valid trade executed for {symbol} due to signal or clearance."
         )
         return {
@@ -673,7 +674,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
     if result:
         logger.info(
-            f"[INFO 1700:80] :: "
+            f"[INFO 1700:80] :: [tickid:{tickid}] :: "
             f"Trade executed successfully: {executed_side} {symbol}"
         )
 
@@ -682,7 +683,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
 
         if result.get("success"):
             logger.info(
-                f"[INFO 1700:90] :: "
+                f"[INFO 1700:90] :: [tickid:{tickid}] :: "
                 f"Trade executed successfully: {executed_side} {symbol}"
             )
 
@@ -696,7 +697,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
             # )
             get_total_positions(save=True, use_cache=False)  # refreshes and saves total_positions.json
             logger.info(
-                f"[INFO 1700:100] :: Total Positions refreshed after trade (dynamic loading, no manual cache)."
+                f"[INFO 1700:100] [tickid:{tickid}] :: Total Positions refreshed after trade (dynamic loading, no manual cache)."
             )
 
         # === Check if liquidation cycle should be registered ===
@@ -733,7 +734,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
             "message": "Trade executed."
         }
     else:
-        logger.error(f"[ERROR 1700:110] :: Trade execution failed for {symbol}")
+        logger.error(f"[ERROR 1700:110] [tickid:{tickid}] :: Trade execution failed for {symbol}")
         return {
             "success": False,
             "executed_side": None,
@@ -854,12 +855,12 @@ def abort_trade(symbol=None):
         volume = pos['volume']
         profit = pos['profit']
         price_open = pos['price_open']
-        # contract_size = symbol_config.get('contract_size', 1)
+        contract_size = symbol_config.get('contract_size', 1)
         # Hard patch for USDJPY (and possibly other forex pairs)
-        if symbol == "USDJPY":
-            contract_size = 1  # Override the default 100,000 to prevent mis-scaling
-        else:
-            contract_size = symbol_config.get('contract_size', 1)
+        # if symbol == "USDJPY":
+        #     contract_size = 1  # Override the default 100,000 to prevent mis-scaling
+        # else:
+        #     contract_size = symbol_config.get('contract_size', 1)
         invested_amount = volume * price_open * contract_size
         position_pnl = profit / invested_amount if invested_amount else 0
 

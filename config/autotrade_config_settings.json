@@ -1,6 +1,6 @@
 {
   "defaults": {
-    "min_atr_pct": 0.00005,
+    "min_atr_pct": 0.000005,
     "default_atr_multiplier": 3.2,
     "atr_multiplier": 3.2,
     "atr_buffer": 2.0,
@@ -11,7 +11,7 @@
     "default_volatility_decimal": 0.03,
     "volatility_cap_decimal": 0.03,
     "default_slippage": 20,
-    "abort_loss_threshold_decimal": -0.0015,
+    "abort_loss_threshold_decimal": -0.0095,
     "close_profit_threshold_decimal": 0.0555,
     "close_profit_dollar_threshold": 0.25,
     "trailing_profit_threshold_decimal": 0.0012,
@@ -23,7 +23,7 @@
     "BTCUSD": {
       "default_volatility_decimal": 0.01,
       "default_slippage": 25,
-      "bias": "long",
+      "bias": "none",
       "atr_multiplier": 1.0
     },
     "XAUUSD": {
@@ -43,7 +43,7 @@
     },
     "ETHUSD": {
       "default_volatility_decimal": 0.01,
-      "bias": "short",
+      "bias": "none",
       "atr_multiplier": 1.0
     },
     "GBPUSD": {
