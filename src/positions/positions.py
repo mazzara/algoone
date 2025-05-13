@@ -5,9 +5,42 @@ import os
 import json
 from datetime import datetime
 import time
-from src.config import HARD_MEMORY_DIR, POSITIONS_FILE
+from typing import List, Dict
+from src.config import HARD_MEMORY_DIR, POSITIONS_FILE, BROKER_SYMBOLS
 from src.tools.server_time import get_server_time_from_tick
 from src.portfolio.position_state_tracker import process_all_positions
+
+
+def get_symbols_config():
+    # global _SYMBOLS_CONFIG_CACHE
+    # if _SYMBOLS_CONFIG_CACHE is not None:
+    #     return _SYMBOLS_CONFIG_CACHE
+
+    symbols_file = BROKER_SYMBOLS
+    if not os.path.exists(symbols_file):
+        logger.error(
+            f"[ERROR 1247] :: "
+            f"Symbol configuration file not found: {symbols_file}")
+        return None
+    try:
+        with open(symbols_file, 'r', encoding='utf-8') as f:
+            symbols_config = json.load(f)
+            _SYMBOLS_CONFIG_CACHE = symbols_config
+        return symbols_config
+    except Exception as e:
+        logger.error(f"[ERROR 1247] :: Failed to load symbols configuration: {e}")
+        return None
+
+def get_symbol_config(symbol):
+    symbols_list = get_symbols_config()
+    if symbols_list is None:
+        return None
+    for sym in symbols_list:
+        if sym.get('name') == symbol:
+            return sym
+    logger.error(f"[ERROR 1252] :: Symbol {symbol} not found in configuration.")
+    return None
+
 
 # Deprecated
 def load_positions(symbol):
@@ -47,6 +80,87 @@ def load_positions(symbol):
 
 
 
+def calculate_individual_risk(pos: dict, contract_size: float = 1.0) -> float:
+    """
+    Calculate the stop-loss risk for a single position.
+
+    Args:
+        pos (dict): A position dictionary with keys: 'type', 'price_open', 'sl', 'volume'
+
+    Returns:
+        float: Potential loss if SL is hit, 0.0 if invalid or trailing stop in profit
+    """
+    volume = pos.get("volume", 0)
+    price_open = pos.get("price_open", 0)
+    stop_loss = pos.get("sl", None)
+    pos_type = pos.get("type")
+
+    if stop_loss is None or stop_loss <= 0:
+        return 0.0  # No SL or invalid
+
+    if pos_type == "BUY":
+        loss = (price_open - stop_loss) * volume * contract_size
+    elif pos_type == "SELL":
+        loss = (stop_loss - price_open) * volume * contract_size
+    else:
+        return 0.0
+
+    return round(loss, 2) if loss > 0 else 0.0
+
+
+def enrich_positions_with_risk(positions: list) -> list:
+    """
+    Adds a 'risk_at_sl' field to each position in the list.
+
+    Args:
+        positions (list): List of position dicts
+
+    Returns:
+        list: The same list with enriched 'risk_at_sl' per item
+    """
+
+    for pos in positions:
+        symbol = pos.get("symbol")
+        symbol_config = get_symbol_config(symbol)
+        contract_size = symbol_config.get("contract_size", 1.0) if symbol_config else 1.0
+        pos["risk_at_sl"] = calculate_individual_risk(pos, contract_size)
+    return positions
+
+
+
+def update_last_closed_timestamps(prev_positions: list, current_positions: list, total_summary: dict) -> dict:
+    """
+    Compares old and new positions to identify which ones were closed,
+    and updates total_summary with LAST_CLOSED_TIME[_RAW] per symbol and side.
+    """
+    # Map current positions by ticket
+    current_tickets = {p["ticket"] for p in current_positions}
+
+    # Map previous positions by ticket
+    prev_map = {p["ticket"]: p for p in prev_positions}
+    
+    # Detect closed positions (in prev but not in current)
+    closed_tickets = [t for t in prev_map if t not in current_tickets]
+    if not closed_tickets:
+        return total_summary  # Nothing to do
+
+    now = datetime.now()
+    now_ts = now.timestamp()
+    now_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
+    for ticket in closed_tickets:
+        pos = prev_map[ticket]
+        symbol = pos["symbol"]
+        side = "LONG" if pos["type"] == "BUY" else "SHORT"
+
+        if symbol in total_summary and side in total_summary[symbol]:
+            total_summary[symbol][side]["LAST_CLOSED_TIME"] = now_str
+            total_summary[symbol][side]["LAST_CLOSED_TIME_RAW"] = now_ts
+
+    return total_summary
+
+
+
 def save_positions(positions):
     """
     Saves open positions to a JSON file.
@@ -81,6 +195,7 @@ def save_positions(positions):
                 "time_raw": pos.time,
                 "comment": pos.comment
             })
+    positions_data = enrich_positions_with_risk(positions_data)
 
     # Resolving in-memory traking vs. stateless update issue.
     # Load previously saved state if available

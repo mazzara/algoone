@@ -14,7 +14,7 @@
     "abort_loss_threshold_decimal": -0.0095,
     "close_profit_threshold_decimal": 0.0555,
     "close_profit_dollar_threshold": 0.25,
-    "trailing_profit_threshold_decimal": 0.0012,
+    "trailing_profit_threshold_decimal": 0.0022,
     "break_even_offset_decimal": 0.123,
     "liquidation_cycle_seconds": 900,
     "bias": "none"
@@ -24,7 +24,7 @@
       "default_volatility_decimal": 0.01,
       "default_slippage": 25,
       "bias": "none",
-      "atr_multiplier": 1.0
+      "atr_multiplier": 1.5
     },
     "XAUUSD": {
       "default_volatility_decimal": 0.01,

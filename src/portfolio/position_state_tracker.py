@@ -21,6 +21,50 @@ def calculate_profit_pct(position):
     return 0.0
 
 
+def calculate_individual_risk(pos: dict) -> float:
+    """
+    Calculate the stop-loss risk for a single position.
+
+    Args:
+        pos (dict): A position dictionary with keys: 'type', 'price_open', 'sl', 'volume'
+
+    Returns:
+        float: Potential loss if SL is hit, 0.0 if invalid or trailing stop in profit
+    """
+    volume = pos.get("volume", 0)
+    price_open = pos.get("price_open", 0)
+    stop_loss = pos.get("sl", None)
+    pos_type = pos.get("type")
+
+    if stop_loss is None or stop_loss <= 0:
+        return 0.0  # No SL or invalid
+
+    if pos_type == "BUY":
+        loss = (price_open - stop_loss) * volume
+    elif pos_type == "SELL":
+        loss = (stop_loss - price_open) * volume
+    else:
+        return 0.0
+
+    return round(loss, 2) if loss > 0 else 0.0
+
+
+def enrich_positions_with_risk(positions: list) -> list:
+    """
+    Adds a 'risk_at_sl' field to each position in the list.
+
+    Args:
+        positions (list): List of position dicts
+
+    Returns:
+        list: The same list with enriched 'risk_at_sl' per item
+    """
+    for pos in positions:
+        if "risk_at_sl" not in pos:
+            pos["risk_at_sl"] = calculate_individual_risk(pos)
+    return positions
+
+
 def update_position_profit_chain(position, profit_step=0.01, max_chain_length=10):
     """
     Updates the profit_chain and peak_profit fields of a position.
@@ -109,6 +153,7 @@ def process_all_positions(positions):
     Applies profit tracking and signal logic to a list of positions.
     Returns updated list.
     """
+    enrich_positions_with_risk(positions)
     # return [process_position_state(deepcopy(pos)) for pos in positions]
     return [process_position_state(pos) for pos in positions]
 # End of position_state_tracker.py

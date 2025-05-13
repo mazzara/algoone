@@ -36,6 +36,22 @@ def get_forex_symbols(limit=5, only_major_forex=False):
     return selected_symbols
 
 
+def is_new_tick(symbol: str, tick, cache: dict) -> bool:
+    """
+    Determine whether current tick is new based on last seen bid/ask.
+
+    Args:
+        symbol (str): Symbol name.
+        tick (MetaTrader5.TICK): Current tick data.
+        cache (dict): Cache of last ticks.
+
+    Returns:
+        bool: True if new tick, False otherwise.
+    """
+    last_bid, last_ask = cache.get(symbol, (None, None))
+    return last_bid != tick.bid or tick.ask != last_ask
+
+
 def listen_to_ticks(sleep_time=0.1,
                     forex_mode=False,
                     only_major_forex=False,
@@ -53,7 +69,7 @@ def listen_to_ticks(sleep_time=0.1,
             symbols = [s.name for s in mt5.symbols_get()]  # Production mode: all active symbols
 
     if not symbols:
-        logger.error("No symbols available for listening.")
+        logger.error("[ERROR 11749] No symbols available for listening.")
         return
 
     mode_text = (
@@ -76,7 +92,7 @@ def listen_to_ticks(sleep_time=0.1,
                 # Inspect tick data for debugging
                 logger.debug(f"[DEBUG 11749:00] Symbol: {symbol} | Tick Data: {tick}")
 
-                if last_bid != tick.bid or last_ask != tick.ask:
+                if is_new_tick(symbol, tick, last_ticks):
                     last_ticks[symbol] = (tick.bid, tick.ask)
                     logger.info(f"{symbol} | Bid: {tick.bid} | Ask: {tick.ask} | Spread: {tick.ask - tick.bid}")
                     tick_detected = True
@@ -85,14 +101,20 @@ def listen_to_ticks(sleep_time=0.1,
                         "bid": tick.bid,
                         "ask": tick.ask,
                         "spread": tick.ask - tick.bid,
-                        "time": tick.time
+                        "last": tick.last,
+                        "volume": tick.volume,
+                        "flags": tick.flags,
+                        "volume_real": tick.volume_real,
+                        "time": tick.time,
+                        "time_msc": tick.time_msc
                     }
                     tick_data.append(tick_info)
 
-        if tick_detected and on_tick and on_tick:
+        if tick_detected and callable(on_tick):
             on_tick(tick_data)
 
         time.sleep(sleep_time if tick_detected else 0.5)
+
 
 def sample_on_tick(ticks):
     """

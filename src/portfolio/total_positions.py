@@ -5,6 +5,8 @@ import os
 import time
 # from src.positions.positions import get_positions
 from src.data.loaders import fetch_mt5_positions as get_positions
+from src.portfolio.position_state_tracker import enrich_positions_with_risk
+from src.positions.positions import update_last_closed_timestamps
 
 
 from src.config import (
@@ -26,7 +28,6 @@ from src.config import (
 
 total_positions_cache = {}
 # total_positions_cache = get_total_positions(save=True, use_cache=False)
-
 
 
 def load_cached_positions(retries=3, delay=0.2, depth=0):
@@ -92,6 +93,31 @@ def load_total_positions_accounting():
         except Exception as e:
             logger.error(f"Failed to load total positions: {e}")
     return {}
+
+
+
+def aggregate_risk_by_symbol(positions: list) -> dict:
+    """
+    Aggregates total `risk_at_sl` per symbol and side from enriched positions.
+
+    Args:
+        positions (list): List of enriched position dicts
+
+    Returns:
+        dict: {symbol: {"LONG": float, "SHORT": float}}
+    """
+    risk_summary = {}
+
+    for pos in positions:
+        symbol = pos["symbol"]
+        side = "LONG" if pos["type"] == "BUY" else "SHORT"
+        risk = pos.get("risk_at_sl", 0.0)
+
+        if symbol not in risk_summary:
+            risk_summary[symbol] = {"LONG": 0.0, "SHORT": 0.0}
+        risk_summary[symbol][side] += risk
+
+    return risk_summary
 
 
 def process_positions(positions):
@@ -239,6 +265,11 @@ def aggregate_position_data(processed):
             "LAST_POSITION_TIME_RAW": net_last_time_raw,
         }
 
+        # Compute NET risk
+        net_risk = long_data.get("RISK_AT_SL", 0.0) + short_data.get("RISK_AT_SL", 0.0)
+        summary[symbol]["NET"]["RISK_AT_SL"] = round(net_risk, 2)
+
+
     return summary
 
 
@@ -259,6 +290,9 @@ def merge_snapshot_into_history(snapshot_summary, historical_summary):
             for side in ('LONG', 'SHORT', 'NET'):
                 snap = sides.get(side, {})
                 hist = historical_summary[symbol].get(side, {})
+
+                if "RISK_AT_SL" in snap:
+                    hist["RISK_AT_SL"] = snap["RISK_AT_SL"]
 
                 # Initialize missing extreme fields with the current aggregated unrealized profit.
                 if "PROFIT_RECORD_TRACK" not in hist:
@@ -304,14 +338,49 @@ def get_total_positions(save=True, use_cache=True, report=False):
         logger.warning("No positions found. Returning empty summary.")
         return {}
 
+    # Enrich with stop-loss risk
+    positions = enrich_positions_with_risk(positions)
+
+    # Load last known snapshot to infer closures
+    prev_data = load_total_positions_accounting()
+    prev_positions = prev_data.get("_last_positions", [])
+
+    # Risk aggregation per symbol/side
+    risk_summary = aggregate_risk_by_symbol(positions)
+
     processed = process_positions(positions)
     snapshot_summary = aggregate_position_data(processed)
+
+    # Inject RISK_AT_SL after snapshot aggregation 
+    for symbol in snapshot_summary:
+        snapshot_summary[symbol]["LONG"]["RISK_AT_SL"] = round(risk_summary.get(symbol, {}).get("LONG", 0.0), 2)
+        snapshot_summary[symbol]["SHORT"]["RISK_AT_SL"] = round(risk_summary.get(symbol, {}).get("SHORT", 0.0), 2)
+        snapshot_summary[symbol]["NET"]["RISK_AT_SL"] = round(risk_summary.get(symbol, {}).get("LONG", 0.0) + risk_summary.get(symbol, {}).get("SHORT", 0.0), 2)
+
+    # Inject RISK_AT_SL into snapshot summary
+    # for symbol, sides in risk_summary.items():
+    #     for side in ('LONG', 'SHORT'):
+    #         if symbol in snapshot_summary and side in snapshot_summary[symbol]:
+    #             snapshot_summary[symbol][side]["RISK_AT_SL"] = round(sides[side], 2)
+
     historical_summary = load_total_positions_accounting()
 
     historical_summary = merge_snapshot_into_history(
         snapshot_summary, historical_summary)
 
+    historical_summary = update_last_closed_timestamps(
+        prev_positions=prev_positions,
+        current_positions=positions,
+        total_summary=historical_summary
+    )
+    
+    #  Save latest raw position state for next diff
+    historical_summary["_last_positions"] = positions
+
     for symbol, sides in historical_summary.items():
+        if symbol.startswith("_"):
+            continue  # skip reserved metadata like _last_positions
+
         for side in ('LONG', 'SHORT', 'NET'):
             hist = sides.get(side, {})
             size = hist.get("SIZE_SUM", 0)

@@ -30,6 +30,10 @@ from src.config import (
         BROKER_SYMBOLS,
         TRADE_DECISIONS_FILE,
     )
+from utils.config_watcher import ConfigWatcher
+
+
+trade_limit_watcher = ConfigWatcher("config/trade_limits_config.json")
 
 # Cash trade limits to avoid reloading
 # trade_limits_cache = None
@@ -142,7 +146,7 @@ def get_open_trade_clearance(symbol):
     return allow_buy, allow_sell
 
 
-def aggregate_signals(signals):
+def aggregate_signals(signals, min_votes = 1):
     """
     Agregate indicator signals from multiple indicators.
     4 digit signature for this function: 1744
@@ -166,7 +170,7 @@ def aggregate_signals(signals):
 
     consensus_signal = max(vote_counts, key=vote_counts.get)
 
-    if vote_counts[consensus_signal] >= 1:
+    if vote_counts[consensus_signal] >= min_votes:
         logger.info(f"[INFO 1744:30] :: Consensus Signal: {consensus_signal}")
         return consensus_signal
     return None
@@ -444,6 +448,8 @@ def open_trade(symbol: str, **kwargs) -> dict:
     4 digit signature: 1700
     """
 
+
+
     # global trade_limits_cache
     global total_positions_cache
 
@@ -478,9 +484,14 @@ def open_trade(symbol: str, **kwargs) -> dict:
         }
 
 
+
+    trade_limit_watcher.load_if_changed()
+    default_lot_size = trade_limit_watcher.config.get(symbol, {}).get('DEFAULT_LOT_SIZE', 0.01)
+
     # Extract known parameters with defaults
     tickid = kwargs.get('tickid', None)
-    lot_size = kwargs.get('lot_size', 0.01)
+    # lot_size = kwargs.get('lot_size', 0.01)
+    lot_size = kwargs.get('lot_size') or default_lot_size
     stop_loss = kwargs.get('stop_loss', None)
     take_profit = kwargs.get('take_profit', None)
     trailing_stop = kwargs.get('trailing_stop', None)
@@ -557,7 +568,7 @@ def open_trade(symbol: str, **kwargs) -> dict:
             "message": "Invalid signals."
         }
 
-    consensus_signal = aggregate_signals(signals)
+    consensus_signal = aggregate_signals(signals, min_votes=1)
     logger.info(
         f"[INFO 1700:30] :: [tickid:{tickid}] :: "
         f"Consensus signal for {symbol}: {consensus_signal}"
@@ -590,8 +601,6 @@ def open_trade(symbol: str, **kwargs) -> dict:
         f"[DEBUG 1700:40] :: [tickid:{tickid}] :: "
         f"Trade clearance for {symbol}: BUY={allow_buy}, SELL={allow_sell}"
     )
-
-
     # Calculate stop loss and take profit if not provided
     if stop_loss is None or take_profit is None:
         default_volatility = get_autotrade_param(
@@ -632,6 +641,8 @@ def open_trade(symbol: str, **kwargs) -> dict:
             "mt5_result": None,
             "message": "Blocked by long bias."
         }
+
+    logger.debug(f"[LOT CHECK] {symbol} - Final lot_size: {lot_size}, from config: {trade_limit_watcher.config.get(symbol)}, default_lot_size: {default_lot_size}")
 
     if consensus_signal == "BUY" and allow_buy:
         logger.info(f"[INFO 1700:50] [tickid:{tickid}] :: Preparing BUY trade for {symbol}")

@@ -40,19 +40,19 @@
         "MAX_ORDERS": 100
     },
     "XAUUSD": {
-        "MAX_LONG_SIZE": 0.02,
-        "MAX_SHORT_SIZE": 0.02,
+        "MAX_LONG_SIZE": 0.01,
+        "MAX_SHORT_SIZE": 0.01,
         "COOLDOWN_SECONDS": 120,
         "MAX_CAPITAL_ALLOCATION": 10000,
-        "DEFAULT_LOT_SIZE": 0.02,
+        "DEFAULT_LOT_SIZE": 0.01,
         "MAX_ORDERS": 100
     },
     "ETHUSD": {
-        "MAX_LONG_SIZE": 0.02,
-        "MAX_SHORT_SIZE": 0.02,
-        "COOLDOWN_SECONDS": 300,
+        "MAX_LONG_SIZE": 0.08,
+        "MAX_SHORT_SIZE": 0.08,
+        "COOLDOWN_SECONDS": 600,
         "MAX_CAPITAL_ALLOCATION": 5000,
-        "DEFAULT_LOT_SIZE": 0.02,
+        "DEFAULT_LOT_SIZE": 0.08,
         "MAX_ORDERS": 100
     },
     "Coffee": {
@@ -160,19 +160,19 @@
       "MAX_ORDERS": 100
     },
     "SpotBrent": {
-      "MAX_LONG_SIZE": 0.02,
-      "MAX_SHORT_SIZE": 0.02,
+      "MAX_LONG_SIZE": 0.08,
+      "MAX_SHORT_SIZE": 0.08,
       "COOLDOWN_SECONDS": 300,
       "MAX_CAPITAL_ALLOCATION": 5000,
-      "DEFAULT_LOT_SIZE": 0.02,
+      "DEFAULT_LOT_SIZE": 0.08,
       "MAX_ORDERS": 100
     },
     "SpotCrude": {
-      "MAX_LONG_SIZE": 0.02,
-      "MAX_SHORT_SIZE": 0.02,
+      "MAX_LONG_SIZE": 0.08,
+      "MAX_SHORT_SIZE": 0.08,
       "COOLDOWN_SECONDS": 300,
       "MAX_CAPITAL_ALLOCATION": 5000,
-      "DEFAULT_LOT_SIZE": 0.02,
+      "DEFAULT_LOT_SIZE": 0.08,
       "MAX_ORDERS": 100
     }
 }
